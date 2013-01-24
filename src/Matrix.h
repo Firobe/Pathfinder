@@ -1,5 +1,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
+#define COST_FOR 5
+#define COST_DIAG 7
 #include <iostream>
 
 using namespace std;
@@ -10,15 +12,17 @@ class Matrix
 public:
     Matrix();
     ~Matrix();
-    void Load(const char*);
-    bool GetValue(int, int);
+    bool GetValue(int, int, int, int);
+    void LoadData();
     int GetX();
     int GetY();
 protected:
 private:
+    void DataFile();
+    void FinalData();
     int _x;
     int _y;
-    bool **_array;
+    int ****_array;
 };
 
 #endif // MATRIX_H
