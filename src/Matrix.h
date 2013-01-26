@@ -3,6 +3,7 @@
 #define COST_FOR 5
 #define COST_DIAG 7
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 

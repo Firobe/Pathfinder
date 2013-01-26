@@ -46,18 +46,16 @@ void Matrix::DataFile()
     else
         cout<<"!! ERROR !! Plan unreadable or missing"<<endl;
 }
-
 void Matrix::LoadData()
 {
     DataFile();
-    cout << "Reading grey colors in plan..." << endl;
+    cout << "Reading raw data..." << endl;
     unsigned long int line_wanted(18), width(0), height(0), line_found(0);
     int  carac, carac1, carac2, carac3, carac4;
     ifstream data("Ressources/data.dt");
     ofstream grey_data("Ressources/grey_lvl.pdt");
     if(data&&grey_data)
     {
-        cout << "Analysing file dimension..."<< endl;
         do //Recherche des dimensions du fichier
         {
             carac=data.get();
@@ -103,8 +101,10 @@ void Matrix::LoadData()
                 line_found++;
         }
         while(line_found<line_wanted);
-        cout << "Converting raw data into exploitable grey data..." << endl;
+        cout << "Converting raw data into raw grey levels..." << endl;
         unsigned long int end_line(0), end_column(0), pixel(0);
+        _x = width;
+        _y = height;
         ///DETECTION DES NIVEAUX DE GRIS
         while(end_column<height) //Tant que Toutes les lignes ne sont pas lues
         {
@@ -149,7 +149,7 @@ void Matrix::LoadData()
     ///DETECTION DES PENTES
     FinalData();
     ///ECRITURE DES INFOS POUR EXPLOITATION
-    cout<<endl<<endl<<"Converting ended successfully."<<endl<<endl;
+    cout<<"Converting ended successfully." <<endl;
 }
 
 void Matrix::FinalData()
@@ -218,18 +218,15 @@ void Matrix::FinalData()
                 }
             }
         }
-        grey_data.close();
-        cout<<"Extracting level grey data..."<<endl;
+        cout<<"Extracting grey levels..."<<endl;
         end_height=height-1;
         while(end_height>-1)
         {
-            end_width=0;
-            while(width>end_width)
+            for(int i=0;i<width;i++)
             {
                 grey_data>>carac;
-                _array[end_height][end_width][0][0]=carac;
+                _array[end_height][i][0][0]=carac;
                 carac=grey_data.get();
-                end_width++;
                 if(carac=='\n')
                 {
                     line_wanted++;
@@ -247,97 +244,19 @@ void Matrix::FinalData()
             }
             end_height--;
         }
-        cout << "Converting grey data into exploitable data..."<<endl;
-        end_height=0;
-        while(height>end_height)
-        {
-            end_width=0;
-            while(width>end_width)
-            {
-                if(end_height<=0)
-                {
-                    _array[end_height][end_width][1][3]=1;
-                    _array[end_height][end_width][2][3]=1;
-                    _array[end_height][end_width][8][3]=1;
-                }
-                else if(end_height>=height-1)
-                {
-                    _array[end_height][end_width][4][3]=1;
-                    _array[end_height][end_width][5][3]=1;
-                    _array[end_height][end_width][6][3]=1;
-                }
-                if(end_width<=0)
-                {
-                    _array[end_height][end_width][6][3]=1;
-                    _array[end_height][end_width][7][3]=1;
-                    _array[end_height][end_width][8][3]=1;
-                }
-                else if(end_width>=width-1)
-                {
-                    _array[end_height][end_width][2][3]=1;
-                    _array[end_height][end_width][3][3]=1;
-                    _array[end_height][end_width][4][3]=1;
-                }
-                x=end_width;
-                y=end_height;
-                if(end_height>0)
-                {
-                    y--;
-                    if(end_width>0)
+        grey_data.close();
+        cout << "Converting grey levels into exploitable array..."<<endl;
+        for(int i=0;i<height;i++)
+            for(int j=0;j<width;j++)
+                for(int k=1;k<9;k++)
+                    if(i+_array[i][j][k][1]>=0 && i+_array[i][j][k][1]<=height-1 && j+_array[i][j][k][0]>=0 && j+_array[i][j][k][0]<=width-1)
                     {
-                        x--;
-                        discard[8]=_array[y][x][0][0]-_array[end_height][end_width][0][0];
-                        x++;
-                    }
-                    discard[1]=_array[y][x][0][0]-_array[end_height][end_width][0][0];
-                    if(width-1>end_width)
-                    {
-                        x++;
-                        discard[2]=_array[y][x][0][0]-_array[end_height][end_width][0][0];
-                        x--;
-                    }
-                    y++;
-                }
-                if(end_width>0)
-                {
-                    x--;
-                    discard[7]=_array[y][x][0][0]-_array[end_height][end_width][0][0];
-                    x++;
-                }
-                if(width-1>end_width)
-                {
-                    x++;
-                    discard[3]=_array[y][x][0][0]-_array[end_height][end_width][0][0];
-                    x--;
-                }
-                if(height-1>end_height)
-                {
-                    y++;
-                    if(end_width>0)
-                    {
-                        x--;
-                        discard[6]=_array[y][x][0][0]-_array[end_height][end_width][0][0];
-                        x++;
-                    }
-                    _array[y][x][0][0]=_array[end_height][end_width][0][0]=discard[5];
-                    if(width-1>end_width)
-                    {
-                        x++;
-                        discard[4]=_array[y][x][0][0]-_array[end_height][end_width][0][0];
-                        x--;
-                    }
-                }
-                for(int i=1; i<9; i++)
-                {
-                    if(discard[i]>50)
-                        _array[end_height][end_width][i][3]=1;
+                        if(abs(_array[i][j][0][0]-_array[i+_array[i][j][k][1]][j+_array[i][j][k][0]][0][0])>0)
+                            _array[i][j][k][3]=1;
+                        else
+                            _array[i][j][k][3]=0;}
                     else
-                        _array[end_height][end_width][i][3]=0;
-                }
-                end_width++;
-            }
-            end_height++;
-        }
+                        _array[i][j][k][3]=0;
     }
     else
         cout<<"!! ERROR !! Data missing";

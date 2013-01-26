@@ -16,7 +16,7 @@ int main()
     openList.push_back(begNode);
     while(!openList.empty() && !(currentNode.x==endNode.x && currentNode.y==endNode.y))
     {
-        if((double)closedList.size()/250 == floor((double)closedList.size()/500))
+        if((double)closedList.size()/250 == floor((double)closedList.size()/250))
             cout << "Processing nodes...       " << closedList.size() <<endl;
         currentNode = SetCurrent(openList, closedList);
         for(int i=1; i<9; i++)
@@ -128,13 +128,15 @@ void New(int i, Node currentNode, vector<Node>& openList, vector<Node> closedLis
 
 bool Valid(int i, Node currentNode, vector<Node>& closedList, Matrix matrix)
 {
-    cout << "Current : " << currentNode.x << ";" << currentNode.y << endl;
     int eventualX, eventualY, eventualCost;
     eventualX=currentNode.x+matrix.GetValue(currentNode.x, currentNode.y, i, DEC_X);
     eventualY=currentNode.y+matrix.GetValue(currentNode.x, currentNode.y, i, DEC_Y);
     if(matrix.GetValue(currentNode.x, currentNode.y, i, 3)==1)
-        return false;
-    if(matrix)
+    {
+        cout << "Top" << endl;
+        return false;}
+    /*if(eventualX>=matrix.GetX() || eventualX<0 || eventualY>=matrix.GetY() || eventualY<0)
+        return false;*/
     eventualCost=matrix.GetValue(currentNode.x, currentNode.y, i, COST);
     if(!closedList.empty())
         for(int i=0; i<(int)closedList.size(); i++)
