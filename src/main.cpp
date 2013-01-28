@@ -53,7 +53,15 @@ int main()
                 if(exist)
                     data << "O";
                 else
-                    data << " ";
+                {
+                    for(int k=1; k<9; k++)
+                        if(matrix.GetValue(j, i, k, 3)==1)
+                            exist=true;
+                    if(!exist)
+                        data << " ";
+                    else
+                        data << "*";
+                }
             }
             data << endl;
         }
@@ -101,10 +109,11 @@ void New(int i, Node currentNode, vector<Node>& openList, vector<Node> closedLis
     int H=0;
     int isOpen=-1;
     int eventualX, eventualY, eventualCost;
-    eventualX=currentNode.x+matrix.GetValue(currentNode.x, currentNode.y, i, DEC_X);
-    eventualY=currentNode.y+matrix.GetValue(currentNode.x, currentNode.y, i, DEC_Y);
-    eventualCost=matrix.GetValue(currentNode.x, currentNode.y, i, COST);
+    eventualX=currentNode.x+matrix.GetValue(currentNode.y, currentNode.x, i, DEC_X);
+    eventualY=currentNode.y+matrix.GetValue(currentNode.y, currentNode.x, i, DEC_Y);
+    eventualCost=matrix.GetValue(currentNode.y, currentNode.x, i, COST);
     if(!openList.empty())
+
         for(i=0; i<(int)openList.size(); i++)
             if(openList[i].x == eventualX && openList[i].y == eventualY)
                 isOpen=i;
@@ -129,15 +138,13 @@ void New(int i, Node currentNode, vector<Node>& openList, vector<Node> closedLis
 bool Valid(int i, Node currentNode, vector<Node>& closedList, Matrix matrix)
 {
     int eventualX, eventualY, eventualCost;
-    eventualX=currentNode.x+matrix.GetValue(currentNode.x, currentNode.y, i, DEC_X);
-    eventualY=currentNode.y+matrix.GetValue(currentNode.x, currentNode.y, i, DEC_Y);
-    if(matrix.GetValue(currentNode.x, currentNode.y, i, 3)==1)
+    eventualX=currentNode.x+matrix.GetValue(currentNode.y, currentNode.x, i, DEC_X);
+    eventualY=currentNode.y+matrix.GetValue(currentNode.y, currentNode.x, i, DEC_Y);
+    if(matrix.GetValue(currentNode.y, currentNode.x, i, 3)==1)
     {
-        cout << "Top" << endl;
-        return false;}
-    /*if(eventualX>=matrix.GetX() || eventualX<0 || eventualY>=matrix.GetY() || eventualY<0)
-        return false;*/
-    eventualCost=matrix.GetValue(currentNode.x, currentNode.y, i, COST);
+        return false;
+    }
+    eventualCost=matrix.GetValue(currentNode.y, currentNode.x, i, COST);
     if(!closedList.empty())
         for(int i=0; i<(int)closedList.size(); i++)
             if(closedList[i].x==eventualX && closedList[i].y==eventualY)

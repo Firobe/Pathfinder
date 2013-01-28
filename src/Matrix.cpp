@@ -13,7 +13,7 @@ Matrix::~Matrix()
 
 bool Matrix::GetValue(int x, int y, int d, int i)
 {
-    return _array[x][y][d][i];
+    return _array[y][x][d][i];
 }
 
 int Matrix::GetX()
@@ -222,7 +222,7 @@ void Matrix::FinalData()
         end_height=height-1;
         while(end_height>-1)
         {
-            for(int i=0;i<width;i++)
+            for(int i=0; i<width; i++)
             {
                 grey_data>>carac;
                 _array[end_height][i][0][0]=carac;
@@ -246,17 +246,18 @@ void Matrix::FinalData()
         }
         grey_data.close();
         cout << "Converting grey levels into exploitable array..."<<endl;
-        for(int i=0;i<height;i++)
-            for(int j=0;j<width;j++)
-                for(int k=1;k<9;k++)
+        for(int i=0; i<height; i++)
+            for(int j=0; j<width; j++)
+                for(int k=1; k<9; k++)
                     if(i+_array[i][j][k][1]>=0 && i+_array[i][j][k][1]<=height-1 && j+_array[i][j][k][0]>=0 && j+_array[i][j][k][0]<=width-1)
                     {
                         if(abs(_array[i][j][0][0]-_array[i+_array[i][j][k][1]][j+_array[i][j][k][0]][0][0])>0)
                             _array[i][j][k][3]=1;
                         else
-                            _array[i][j][k][3]=0;}
+                            _array[i][j][k][3]=0;
+                    }
                     else
-                        _array[i][j][k][3]=0;
+                        _array[i][j][k][3]=1;
     }
     else
         cout<<"!! ERROR !! Data missing";
