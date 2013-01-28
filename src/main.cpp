@@ -1,9 +1,11 @@
 #include "header.h"
 
 using namespace std;
+int count;
 
 int main()
 {
+    count =0;
     cout << "Pathfinder V2 : THE DEMINER"<< endl << "---------------------------" <<endl;
     Matrix matrix;
     matrix.LoadData();
@@ -72,6 +74,7 @@ int main()
     {
         cout << "ERROR" << endl << "The problem has no solution." << endl << "Operation aborted" << endl;
     }
+    cout << count;
     return 0;
 }
 
@@ -138,13 +141,15 @@ void New(int i, Node currentNode, vector<Node>& openList, vector<Node> closedLis
 bool Valid(int i, Node currentNode, vector<Node>& closedList, Matrix matrix)
 {
     int eventualX, eventualY, eventualCost;
-    eventualX=currentNode.x+matrix.GetValue(currentNode.y, currentNode.x, i, DEC_X);
-    eventualY=currentNode.y+matrix.GetValue(currentNode.y, currentNode.x, i, DEC_Y);
-    if(matrix.GetValue(currentNode.y, currentNode.x, i, 3)==1)
+    eventualX=currentNode.x+matrix.GetValue(currentNode.x, currentNode.y, i, DEC_X);
+    eventualY=currentNode.y+matrix.GetValue(currentNode.x, currentNode.y, i, DEC_Y);
+    if(matrix.GetValue(currentNode.x, currentNode.y, i, 3)==1)
     {
+        cout << "Mur : (" << currentNode.x << ";" << currentNode.y << ") Direction : " << i << endl;
+        count++;
         return false;
     }
-    eventualCost=matrix.GetValue(currentNode.y, currentNode.x, i, COST);
+    eventualCost=matrix.GetValue(currentNode.x, currentNode.y, i, COST);
     if(!closedList.empty())
         for(int i=0; i<(int)closedList.size(); i++)
             if(closedList[i].x==eventualX && closedList[i].y==eventualY)

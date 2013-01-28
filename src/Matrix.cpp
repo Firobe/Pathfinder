@@ -13,7 +13,7 @@ Matrix::~Matrix()
 
 bool Matrix::GetValue(int x, int y, int d, int i)
 {
-    return _array[y][x][d][i];
+    return _array[x][y][d][i];
 }
 
 int Matrix::GetX()
@@ -171,6 +171,7 @@ void Matrix::FinalData()
                 for(int k=0; k<9; k++)
                 {
                     _array[i][j][k]=new int[4];
+                    _array[i][j][k][3]=0;
                     switch(k)
                     {
                     case 1:
@@ -225,7 +226,7 @@ void Matrix::FinalData()
             for(int i=0; i<width; i++)
             {
                 grey_data>>carac;
-                _array[end_height][i][0][0]=carac;
+                _array[i][end_height][0][0]=carac;
                 carac=grey_data.get();
                 if(carac=='\n')
                 {
@@ -246,8 +247,8 @@ void Matrix::FinalData()
         }
         grey_data.close();
         cout << "Converting grey levels into exploitable array..."<<endl;
-        for(int i=0; i<height; i++)
-            for(int j=0; j<width; j++)
+        for(int i=0; i<width; i++)
+            for(int j=0; j<height; j++)
                 for(int k=1; k<9; k++)
                     if(i+_array[i][j][k][1]>=0 && i+_array[i][j][k][1]<=height-1 && j+_array[i][j][k][0]>=0 && j+_array[i][j][k][0]<=width-1)
                     {
