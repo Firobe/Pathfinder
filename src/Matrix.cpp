@@ -1,5 +1,8 @@
-#include "Matrix.h"
+﻿#include "Matrix.h"
 #include <fstream>
+#include <windows.h>
+
+using namespace std;
 
 Matrix::Matrix()
 {
@@ -44,7 +47,9 @@ void Matrix::DataFile()
         data.close();
     }
     else
+    {
         cout<<"!! ERROR !! Plan unreadable or missing"<<endl;
+    }
 }
 void Matrix::LoadData()
 {
@@ -106,6 +111,7 @@ void Matrix::LoadData()
         _x = width;
         _y = height;
         ///DETECTION DES NIVEAUX DE GRIS
+        end_column=0;
         while(end_column<height) //Tant que Toutes les lignes ne sont pas lues
         {
             end_line=0;
@@ -120,7 +126,7 @@ void Matrix::LoadData()
                 pixel=pixel/3;
                 grey_data<<pixel;
                 end_line++;
-                if(end_line!=height)
+                if(end_line!=width)
                     grey_data<<"*";
 
             }
@@ -145,7 +151,9 @@ void Matrix::LoadData()
         grey_data.close();
     }
     else
+    {
         cout<<"!! ERROR !! Data missing";
+    }
     ///DETECTION DES PENTES
     FinalData();
     ///ECRITURE DES INFOS POUR EXPLOITATION
@@ -161,11 +169,11 @@ void Matrix::FinalData()
         int width(0), height(0), end_height(0), end_width(0), x(0), y(0),discard[9];
         grey_data>>width;
         grey_data>>height;
-        _array=new int***[height];
-        for(int i=0; i<height; i++)
+        _array=new int***[width];
+        for(int i=0; i<width+1; i++)
         {
-            _array[i]=new int**[width];
-            for(int j=0; j<width; j++)
+            _array[i]=new int**[height];
+            for(int j=0; j<height; j++)
             {
                 _array[i][j]=new int*[9];
                 for(int k=0; k<9; k++)
@@ -250,16 +258,23 @@ void Matrix::FinalData()
         for(int i=0; i<width; i++)
             for(int j=0; j<height; j++)
                 for(int k=1; k<9; k++)
-                    if(i+_array[i][j][k][1]>=0 && i+_array[i][j][k][1]<=height-1 && j+_array[i][j][k][0]>=0 && j+_array[i][j][k][0]<=width-1)
+                {
+                    //Si la case du tableau correspondant au pixel testé existe
+                    if(i+_array[i][j][k][0]>=0 && i+_array[i][j][k][0]<=width-1 && j+_array[i][j][k][1]>=0 && j+_array[i][j][k][1]<=height-1)
                     {
-                        if(abs(_array[i][j][0][0]-_array[i+_array[i][j][k][1]][j+_array[i][j][k][0]][0][0])>0)
+                        if(abs((double)(_array[i][j][0][0]-_array[i+_array[i][j][k][0]][j+_array[i][j][k][1]][0][0]))>0)
                             _array[i][j][k][3]=1;
                         else
                             _array[i][j][k][3]=0;
                     }
                     else
                         _array[i][j][k][3]=1;
+                }
+
     }
     else
+    {
         cout<<"!! ERROR !! Data missing";
+    }
+system("pause");
 }
