@@ -1,0 +1,55 @@
+# depslib dependency file v1.0
+1359625854 source:i:\projets\output\main.cpp
+	"main.h"
+
+1359371486 i:\projets\output\main.h
+	<GL/glfw.h>
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	<new>
+	<AntTweakBar.h>
+	"config.h"
+	"coords.h"
+	"functions.h"
+
+1228530734 i:\programmes\codeblocks\mingw\include\gl\gl.h
+
+1228530734 i:\programmes\codeblocks\mingw\include\gl\glu.h
+	<stddef.h>
+	<GL/gl.h>
+
+1170358626 i:\projets\output\config.h
+
+1328544166 i:\projets\output\coords.h
+
+1328544138 source:i:\projets\output\coords.cpp
+	<cmath>
+	"coords.h"
+
+1342361890 i:\programmes\codeblocks\mingw\include\gl\glfw.h
+	<OpenGL/gl3.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL3/gl3.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1170358626 i:\programmes\codeblocks\mingw\include\config.h
+
+1344505226 i:\programmes\codeblocks\mingw\include\anttweakbar.h
+	<stddef.h>
+	<string>
+	<string>
+
+1359373310 source:i:\projets\output\functions.cpp
+	"functions.h"
+
+1359116096 i:\projets\output\functions.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+
