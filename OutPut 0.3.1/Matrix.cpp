@@ -14,16 +14,16 @@ Matrix::~Matrix()
     //dtor
 }
 
-int Matrix::GetValue(int x, int y, int d)
+const int Matrix::GetValue(const int x, const int y, const int d)
 {
     return _array[x][y][d];
 }
 
-int Matrix::GetX()
+const int Matrix::GetX()
 {
     return _x;
 }
-int Matrix::GetY()
+const int Matrix::GetY()
 {
     return _y;
 }
@@ -115,7 +115,6 @@ void Matrix::FinalData()
                 line_found++;
         }
         while(line_found<line_wanted);
-
         for(unsigned int j=0 ; j < height ; j++)
         {
             for(unsigned int i=0; i<width; i++)
@@ -155,7 +154,7 @@ void Matrix::FinalData()
                     //Si la case du tableau correspondant au pixel testé existe
                     if(i+decalXY[k][0]>=0 && i+decalXY[k][0]<=width-1 && j+decalXY[k][1]>=0 && j+decalXY[k][1]<=height-1)
                     {
-                        if(abs((double)(_array[i][j][0]-_array[i+decalXY[k][0]][j+decalXY[k][1]][0]))>0)
+                        if(abs((double)(_array[i][j][0]-_array[i+decalXY[k][0]][j+decalXY[k][1]][0]))>50)
                             _array[i][j][k]=1;
                         else
                             _array[i][j][k]=0;

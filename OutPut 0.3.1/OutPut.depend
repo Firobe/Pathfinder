@@ -1,0 +1,47 @@
+# depslib dependency file v1.0
+1360827323 source:/home/virgile/Prog/PathfinderV2/OutPut 0.3.1/coords.cpp
+	<cmath>
+	"coords.h"
+
+1360827323 /home/virgile/Prog/PathfinderV2/OutPut 0.3.1/coords.h
+
+1360838993 source:/home/virgile/Prog/PathfinderV2/OutPut 0.3.1/Matrix.cpp
+	"Matrix.h"
+	<fstream>
+
+1360837863 /home/virgile/Prog/PathfinderV2/OutPut 0.3.1/Matrix.h
+	<iostream>
+	<cmath>
+
+1360838166 source:/home/virgile/Prog/PathfinderV2/OutPut 0.3.1/main.cpp
+	"main.h"
+
+1360838204 /home/virgile/Prog/PathfinderV2/OutPut 0.3.1/main.h
+	<GL/glfw.h>
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	<new>
+	<AntTweakBar.h>
+	"config.h"
+	"coords.h"
+	"functions.h"
+	<fstream>
+	<cmath>
+	"Matrix.h"
+
+1170358626 /home/virgile/Prog/PathfinderV2/OutPut 0.3.1/config.h
+
+1360837929 /home/virgile/Prog/PathfinderV2/OutPut 0.3.1/functions.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	<rude/config.h>
+	"Matrix.h"
+
+1360837929 source:/home/virgile/Prog/PathfinderV2/OutPut 0.3.1/functions.cpp
+	"functions.h"
+

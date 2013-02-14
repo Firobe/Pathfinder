@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="Matrix.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="3775" topLine="144" />
+	</File>
+	<File name="Matrix.h" open="1" top="0" tabpos="3">
+		<Cursor position="485" topLine="0" />
+	</File>
+	<File name="config.ini" open="1" top="1" tabpos="9">
+		<Cursor position="87" topLine="0" />
+	</File>
+	<File name="coords.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="179" topLine="32" />
+	</File>
+	<File name="coords.h" open="1" top="0" tabpos="4">
+		<Cursor position="385" topLine="1" />
+	</File>
+	<File name="functions.cpp" open="1" top="0" tabpos="7">
+		<Cursor position="45" topLine="132" />
+	</File>
+	<File name="functions.h" open="1" top="0" tabpos="5">
+		<Cursor position="217" topLine="0" />
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="207" topLine="0" />
+	</File>
+	<File name="main.h" open="1" top="0" tabpos="6">
+		<Cursor position="264" topLine="1" />
+	</File>
+</CodeBlocks_layout_file>
