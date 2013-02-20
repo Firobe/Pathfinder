@@ -22,6 +22,7 @@
 
 #include <fstream>
 #include <cmath>
+#include <ctime>
 #include "Matrix.h"
 
 struct Node

@@ -11,23 +11,27 @@ int main (int argc, char** argv)
     vector<Node> resultList;
     Node begNode=Affect(1, 1, 0, 0, 0, 0, 0, 0), endNode=Affect(matrix.GetX()-1, matrix.GetY()-1, 0, 0, 0, 0, 0, 0), currentNode;
     bool exist;
-    int count=0;
+    int exCount=0, count=0, actTime=0, exTime=0;
     outPut moteur(matrix);
-
     moteur.display();
-
     openList.push_back(begNode);
+    exTime = time(0);
     while(!openList.empty() && !(currentNode.x==endNode.x && currentNode.y==endNode.y))
     {
+        actTime = time(0);
         count++;
-        if((double)count/2000 == floor((double)count/2000))
-            cout << "Processing nodes...       " << count <<endl;
+        if(actTime-exTime>=1)
+        {
+            cout << "Processing nodes : " << count << " ( " << count-exCount << " nd/s )" <<endl;
+            exCount= count;
+            exTime = actTime;
+        }
         currentNode = SetCurrent(openList, matrix);
         for(int i=1; i<9; i++)
             if(Valid(i, currentNode, matrix))
                 New(i, currentNode, openList, endNode, matrix);
     }
-    cout << "Algorithm finished";
+    cout << "Algorithm finished" << endl;
     if(!openList.empty())
     {
         int i;
