@@ -37,9 +37,9 @@ struct Node
 };
 typedef struct Node Node;
 
-const bool Valid(const int, const Node, vector<Node>&, Matrix);
-void New(int, const Node, vector<Node>&, vector<Node>, const Node, const Matrix);
+const bool Valid(const int, const Node, Matrix);
+void New(int, const Node, vector<Node>&, const Node, const Matrix);
 const Node Affect(const int, const int, const int, const int, const int, const double, const double, const double);
-const Node SetCurrent(vector<Node>&, vector<Node>&);
+const Node SetCurrent(vector<Node>&, Matrix&);
 
 #endif // MAIN_H_INCLUDED

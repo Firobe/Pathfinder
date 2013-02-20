@@ -2,16 +2,16 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
 	<File name="Matrix.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="3775" topLine="144" />
+		<Cursor position="210" topLine="18" />
 	</File>
 	<File name="Matrix.h" open="1" top="0" tabpos="3">
-		<Cursor position="485" topLine="0" />
+		<Cursor position="422" topLine="5" />
 	</File>
-	<File name="config.ini" open="1" top="1" tabpos="9">
-		<Cursor position="87" topLine="0" />
+	<File name="config.ini" open="1" top="0" tabpos="9">
+		<Cursor position="92" topLine="0" />
 	</File>
 	<File name="coords.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="179" topLine="32" />
+		<Cursor position="1092" topLine="71" />
 	</File>
 	<File name="coords.h" open="1" top="0" tabpos="4">
 		<Cursor position="385" topLine="1" />
@@ -22,10 +22,10 @@
 	<File name="functions.h" open="1" top="0" tabpos="5">
 		<Cursor position="217" topLine="0" />
 	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="8">
-		<Cursor position="207" topLine="0" />
+	<File name="main.cpp" open="1" top="1" tabpos="8">
+		<Cursor position="4584" topLine="116" />
 	</File>
 	<File name="main.h" open="1" top="0" tabpos="6">
-		<Cursor position="264" topLine="1" />
+		<Cursor position="673" topLine="15" />
 	</File>
 </CodeBlocks_layout_file>

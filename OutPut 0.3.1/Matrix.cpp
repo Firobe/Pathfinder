@@ -31,7 +31,8 @@ const int Matrix::GetY()
 void Matrix::DataFile()
 {
     int carac(0);
-    ifstream file("Plans/plan.bmp"); // Ouvertur fichier
+    ifstream file; // Ouverture fichier
+    file.open("Plans/plan.bmp", ios::binary);
     ofstream data("Ressources/data.dt"); //Ouvertur du fichier de données ordonnées
 
     if(file&&data) // Si fichier lecture
@@ -101,7 +102,7 @@ void Matrix::FinalData()
         {
             _array[i]=new int*[height];
             for(unsigned int j=0; j<height; j++)
-                _array[i][j]=new int[9];
+                _array[i][j]=new int[11];
         }
         cout<<"Extracting grey levels..."<<endl;
         data.seekg(0, ios::beg);
@@ -154,7 +155,7 @@ void Matrix::FinalData()
                     //Si la case du tableau correspondant au pixel testé existe
                     if(i+decalXY[k][0]>=0 && i+decalXY[k][0]<=width-1 && j+decalXY[k][1]>=0 && j+decalXY[k][1]<=height-1)
                     {
-                        if(abs((double)(_array[i][j][0]-_array[i+decalXY[k][0]][j+decalXY[k][1]][0]))>50)
+                        if(abs((double)(_array[i][j][0]-_array[i+decalXY[k][0]][j+decalXY[k][1]][0]))>MAX_DIFF)
                             _array[i][j][k]=1;
                         else
                             _array[i][j][k]=0;
@@ -168,4 +169,11 @@ void Matrix::FinalData()
     {
         cout<<"!! ERROR !! Data missing";
     }
+}
+
+void Matrix::CloseCell(const int x, const int y, const int Px, const int Py)
+{
+    _array[x][y][0]=-1;
+    _array[x][y][9]=Px;
+    _array[x][y][10]=Py;
 }

@@ -8,11 +8,10 @@ int main (int argc, char** argv)
     Matrix matrix;
     matrix.DataFile();
     vector<Node> openList;
-    vector<Node> closedList;
     vector<Node> resultList;
-    Node begNode=Affect(2, 2, 0, 0, 0, 0, 0, 0), endNode=Affect(matrix.GetX()-1, matrix.GetY()-1, 0, 0, 0, 0, 0, 0), currentNode;
+    Node begNode=Affect(1, 1, 0, 0, 0, 0, 0, 0), endNode=Affect(matrix.GetX()-1, matrix.GetY()-1, 0, 0, 0, 0, 0, 0), currentNode;
     bool exist;
-
+    int count=0;
     outPut moteur(matrix);
 
     moteur.display();
@@ -20,28 +19,25 @@ int main (int argc, char** argv)
     openList.push_back(begNode);
     while(!openList.empty() && !(currentNode.x==endNode.x && currentNode.y==endNode.y))
     {
-        if((double)closedList.size()/250 == floor((double)closedList.size()/250))
-            cout << "Processing nodes...       " << closedList.size() <<endl;
-        currentNode = SetCurrent(openList, closedList);
+        count++;
+        if((double)count/2000 == floor((double)count/2000))
+            cout << "Processing nodes...       " << count <<endl;
+        currentNode = SetCurrent(openList, matrix);
         for(int i=1; i<9; i++)
-            if(Valid(i, currentNode, closedList, matrix))
-                New(i, currentNode, openList, closedList, endNode, matrix);
+            if(Valid(i, currentNode, matrix))
+                New(i, currentNode, openList, endNode, matrix);
     }
-
+    cout << "Algorithm finished";
     if(!openList.empty())
     {
-        cout << "Processing nodes...       " << closedList.size() << endl;
         int i;
         while(!(currentNode.x == begNode.x && currentNode.y == begNode.y))
         {
-            i=0;
             resultList.push_back(currentNode);
             currentNode.x = currentNode.Px;
             currentNode.y = currentNode.Py;
-            while(!(closedList[i].x == currentNode.Px && closedList[i].y == currentNode.Py))
-                i++;
-            currentNode.Px = closedList[i].Px;
-            currentNode.Py = closedList[i].Py;
+            currentNode.Px = matrix.GetValue(currentNode.x, currentNode.y, 9);
+            currentNode.Py = matrix.GetValue(currentNode.x, currentNode.y, 10);
         }
         resultList.push_back(currentNode);
         cout << endl << "Writing result..." << endl;
@@ -79,7 +75,7 @@ int main (int argc, char** argv)
     return 0;
 }
 
-const Node SetCurrent(vector<Node>& openList, vector<Node>& closedList)
+const Node SetCurrent(vector<Node>& openList, Matrix& matrix)
 {
     double minNode = 0;
     if(!openList.empty())
@@ -87,7 +83,7 @@ const Node SetCurrent(vector<Node>& openList, vector<Node>& closedList)
             if(openList[i].F<openList[minNode].F)
                 minNode = i;
     Node resultNode = openList[minNode];
-    closedList.push_back(openList[minNode]);
+    matrix.CloseCell(openList[minNode].x, openList[minNode].y, openList[minNode].Px, openList[minNode].Py);
     if(openList.size()>1)
         openList[minNode] = openList[openList.size()-1];
     openList.pop_back();
@@ -108,7 +104,7 @@ const Node Affect(const int x, const int y, const int Px, const int Py, const in
     return result;
 }
 
-void New(int i, const Node currentNode, vector<Node>& openList, vector<Node> closedList, const Node endNode, const Matrix matrix)
+void New(int i, const Node currentNode, vector<Node>& openList, const Node endNode, const Matrix matrix)
 {
     int H=0;
     int isOpen=-1;
@@ -139,17 +135,9 @@ void New(int i, const Node currentNode, vector<Node>& openList, vector<Node> clo
     }
 }
 
-const bool Valid(const int i, const Node currentNode, vector<Node>& closedList, Matrix matrix)
+const bool Valid(const int i, const Node currentNode, Matrix matrix)
 {
-    int eventualX, eventualY, eventualCost;
-    eventualX=currentNode.x+decalXY[i][0];
-    eventualY=currentNode.y+decalXY[i][1];
-    if(matrix.GetValue(currentNode.x, currentNode.y, i)==1)
+    if(matrix.GetValue(currentNode.x, currentNode.y, i)==1 || matrix.GetValue(currentNode.x+decalXY[i][0], currentNode.y+decalXY[i][1], 0)==-1)
         return false;
-    eventualCost=decalXY[i][2];
-    if(!closedList.empty())
-        for(int i=0; i<(int)closedList.size(); i++)
-            if(closedList[i].x==eventualX && closedList[i].y==eventualY)
-                return false;
     return true;
 }
