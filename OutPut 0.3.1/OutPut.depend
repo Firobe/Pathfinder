@@ -1,0 +1,94 @@
+# depslib dependency file v1.0
+1360827323 source:/home/virgile/Prog/PathfinderV2/OutPut 0.3.1/coords.cpp
+	<cmath>
+	"coords.h"
+
+1360827323 /home/virgile/Prog/PathfinderV2/OutPut 0.3.1/coords.h
+
+1361322967 source:/home/virgile/Prog/PathfinderV2/OutPut 0.3.1/Matrix.cpp
+	"Matrix.h"
+	<fstream>
+
+1361322967 /home/virgile/Prog/PathfinderV2/OutPut 0.3.1/Matrix.h
+	<iostream>
+	<cmath>
+
+1361324714 source:/home/virgile/Prog/PathfinderV2/OutPut 0.3.1/main.cpp
+	"main.h"
+
+1361324893 /home/virgile/Prog/PathfinderV2/OutPut 0.3.1/main.h
+	<GL/glfw.h>
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	<new>
+	<AntTweakBar.h>
+	"config.h"
+	"coords.h"
+	"functions.h"
+	<fstream>
+	<cmath>
+	"Matrix.h"
+
+1170358626 /home/virgile/Prog/PathfinderV2/OutPut 0.3.1/config.h
+
+1360837929 /home/virgile/Prog/PathfinderV2/OutPut 0.3.1/functions.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	<rude/config.h>
+	"Matrix.h"
+
+1361320740 source:/home/virgile/Prog/PathfinderV2/OutPut 0.3.1/functions.cpp
+	"functions.h"
+
+1361368995 source:/home/virgile/Prog/OutPut 0.3.1/Matrix.cpp
+	"Matrix.h"
+	<fstream>
+
+1361368995 /home/virgile/Prog/OutPut 0.3.1/Matrix.h
+	<iostream>
+	<cmath>
+
+1361368995 source:/home/virgile/Prog/OutPut 0.3.1/coords.cpp
+	<cmath>
+	"coords.h"
+
+1361368995 /home/virgile/Prog/OutPut 0.3.1/coords.h
+
+1361368995 source:/home/virgile/Prog/OutPut 0.3.1/functions.cpp
+	"functions.h"
+
+1361368995 /home/virgile/Prog/OutPut 0.3.1/functions.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	<rude/config.h>
+	"Matrix.h"
+
+1361369204 /home/virgile/Prog/OutPut 0.3.1/main.h
+	<GL/glfw.h>
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	<new>
+	<AntTweakBar.h>
+	"config.h"
+	"coords.h"
+	"functions.h"
+	<fstream>
+	<cmath>
+	<ctime>
+	"Matrix.h"
+
+1361368995 /home/virgile/Prog/OutPut 0.3.1/config.h
+
+1361369329 source:/home/virgile/Prog/OutPut 0.3.1/main.cpp
+	"main.h"
+
