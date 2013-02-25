@@ -77,6 +77,7 @@ void outPut::init_outPut()
     init_Tw();
 
     _reg.MULTIPLIER = 5;
+    _reg.UNIFORM_COLOR = {1,1,1};
 }
 
 void outPut::init_Tw()
@@ -114,42 +115,47 @@ void outPut::gen_normalMap()
 
     for(int x = 0; x < _data.GetX(); x++)
     {
-        _normalMap[x][0] = vert_normal;
-        _normalMap[x][_data.GetY()-1] = vert_normal;
-    }
-    for(int y = 1; y < _data.GetY(); y++)
-    {
-        _normalMap[0][y] = vert_normal;
-        _normalMap[_data.GetY()-1][y] = vert_normal;
-    }
-
-    for(int x = 1; x < _data.GetX()-1; x++)
-    {
-        for(int y = 1; y < _data.GetY()-1; y++)
+        for(int y = 0; y < _data.GetY(); y++)
         {
             somme = coords3d::retournercoords3d(0,0,0);
-            /*       0,1
-             -1,1  +--+--+
-                   |\2|\*|
-                   |1\|3\|
-             -1,0  +--+--+ 1,0
-                   |\4|\6|
-                   |*\|5\|
-             -1,-1 +--+--+ 1,-1
-                     0,-1
-            */
-            somme+= coords3d::cross(_verticesMap[x][y]-_verticesMap[x-1][y], _verticesMap[x-1][y+1]-_verticesMap[x-1][y]); //1
-            somme+= coords3d::cross(_verticesMap[x-1][y+1]-_verticesMap[x][y+1], _verticesMap[x][y]-_verticesMap[x][y+1]); //2
-            somme+= coords3d::cross(_verticesMap[x+1][y]-_verticesMap[x][y], _verticesMap[x][y+1]-_verticesMap[x][y]); //3
-            somme+= coords3d::cross(_verticesMap[x-1][y]-_verticesMap[x][y], _verticesMap[x][y-1]-_verticesMap[x][y]); //4
-            somme+= coords3d::cross(_verticesMap[x+1][y-1]-_verticesMap[x][y-1], _verticesMap[x][y]-_verticesMap[x][y-1]); //5
-            somme+= coords3d::cross(_verticesMap[x][y]-_verticesMap[x+1][y], _verticesMap[x+1][y-1]-_verticesMap[x+1][y]); //6
 
+            /*       1,0                           0,1
+               0,0 +--+--+                 -1,1  +--+--+
+                   |\2|\*|                       |\2|\*|
+                   |1\|3\|                       |1\|3\|
+              0,1  +--+--+ 2,1             -1,0  +--+--+ 1,0
+                   |\4|\6|                       |\4|\6|
+                   |*\|5\|                       |*\|5\|
+                   +--+--+ 2,2                   +--+--+ 1,-1
+                     1,2                           0,-1
+            */
+
+            somme+= coords3d::cross(getVertex(x,y)-getVertex(x-1,y), getVertex(x-1,y+1)-getVertex(x-1,y)); //1
+            somme+= coords3d::cross(getVertex(x-1,y+1)-getVertex(x,y+1), getVertex(x,y)-getVertex(x,y+1)); //2
+            somme+= coords3d::cross(getVertex(x+1,y)-getVertex(x,y), getVertex(x,y+1)-getVertex(x,y)); //3
+            somme+= coords3d::cross(getVertex(x-1,y)-getVertex(x,y), getVertex(x,y-1)-getVertex(x,y)); //4
+            somme+= coords3d::cross(getVertex(x+1,y-1)-getVertex(x,y-1), getVertex(x,y)-getVertex(x,y-1)); //5
+            somme+= coords3d::cross(getVertex(x,y)-getVertex(x+1,y), getVertex(x+1,y-1)-getVertex(x+1,y)); //6
 
             somme.normalize();
             _normalMap[x][y] = somme;
         }
     }
+}
+
+coords3d outPut::getVertex(int x, int y)
+{
+    if(x < 0)
+    x = 0;
+    if(x > _data.GetX()-1)
+    x = _data.GetX()-1;
+
+    if(y < 0)
+    y = 0;
+    if(y > _data.GetY()-1)
+    y = _data.GetY()-1;
+
+    return _verticesMap[x][y];
 }
 
 void outPut::genList()
@@ -224,7 +230,7 @@ void outPut::drawTerrain()
         glColor3ub(100, 100,100);
         glMateriali(GL_FRONT_AND_BACK, GL_SHININESS, 30.0);
         glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-        glColor3ub(255,255,255);
+        glColor3f(_reg.UNIFORM_COLOR[0],_reg.UNIFORM_COLOR[1],_reg.UNIFORM_COLOR[2]);
 
         for(int x = 0; x < _data.GetX()-1; x++)
         {

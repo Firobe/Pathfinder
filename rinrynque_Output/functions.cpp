@@ -33,8 +33,9 @@ void outPut::display()
     TwAddVarRW(reglages, "Couleurs", colorsType, &(_reg.COLORS), " enum='0 {Réelles}, 1 {Colorisé}, 2 {Uniforme}'");
     TwAddVarRW(reglages, "Rendu filaire", TW_TYPE_BOOLCPP, &(_reg.WIREFRAME), "group = 'Rendu'");
     TwAddVarRW(reglages, "Normales", TW_TYPE_BOOLCPP, &(_reg.DRAW_NORMALS), "group = 'Rendu'");
+    TwAddVarRW(reglages, "Couleur unie", TW_TYPE_COLOR3F, &(_reg.UNIFORM_COLOR), "");
 
-float lightPos[4] = {30,30,30,1};
+    float lightPos[4] = {-30,-30,30,0};
     TwAddVarRW(reglages, "x", TW_TYPE_FLOAT, &(lightPos[0]), "group = Lumiere" );
     TwAddVarRW(reglages, "y", TW_TYPE_FLOAT, &(lightPos[1]), "group = Lumiere" );
     TwAddVarRW(reglages, "z", TW_TYPE_FLOAT, &(lightPos[2]), "group = Lumiere" );

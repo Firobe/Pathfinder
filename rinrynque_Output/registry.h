@@ -11,6 +11,7 @@ struct registry
     colors_types COLORS;
     bool WIREFRAME;
     bool DRAW_NORMALS;
+    float UNIFORM_COLOR[3];
 
 };
 

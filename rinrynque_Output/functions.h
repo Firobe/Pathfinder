@@ -35,6 +35,7 @@ class outPut
     void init_Tw();
 
     void gen_verticesMap();
+    coords3d getVertex(int x, int y);
     void gen_normalMap();
 };
 
