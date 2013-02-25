@@ -1,5 +1,6 @@
 #ifndef coords3d3D_H_INCLUDED
 #define coords3d3D_H_INCLUDED
+#include <cmath>
 
 struct coords3d
 {
@@ -9,6 +10,8 @@ struct coords3d
 
     //Fonction static pour pouvoir l'appeler à tt moment
     static coords3d retournercoords3d(double t_x, double t_y, double t_z);
+    static coords3d cross(coords3d a, coords3d b);
+    void normalize();
 
     coords3d();
     coords3d(double t_x, double t_y, double t_z);

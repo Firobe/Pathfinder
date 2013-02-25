@@ -50,9 +50,9 @@
 		<Unit filename="coords3d.h" />
 		<Unit filename="functions.cpp" />
 		<Unit filename="functions.h" />
+		<Unit filename="initializations.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="main.h" />
-		<Unit filename="registry.cpp" />
 		<Unit filename="registry.h" />
 		<Extensions>
 			<code_completion />

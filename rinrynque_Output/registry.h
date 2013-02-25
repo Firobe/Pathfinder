@@ -10,6 +10,8 @@ struct registry
     int MAX_FPS;
     colors_types COLORS;
     bool WIREFRAME;
+    bool DRAW_NORMALS;
+
 };
 
 #endif // REGISTRY_H_INCLUDED

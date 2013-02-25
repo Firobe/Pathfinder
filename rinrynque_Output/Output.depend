@@ -282,3 +282,59 @@
 
 1361720830 source:i:\projets\output\registry.cpp
 
+1328544138 source:d:\git_repositories\output\rinrynque_output\coords.cpp
+	<cmath>
+	"coords.h"
+
+1360829058 d:\git_repositories\output\rinrynque_output\coords.h
+
+1360829192 source:d:\git_repositories\output\rinrynque_output\coords3d.cpp
+	<cmath>
+	"coords3d.h"
+
+1360829188 d:\git_repositories\output\rinrynque_output\coords3d.h
+
+1361729926 source:d:\git_repositories\output\rinrynque_output\functions.cpp
+	"functions.h"
+
+1361721320 d:\git_repositories\output\rinrynque_output\functions.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	"registry.h"
+	"Matrix.h"
+	"coords3d.h"
+
+1361373534 d:\git_repositories\output\rinrynque_output\main.h
+	<GL/glfw.h>
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	<new>
+	<AntTweakBar.h>
+	"config.h"
+	"coords.h"
+	"functions.h"
+	<fstream>
+	<cmath>
+	<ctime>
+	"Matrix.h"
+
+1170358626 d:\git_repositories\output\rinrynque_output\config.h
+
+1361373486 d:\git_repositories\output\rinrynque_output\matrix.h
+	<iostream>
+	<cmath>
+
+1361729802 d:\git_repositories\output\rinrynque_output\registry.h
+
+1361373486 source:d:\git_repositories\output\rinrynque_output\main.cpp
+	"main.h"
+
+1361373486 source:d:\git_repositories\output\rinrynque_output\matrix.cpp
+	"Matrix.h"
+	<fstream>
+

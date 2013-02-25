@@ -23,9 +23,19 @@ class outPut
     rude::Config _config;
     Matrix _data;
 
+    coords3d** _verticesMap;
+    coords3d** _normalMap;
+
     void genList();
+    void drawNormals();
+    void drawAxis();
+    void drawTerrain();
+
     void init_outPut();
     void init_Tw();
+
+    void gen_verticesMap();
+    void gen_normalMap();
 };
 
 void ConvertQuaternionToMatrix(const float *quat, float *mat);
