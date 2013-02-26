@@ -1,80 +1,49 @@
 #include "functions.h"
 
+bool outPut::getStatus()
+{
+    return _running && glfwGetWindowParam( GLFW_OPENED );
+}
+
 void outPut::display()
 {
     init_outPut();
 
-    TwBar *camera;
-    camera = TwNewBar("Camera");
-    float orientation[4] = {0, 0, 0, 1}; // direction pointing to +x and +y
-    double distance = _data.GetX()+_data.GetY(), zoom = 60;
-    coords3d focus(_data.GetX()/2,_data.GetY()/2,0);
-    TwAddVarRW(camera, "Orientation", TW_TYPE_QUAT4F, &orientation,"axisx=x axisy=y axisz=z");
-    TwAddVarRW(camera, "Distance", TW_TYPE_DOUBLE, &distance,"");
-    TwAddVarRW(camera, "Zoom", TW_TYPE_DOUBLE, &zoom,"min = 5 max = 200");
-    TwAddVarRW(camera, "x", TW_TYPE_DOUBLE, &(focus.x), "group = 'Focus'");
-    TwAddVarRW(camera, "y", TW_TYPE_DOUBLE, &(focus.y), "group = 'Focus'");
-    TwAddVarRW(camera, "z", TW_TYPE_DOUBLE, &(focus.z), "group = 'Focus'");
-
-    TwBar *reglages;
-    reglages = TwNewBar("Reglages");
-    bool running = true;
-    char title[50] = "PathFinder output";
-    TwAddVarRW(reglages, "Title", TW_TYPE_CSSTRING(sizeof(title)), title, "group='Window settings'  help='Changer le titre de la fenetre'");
-
-    TwAddVarRW(reglages, "Running", TW_TYPE_BOOLCPP, &running, "group='Window settings' help='Fermer le programme' key=ESC");
-    TwAddVarRO(reglages, "MAX_FPS", TW_TYPE_INT32, &(_reg.MAX_FPS), "group='Window settings'");
-
-    bool recalculate(true);
-    TwAddVarRW(reglages, "Recalculer", TW_TYPE_BOOLCPP, &recalculate, "group = 'Rendu'");
-    TwAddVarRW(reglages, "Multiplicateur", TW_TYPE_DOUBLE, &(_reg.MULTIPLIER), "group = 'Rendu' min = 0 max = 10");
-    TwType colorsType;
-    colorsType = TwDefineEnum("ColorsType", NULL, 0);
-    TwAddVarRW(reglages, "Couleurs", colorsType, &(_reg.COLORS), " enum='0 {Réelles}, 1 {Colorisé}, 2 {Uniforme}'");
-    TwAddVarRW(reglages, "Rendu filaire", TW_TYPE_BOOLCPP, &(_reg.WIREFRAME), "group = 'Rendu'");
-    TwAddVarRW(reglages, "Normales", TW_TYPE_BOOLCPP, &(_reg.DRAW_NORMALS), "group = 'Rendu'");
-    TwAddVarRW(reglages, "Couleur unie", TW_TYPE_COLOR3F, &(_reg.UNIFORM_COLOR), "");
-
-    float lightPos[4] = {-30,-30,30,0};
-    TwAddVarRW(reglages, "x", TW_TYPE_FLOAT, &(lightPos[0]), "group = Lumiere" );
-    TwAddVarRW(reglages, "y", TW_TYPE_FLOAT, &(lightPos[1]), "group = Lumiere" );
-    TwAddVarRW(reglages, "z", TW_TYPE_FLOAT, &(lightPos[2]), "group = Lumiere" );
-    TwAddVarRW(reglages, "Directionnelle", TW_TYPE_FLOAT, &(lightPos[3]), "group = Lumiere min=0 max =1" );
-
-
+    genList();
+    int fps = 0;
+    TwAddVarRO(b_scene, "FPS", TW_TYPE_INT8, &fps, " label='Nombre de FPS' ");
+    glfwSetTime(0);
     // Main loop
-    while( running && glfwGetWindowParam( GLFW_OPENED ) )
+    while( getStatus()  )
     {
+        //_close = false;
         static double loopTime;
+        static double beginTime = 0;
+        beginTime = glfwGetTime();
         static float mat[4*4];
-        glfwSetTime(0);
 
 
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         glMatrixMode( GL_PROJECTION );
         glLoadIdentity();
-        gluPerspective(zoom,_reg.WIDTH/_reg.HEIGHT,1,1000);
+        gluPerspective(_scene3d.zoom,_reg.WIDTH/_reg.HEIGHT,1,1000);
 
 
-        gluLookAt(0, 0, distance, focus.x, focus.y, focus.z, 0, 1, 0);
+        gluLookAt(0, 0, _scene3d.distance, _scene3d.focus.x, _scene3d.focus.y, _scene3d.focus.z, 0, 1, 0);
 
-        glLightfv(GL_LIGHT0,GL_POSITION,lightPos);
-        glPointSize(5);
-        glColor3ub(255,255,0);
-        glBegin(GL_POINT);
-        glVertex3d(lightPos[0],lightPos[1], lightPos[2]);
-        glEnd();
+        if(!_scene3d.lightPos[3])
+        {_scene3d.lightPos[0] = -_scene3d.lightDir[0];  _scene3d.lightPos[1] = -_scene3d.lightDir[1];  _scene3d.lightPos[2] = -_scene3d.lightDir[2];}
+        else
+        {_scene3d.lightPos[0] = _scene3d.lightDir[0];  _scene3d.lightPos[1] = _scene3d.lightDir[1];  _scene3d.lightPos[2] = _scene3d.lightDir[2];}
+        glLightfv(GL_LIGHT0,GL_POSITION,_scene3d.lightPos);
 
-       glTranslatef(focus.x, focus.y, focus.z);
-        ConvertQuaternionToMatrix(orientation, mat);
+
+        glTranslatef(_scene3d.focus.x, _scene3d.focus.y, _scene3d.focus.z);
+        ConvertQuaternionToMatrix(_scene3d.orientation, mat);
         glMultMatrixf(mat);
-        glTranslatef(-focus.x, -focus.y, -focus.z);
+        glTranslatef(-_scene3d.focus.x, -_scene3d.focus.y, -_scene3d.focus.z);
 
-        if(recalculate)
-        {
-            genList();
-            recalculate = false;
-        }
+        drawLight();
 
         glCallList(_dispListMap);
 
@@ -83,12 +52,34 @@ void outPut::display()
 // Swap front and back rendering buffers
         glfwSwapBuffers();
 
-        loopTime = glfwGetTime();
-        if(1/loopTime >  _reg.MAX_FPS)
+        loopTime = glfwGetTime() - beginTime;
+        fps = 1/loopTime;
+        if(fps >  _reg.MAX_FPS)
             glfwSleep(loopTime-1/_reg.MAX_FPS );
-
-        glfwSetWindowTitle( title );
     }
+}
+
+void outPut::drawLight()
+{
+    #define DL_SCALE 10
+        glDisable(GL_LIGHTING);
+        glPointSize(5);
+        glColor3ub(255,255,0);
+        if(_scene3d.lightPos[3])
+        {
+            glBegin(GL_POINTS);
+            glVertex3d(_scene3d.lightPos[0],_scene3d.lightPos[1],_scene3d.lightPos[2]);
+            glEnd();
+        }
+        else
+        {
+            glBegin(GL_LINES);
+            glVertex3d(_scene3d.lightPos[0]*DL_SCALE,_scene3d.lightPos[1]*DL_SCALE,_scene3d.lightPos[2]*DL_SCALE);
+            glVertex3d(0,0,0);
+            glEnd();
+        }
+
+        glEnable(GL_LIGHTING);
 }
 
 void ConvertQuaternionToMatrix(const float *quat, float *mat)

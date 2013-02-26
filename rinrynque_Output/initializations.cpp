@@ -1,15 +1,17 @@
 #include "functions.h"
+#include <string>
+#define __WINDOW_TITLE "Pathfinder OutPut"
 
 outPut::outPut(Matrix array)
 {
     _data = array;
-    _normalMap = new coords3d*[_data.GetX()];
+    _scene3d.normalMap = new coords3d*[_data.GetX()];
     for(int i = 0; i < _data.GetX(); i++)
-        _normalMap[i] = new coords3d[_data.GetY()];
+        _scene3d.normalMap[i] = new coords3d[_data.GetY()];
 
-    _verticesMap = new coords3d*[_data.GetX()];
+    _scene3d.verticesMap = new coords3d*[_data.GetX()];
     for(int i = 0; i < _data.GetX(); i++)
-        _verticesMap[i] = new coords3d[_data.GetY()];
+        _scene3d.verticesMap[i] = new coords3d[_data.GetY()];
 }
 
 outPut::~outPut()
@@ -27,7 +29,47 @@ void outPut::init_outPut()
     ///Initialisation OpenGL
     glfwInit();
 
-    ///Initialisation Rude::Config
+    loadConfig();
+
+    glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
+    assert(glfwOpenWindow( _reg.WIDTH, _reg.HEIGHT, 0,0,0,0,0,0, GLFW_WINDOW ));
+    std::string window_title = "";
+    window_title += __WINDOW_TITLE;
+    window_title += " compilé le ";
+    window_title += __DATE__;
+    window_title += " à ";
+    window_title += __TIME__;
+    glfwSetWindowTitle(window_title.c_str() );
+
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    gluPerspective(70,(double)_reg.WIDTH/_reg.HEIGHT,1,1000);
+
+    glEnable(GL_DEPTH_TEST);
+   /* glDisable(GL_POINT_SMOOTH);
+    glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);*/
+    /*glEnable (GL_BLEND);
+    glBlendFunc (GL_ONE, GL_ONE);*/
+    //glEnable(GL_CULL_FACE);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glShadeModel(GL_SMOOTH);
+
+    glEnable(GL_COLOR_MATERIAL);
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
+
+    init_Tw();
+    init_Bars();
+
+    _reg.MULTIPLIER = 5;
+    _reg.UNIFORM_COLOR = {0.5,0.5,0.5};
+    _running = true;
+}
+
+void outPut::loadConfig()
+{
+        ///Initialisation Rude::Config
     assert(_config.load("config.ini"));
     _config.setSection("window");
 
@@ -52,32 +94,6 @@ void outPut::init_outPut()
     assert(_reg.MAX_FPS = _config.getIntValue("MAX_FPS"));
     _reg.WIREFRAME = _config.getBoolValue("WIREFRAME");
     _reg.DRAW_NORMALS = _config.getBoolValue("DRAW_NORMALS");
-
-    glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
-    assert(glfwOpenWindow( _reg.WIDTH, _reg.HEIGHT, 0,0,0,0,0,0, GLFW_WINDOW ));
-
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity();
-    gluPerspective(70,(double)_reg.WIDTH/_reg.HEIGHT,1,1000);
-
-    glEnable(GL_DEPTH_TEST);
-   /* glDisable(GL_POINT_SMOOTH);
-    glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);*/
-    /*glEnable (GL_BLEND);
-    glBlendFunc (GL_ONE, GL_ONE);*/
-    //glEnable(GL_CULL_FACE);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glShadeModel(GL_SMOOTH);
-
-    glEnable(GL_COLOR_MATERIAL);
-    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-    glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-
-    init_Tw();
-
-    _reg.MULTIPLIER = 5;
-    _reg.UNIFORM_COLOR = {1,1,1};
 }
 
 void outPut::init_Tw()
@@ -93,15 +109,53 @@ void outPut::init_Tw()
     glfwSetCharCallback((GLFWcharfun)TwEventCharGLFW);
 }
 
+void TW_CALL recalculate(void* clientData)
+{
+    static_cast<outPut *>(clientData)->genList();
+}
+
+void outPut::init_Bars()
+{
+    b_scene = TwNewBar("Scene");
+    _scene3d.distance = _data.GetX()+_data.GetY();
+    _scene3d.zoom = 60;
+    _scene3d.focus = coords3d::retournercoords3d(_data.GetX()/2,_data.GetY()/2,0);
+    _scene3d.orientation = {0, 0, 0, 1}; // direction pointing to +x and +y
+
+    TwAddVarRW(b_scene, "Orientation", TW_TYPE_QUAT4F, &(_scene3d.orientation),"axisx=x axisy=y axisz=z");
+    TwAddVarRW(b_scene, "Distance", TW_TYPE_DOUBLE, &(_scene3d.distance),"");
+    TwAddVarRW(b_scene, "Zoom", TW_TYPE_DOUBLE, &(_scene3d.zoom),"min = 5 max = 200");
+    TwAddVarRW(b_scene, "x", TW_TYPE_DOUBLE, &(_scene3d.focus.x), "group = 'Focus'");
+    TwAddVarRW(b_scene, "y", TW_TYPE_DOUBLE, &(_scene3d.focus.y), "group = 'Focus'");
+    TwAddVarRW(b_scene, "z", TW_TYPE_DOUBLE, &(_scene3d.focus.z), "group = 'Focus'");
+    _scene3d.lightDir = {1,1,-1};
+    _scene3d.lightPos = {-1,-1,1,0};
+    TwAddVarRW(b_scene, "Direction", TW_TYPE_DIR3F, &(_scene3d.lightDir), "group = Lumiere" );
+    TwAddVarRW(b_scene, "Directionnelle", TW_TYPE_FLOAT, &(_scene3d.lightPos[3]), "group = Lumiere min=0 max =1" );
+
+    b_reglages = TwNewBar("Reglages");
+    TwAddVarRW(b_reglages, "En cours", TW_TYPE_BOOLCPP, &_running, "group='Window settings' help='Fermer le programme' key=ESC");
+    TwAddVarRO(b_reglages, "MAX_FPS", TW_TYPE_INT32, &(_reg.MAX_FPS), "group='Window settings'");
+
+    TwAddButton(b_reglages, "Recalculer", recalculate, this, " group = Rendu ");
+    TwAddVarRW(b_reglages, "Multiplicateur", TW_TYPE_DOUBLE, &(_reg.MULTIPLIER), "group = 'Rendu' min = 0 max = 10");
+    TwType colorsType;
+    colorsType = TwDefineEnum("ColorsType", NULL, 0);
+    TwAddVarRW(b_reglages, "Couleurs", colorsType, &(_reg.COLORS), " enum='0 {Réelles}, 1 {Colorisé}, 2 {Uniforme}'");
+    TwAddVarRW(b_reglages, "Rendu filaire", TW_TYPE_BOOLCPP, &(_reg.WIREFRAME), "group = 'Rendu'");
+    TwAddVarRW(b_reglages, "Normales", TW_TYPE_BOOLCPP, &(_reg.DRAW_NORMALS), "group = 'Rendu'");
+    TwAddVarRW(b_reglages, "Couleur unie", TW_TYPE_COLOR3F, &(_reg.UNIFORM_COLOR), "colormode=hls group = 'Rendu'");
+}
+
 void outPut::gen_verticesMap()
 {
     for(int x = 0; x < _data.GetX(); x++)
     {
         for(int y = 0; y < _data.GetY(); y++)
         {
-            _verticesMap[x][y].x = x*_reg.PIXEL_SIZE;
-            _verticesMap[x][y].y = y*_reg.PIXEL_SIZE;
-            _verticesMap[x][y].z = _data.GetValue(x,y,0)/25.5*_reg.MULTIPLIER;
+            _scene3d.verticesMap[x][y].x = x*_reg.PIXEL_SIZE;
+            _scene3d.verticesMap[x][y].y = y*_reg.PIXEL_SIZE;
+            _scene3d.verticesMap[x][y].z = _data.GetValue(x,y,0)/25.5*_reg.MULTIPLIER;
         }
     }
     gen_normalMap();
@@ -119,15 +173,15 @@ void outPut::gen_normalMap()
         {
             somme = coords3d::retournercoords3d(0,0,0);
 
-            /*       1,0                           0,1
-               0,0 +--+--+                 -1,1  +--+--+
-                   |\2|\*|                       |\2|\*|
-                   |1\|3\|                       |1\|3\|
-              0,1  +--+--+ 2,1             -1,0  +--+--+ 1,0
-                   |\4|\6|                       |\4|\6|
-                   |*\|5\|                       |*\|5\|
-                   +--+--+ 2,2                   +--+--+ 1,-1
-                     1,2                           0,-1
+            /*        0,1
+              -1,1  +--+--+
+                    |\2|\*|
+                    |1\|3\|
+              -1,0  +--+--+ 1,0
+                    |\4|\6|
+                    |*\|5\|
+                    +--+--+ 1,-1
+                      0,-1
             */
 
             somme+= coords3d::cross(getVertex(x,y)-getVertex(x-1,y), getVertex(x-1,y+1)-getVertex(x-1,y)); //1
@@ -138,7 +192,7 @@ void outPut::gen_normalMap()
             somme+= coords3d::cross(getVertex(x,y)-getVertex(x+1,y), getVertex(x+1,y-1)-getVertex(x+1,y)); //6
 
             somme.normalize();
-            _normalMap[x][y] = somme;
+            _scene3d.normalMap[x][y] = somme;
         }
     }
 }
@@ -155,11 +209,12 @@ coords3d outPut::getVertex(int x, int y)
     if(y > _data.GetY()-1)
     y = _data.GetY()-1;
 
-    return _verticesMap[x][y];
+    return _scene3d.verticesMap[x][y];
 }
 
 void outPut::genList()
 {
+    double beginTime = glfwGetTime();
     gen_verticesMap();
     glNewList(_dispListMap, GL_COMPILE);
 
@@ -181,6 +236,7 @@ void outPut::genList()
 
     drawTerrain();
     glEndList();
+    std::cout << "Temps de calcul : " << glfwGetTime()- beginTime << " secondes." << endl;
 }
 
 void outPut::drawAxis()
@@ -214,8 +270,8 @@ void outPut::drawNormals()
             {
 
                 glBegin(GL_LINES);
-                glVertex3d(_verticesMap[x][y].x, _verticesMap[x][y].y,_verticesMap[x][y].z);
-                glVertex3d(_verticesMap[x][y].x+_normalMap[x][y].x, _verticesMap[x][y].y+_normalMap[x][y].y,_verticesMap[x][y].z+_normalMap[x][y].z);
+                glVertex3d(_scene3d.verticesMap[x][y].x, _scene3d.verticesMap[x][y].y,_scene3d.verticesMap[x][y].z);
+                glVertex3d(_scene3d.verticesMap[x][y].x+_scene3d.normalMap[x][y].x, _scene3d.verticesMap[x][y].y+_scene3d.normalMap[x][y].y,_scene3d.verticesMap[x][y].z+_scene3d.normalMap[x][y].z);
                 glEnd();
             }
             glEnd();
@@ -243,48 +299,48 @@ void outPut::drawTerrain()
                 if (_reg.COLORS == real)
                 glColor3ub(_data.GetValue(x,y,0), _data.GetValue(x,y,0), _data.GetValue(x,y,0));
 
-                glNormal3d(_normalMap[x][y].x,_normalMap[x][y].y,_normalMap[x][y].z);
-                glVertex3d(_verticesMap[x][y].x, _verticesMap[x][y].y,_verticesMap[x][y].z);
+                glNormal3d(_scene3d.normalMap[x][y].x,_scene3d.normalMap[x][y].y,_scene3d.normalMap[x][y].z);
+                glVertex3d(_scene3d.verticesMap[x][y].x, _scene3d.verticesMap[x][y].y,_scene3d.verticesMap[x][y].z);
 
                 if(_reg.COLORS == colorized)
                 glColor3ub(_data.GetValue(x+1,y,0), 255-_data.GetValue(x+1,y,0), 0);
                 if (_reg.COLORS == real)
                 glColor3ub(_data.GetValue(x+1,y,0), _data.GetValue(x+1,y,0), _data.GetValue(x+1,y,0));
 
-                glNormal3d(_normalMap[x+1][y].x,_normalMap[x+1][y].y,_normalMap[x+1][y].z);
-                glVertex3d(_verticesMap[x+1][y].x, _verticesMap[x+1][y].y,_verticesMap[x+1][y].z);
+                glNormal3d(_scene3d.normalMap[x+1][y].x,_scene3d.normalMap[x+1][y].y,_scene3d.normalMap[x+1][y].z);
+                glVertex3d(_scene3d.verticesMap[x+1][y].x, _scene3d.verticesMap[x+1][y].y,_scene3d.verticesMap[x+1][y].z);
 
                 if(_reg.COLORS == colorized)
                 glColor3ub(_data.GetValue(x,y+1,0), 255-_data.GetValue(x,y+1,0), 0);
                 if (_reg.COLORS == real)
                 glColor3ub(_data.GetValue(x,y+1,0), _data.GetValue(x,y+1,0), _data.GetValue(x,y+1,0));
 
-                glNormal3d (_normalMap[x][y+1].x,_normalMap[x][y+1].y,_normalMap[x][y+1].z);
-                glVertex3d(_verticesMap[x][y+1].x, _verticesMap[x][y+1].y,_verticesMap[x][y+1].z);
+                glNormal3d (_scene3d.normalMap[x][y+1].x,_scene3d.normalMap[x][y+1].y,_scene3d.normalMap[x][y+1].z);
+                glVertex3d(_scene3d.verticesMap[x][y+1].x, _scene3d.verticesMap[x][y+1].y,_scene3d.verticesMap[x][y+1].z);
 
                 if(_reg.COLORS == colorized)
                 glColor3ub(_data.GetValue(x+1,y+1,0), 255-_data.GetValue(x+1,y+1,0), 0);
                 if (_reg.COLORS == real)
                 glColor3ub(_data.GetValue(x+1,y+1,0), _data.GetValue(x+1,y+1,0), _data.GetValue(x+1,y+1,0));
 
-                glNormal3d(_normalMap[x+1][y+1].x,_normalMap[x+1][y+1].y,_normalMap[x+1][y+1].z);
-                glVertex3d(_verticesMap[x+1][y+1].x, _verticesMap[x+1][y+1].y,_verticesMap[x+1][y+1].z);
+                glNormal3d(_scene3d.normalMap[x+1][y+1].x,_scene3d.normalMap[x+1][y+1].y,_scene3d.normalMap[x+1][y+1].z);
+                glVertex3d(_scene3d.verticesMap[x+1][y+1].x, _scene3d.verticesMap[x+1][y+1].y,_scene3d.verticesMap[x+1][y+1].z);
 
                 if(_reg.COLORS == colorized)
                 glColor3ub(_data.GetValue(x,y+1,0), 255-_data.GetValue(x,y+1,0), 0);
                 if (_reg.COLORS == real)
                 glColor3ub(_data.GetValue(x,y+1,0), _data.GetValue(x,y+1,0), _data.GetValue(x,y+1,0));
 
-                glNormal3d (_normalMap[x][y+1].x,_normalMap[x][y+1].y,_normalMap[x][y+1].z);
-                glVertex3d(_verticesMap[x][y+1].x, _verticesMap[x][y+1].y,_verticesMap[x][y+1].z);
+                glNormal3d (_scene3d.normalMap[x][y+1].x,_scene3d.normalMap[x][y+1].y,_scene3d.normalMap[x][y+1].z);
+                glVertex3d(_scene3d.verticesMap[x][y+1].x, _scene3d.verticesMap[x][y+1].y,_scene3d.verticesMap[x][y+1].z);
 
                 if(_reg.COLORS == colorized)
                 glColor3ub(_data.GetValue(x+1,y,0), 255-_data.GetValue(x+1,y,0), 0);
                 if (_reg.COLORS == real)
                 glColor3ub(_data.GetValue(x+1,y,0), _data.GetValue(x+1,y,0), _data.GetValue(x+1,y,0));
 
-                glNormal3d(_normalMap[x+1][y].x,_normalMap[x+1][y].y,_normalMap[x+1][y].z);
-                glVertex3d(_verticesMap[x+1][y].x, _verticesMap[x+1][y].y,_verticesMap[x+1][y].z);
+                glNormal3d(_scene3d.normalMap[x+1][y].x,_scene3d.normalMap[x+1][y].y,_scene3d.normalMap[x+1][y].z);
+                glVertex3d(_scene3d.verticesMap[x+1][y].x, _scene3d.verticesMap[x+1][y].y,_scene3d.verticesMap[x+1][y].z);
             }
             glEnd();
         }

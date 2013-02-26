@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include "registry.h"
+#include "scene.h"
 #include "Matrix.h"
 #include "coords3d.h"
 
@@ -15,24 +16,28 @@ class outPut
     ~outPut();
 
     void display();
+    bool getStatus();
+    void genList();
 
     private:
     GLuint _dispListMap;
     registry _reg;
+    scene _scene3d;
+    bool _running;
+    TwBar *b_scene, *b_reglages;
 
     rude::Config _config;
     Matrix _data;
 
-    coords3d** _verticesMap;
-    coords3d** _normalMap;
-
-    void genList();
     void drawNormals();
     void drawAxis();
     void drawTerrain();
+    void drawLight();
 
     void init_outPut();
     void init_Tw();
+    void init_Bars();
+    void loadConfig();
 
     void gen_verticesMap();
     coords3d getVertex(int x, int y);
