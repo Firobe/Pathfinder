@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="OutPut" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\OutPut" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\OutPut" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="I:\Programmes\CodeBlocks\MinGW\include" />
+		</Compiler>
+		<Linker>
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\librudeconfig.a" />
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\libglfw.a" />
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\libglfwdll.a" />
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\libglu32.a" />
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\libopengl32.a" />
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\AntTweakBar.lib" />
+		</Linker>
+		<Unit filename="Matrix.cpp" />
+		<Unit filename="Matrix.h" />
+		<Unit filename="config.ini" />
+		<Unit filename="coords.cpp" />
+		<Unit filename="coords.h" />
+		<Unit filename="coords3d.cpp" />
+		<Unit filename="coords3d.h" />
+		<Unit filename="functions.cpp" />
+		<Unit filename="functions.h" />
+		<Unit filename="initializations.cpp" />
+		<Unit filename="main.cpp" />
+		<Unit filename="main.h" />
+		<Unit filename="registry.h" />
+		<Unit filename="scene.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
