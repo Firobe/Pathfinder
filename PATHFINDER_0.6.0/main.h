@@ -1,0 +1,27 @@
+#ifndef MAIN_H_INCLUDED
+#define MAIN_H_INCLUDED
+
+#include <GL/glfw.h>
+#include <cassert>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include <new>
+#include <AntTweakBar.h>
+
+#include "config.h"
+#include "prev_declarations.h"
+#include "Pathfinder.h"
+#include "coords.h"
+#include "output.h"
+
+#define CASE_H SCREEN_H/20
+#define CASE_L SCREEN_L/20
+
+#include <fstream>
+#include <cmath>
+#include <ctime>
+#include "Matrix.h"
+
+#endif // MAIN_H_INCLUDED
