@@ -59,8 +59,8 @@
 void outPut::drawScene()
 {
     drawLight();
-    genList();
-    //glCallList(_dispListMap);
+   // genList();
+    glCallList(_dispListMap);
     TwDraw();
 }
 

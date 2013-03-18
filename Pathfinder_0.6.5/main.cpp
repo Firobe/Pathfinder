@@ -2,6 +2,7 @@
 
 using namespace std;
 
+
 int main (int argc, char** argv)
 {
     cout << "Pathfinder V2 : THE DEMINER"<< endl << "---------------------------" <<endl;
@@ -12,7 +13,8 @@ int main (int argc, char** argv)
     vector<Node> resultList=pathfinder.find(moteur.choosePoints());
     if(resultList.empty())
     {
-        cout << "ERROR" << endl << "The problem has no solution." << endl << "Operation aborted" << endl;
+        cout << "ERREUR" << endl << "Le probleme n'a pas de solution" << endl << "Operation annulee" << endl;
+        cout<<"\nAFFICHAGE (Vianney)\n\n";
         while(moteur.getStatus())
         {
             moteur.setScene();
@@ -23,7 +25,6 @@ int main (int argc, char** argv)
     else
     {
         moteur.drawResult(&resultList);
-        cout << endl << "Writing result..." << endl;
         while(moteur.getStatus())
         {
             moteur.setScene();
@@ -32,8 +33,8 @@ int main (int argc, char** argv)
             moteur.display();
         }
         cout << "Taille de la liste : " << resultList.size() << endl;
-
-        cout << "Pathfinding ended successfully" << endl;
+        cout << "Fin de la recherche atteinte avec succes." << endl;
+        cout<<"\nAFFICHAGE (Vianney)\n\n";
     }
     return 0;
 }

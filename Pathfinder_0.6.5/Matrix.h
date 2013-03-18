@@ -4,7 +4,7 @@
 #define COST_DIAG 7
 #include <iostream>
 #include <cmath>
-#define MAX_DIFF 50
+#define MAX_DIFF 1
 #define DECAL_XY { {0,0,0},{0,1,COST_FOR},{1,1,COST_DIAG},{1,0,COST_FOR},{1,-1,COST_DIAG},{0,-1,COST_FOR},{-1,-1,COST_DIAG},{-1,0,COST_FOR},{-1,1,COST_DIAG} }
 
 const int decalXY[][3] = DECAL_XY;

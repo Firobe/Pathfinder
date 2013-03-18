@@ -158,7 +158,7 @@ void outPut::init_Bars()
     TwAddVarRO(b_reglages, "MAX_FPS", TW_TYPE_INT32, &(_reg.MAX_FPS), "group='Window settings'");
 
     TwAddButton(b_reglages, "Recalculer", recalculate, this, " group = Rendu ");
-    TwAddVarRW(b_reglages, "Multiplicateur", TW_TYPE_DOUBLE, &(_reg.MULTIPLIER), "group = 'Rendu' min = 0 max = 10");
+    TwAddVarRW(b_reglages, "Multiplicateur", TW_TYPE_DOUBLE, &(_reg.MULTIPLIER), "group = 'Rendu' min = 0 max = 100");
     TwType colorsType;
     colorsType = TwDefineEnum("ColorsType", NULL, 0);
     TwAddVarRW(b_reglages, "Couleurs", colorsType, &(_reg.COLORS), " enum='0 {Réelles}, 1 {Colorisé}, 2 {Uniforme}'");
@@ -240,7 +240,7 @@ void outPut::genList()
 {
     double beginTime = glfwGetTime();
     gen_verticesMap();
-//    glNewList(_dispListMap, GL_COMPILE_AND_RUN);
+    glNewList(_dispListMap, GL_COMPILE);
 
     glDisable(GL_LIGHTING);
     drawAxis();
@@ -259,7 +259,7 @@ void outPut::genList()
     }
 
     drawTerrain();
-   // glEndList();
+    glEndList();
    // std::cout << "Temps de calcul : " << glfwGetTime()- beginTime << " secondes." << endl;
 }
 
