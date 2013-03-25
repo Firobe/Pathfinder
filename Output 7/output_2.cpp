@@ -140,6 +140,20 @@ void TW_CALL recalculate(void* clientData)
     static_cast<outPut *>(clientData)->drawResult();
 }
 
+void TW_CALL cbCenterView(void* clientData)
+{
+    static_cast<outPut *>(clientData)->centerView();
+}
+
+void outPut::centerView()
+{
+    _scene3d.focus.x = (int)(_dimensions.x/2.0);
+    _scene3d.focus.y = (int)(_dimensions.y/2.0);
+
+    cout << "\nx/2 : " << (int)(_dimensions.x/2.0) << "\ny/2 : " << (int)(_dimensions.y/2.0);
+    cout << "\nx : " << _dimensions.x << "\ny : " << _dimensions.y;
+}
+
 void outPut::init_Bars()
 {
     b_scene = TwNewBar("Scene");
@@ -155,6 +169,11 @@ void outPut::init_Bars()
     TwAddVarRW(b_scene, "x", TW_TYPE_DOUBLE, &(_scene3d.focus.x), "group = 'Focus'");
     TwAddVarRW(b_scene, "y", TW_TYPE_DOUBLE, &(_scene3d.focus.y), "group = 'Focus'");
     TwAddVarRW(b_scene, "z", TW_TYPE_DOUBLE, &(_scene3d.focus.z), "group = 'Focus'");
+    TwAddButton(b_scene, "Centrer", cbCenterView, this, " group = 'Focus' ");
+
+    TwAddVarRW(b_scene, "Test de profondeur résultat", TW_TYPE_BOOLCPP,
+                &(_reg.ZTEST_RESULT), "label='Z test resultat'");
+
     //_scene3d.lightDir = {1,1,-1};
     _scene3d.lightDir[0]=_scene3d.lightDir[1]=1;
     _scene3d.lightDir[2]=-1;
@@ -177,7 +196,6 @@ void outPut::init_Bars()
     TwAddVarRW(b_reglages, "Rendu filaire", TW_TYPE_BOOLCPP, &(_reg.WIREFRAME), "group = 'Rendu'");
     TwAddVarRW(b_reglages, "Normales", TW_TYPE_BOOLCPP, &(_reg.DRAW_NORMALS), "group = 'Rendu'");
     TwAddVarRW(b_reglages, "Couleur unie", TW_TYPE_COLOR3F, &(_reg.UNIFORM_COLOR), "colormode=hls group = 'Rendu'");
-    TwAddVarRW(b_reglages, "Test de profondeur résultat", TW_TYPE_BOOLCPP, &(_reg.ZTEST_RESULT), "label='Z test resultat' group = 'Rendu'");
 
     TwSetTopBar(b_scene);
     TwDefine(" Reglages iconified=true ");

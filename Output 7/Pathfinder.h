@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <ctime>
+#include <algorithm>
 #include "Matrix.h"
 
 using namespace std;
@@ -18,7 +19,6 @@ struct Node
     int x;
     int y;
 };
-typedef struct Node Node;
 
 class Pathfinder
 {
@@ -28,16 +28,19 @@ public:
     vector<Node> find(vector<int*>);
     Matrix getMatrix();
 private:
-    int calcDist(Node, Node);
     const bool Valid(const int);
-    void New(int);
+    void New(int, Node);
     const Node SetCurrent();
+    vector<Node> path(Node,Node);
+    void addResult(vector<Node>);
     Matrix matrix;
+    int*** cells;
+    vector<Node> finalList;
+    Node currentNode;
     vector<Node> openList;
-    vector<Node> resultList;
-    Node begNode, endNode, currentNode;
     int exCount, count, actTime, exTime;
 };
 
 const Node Affect(const int, const int, const int, const int, const int, const double, const double, const double);
+unsigned int factorial(unsigned int);
 #endif // PATHFINDER_H_INCLUDED

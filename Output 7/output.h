@@ -25,6 +25,7 @@ class outPut
     void init_outPut();
     void reInit();
     bool getStatus();
+    void centerView();
 
     void setScene();
     void drawScene();

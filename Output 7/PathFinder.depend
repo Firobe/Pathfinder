@@ -142,16 +142,17 @@
 
 1363602526 i:\projets\output 7\prev_declarations.h
 
-1363002456 i:\projets\output 7\pathfinder.h
+1364248830 i:\projets\output 7\pathfinder.h
 	<vector>
 	<ctime>
+	<algorithm>
 	"Matrix.h"
 
 1363370970 i:\projets\output 7\matrix.h
 	<iostream>
 	<cmath>
 
-1364248036 i:\projets\output 7\output.h
+1364250094 i:\projets\output 7\output.h
 	"main.h"
 	<vector>
 	<cstdlib>
@@ -176,7 +177,7 @@
 	"Matrix.h"
 	<fstream>
 
-1364244144 source:i:\projets\output 7\output_2.cpp
+1364250658 source:i:\projets\output 7\output_2.cpp
 	"output.h"
 	<string>
 
@@ -186,10 +187,10 @@
 1364208644 source:i:\projets\output 7\output_4.cpp
 	"output.h"
 
-1363603760 source:i:\projets\output 7\pathfinder.cpp
+1364248830 source:i:\projets\output 7\pathfinder.cpp
 	"Pathfinder.h"
 
-1364242668 source:i:\projets\output 7\output_1.cpp
+1364248292 source:i:\projets\output 7\output_1.cpp
 	"output.h"
 
 1344243548 i:\programmes\codeblocks\mingw\include\gl\glew.h
