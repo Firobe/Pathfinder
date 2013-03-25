@@ -2,7 +2,6 @@
 #include <fstream>
 //#include <windows.h>
 
-const int decalXY[][3] = DECAL_XY;
 using namespace std;
 
 Matrix::Matrix()
@@ -149,22 +148,7 @@ void Matrix::FinalData()
         data.close();
 
         cout << "Converting grey levels into exploitable array..."<<endl;
-        for(unsigned int i=0; i<width; i++)
-            for(unsigned int j=0; j<height; j++)
-                for(unsigned int k=1; k<9; k++)
-                {
-                    //Si la case du tableau correspondant au pixel testĂŠ existe
-                    if(i+decalXY[k][0]>=0 && i+decalXY[k][0]<=width-1 && j+decalXY[k][1]>=0 && j+decalXY[k][1]<=height-1)
-                    {
-                        if(abs((double)(_array[i][j][0]-_array[i+decalXY[k][0]][j+decalXY[k][1]][0]))>MAX_DIFF)
-                            _array[i][j][k]=1;
-                        else
-                            _array[i][j][k]=0;
-                    }
-                    else
-                        _array[i][j][k]=1;
-                }
-
+        calcWalls();
     }
     else
     {
@@ -177,4 +161,22 @@ void Matrix::CloseCell(const int x, const int y, const int Px, const int Py)
     _array[x][y][0]=-1;
     _array[x][y][9]=Px;
     _array[x][y][10]=Py;
+}
+void Matrix::calcWalls()
+{
+    for(int i=0; i<_x; i++)
+            for(int j=0; j<_y; j++)
+                for(int k=1; k<9; k++)
+                {
+                    //Si la case du tableau correspondant au pixel testĂŠ existe
+                    if(i+decalXY[k][0]>=0 && i+decalXY[k][0]<=_x-1 && j+decalXY[k][1]>=0 && j+decalXY[k][1]<=_y-1)
+                    {
+                        if(abs((double)(_array[i][j][0]-_array[i+decalXY[k][0]][j+decalXY[k][1]][0]))>MAX_DIFF)
+                            _array[i][j][k]=1;
+                        else
+                            _array[i][j][k]=0;
+                    }
+                    else
+                        _array[i][j][k]=1;
+                }
 }

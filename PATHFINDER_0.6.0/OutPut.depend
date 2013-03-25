@@ -99,3 +99,105 @@
 1362999758 source:/home/virgile/Prog/OutPut 0.5.0/output_4.cpp
 	"output.h"
 
+1363292754 source:d:\git_repositories\output\pathfinder_0.6.0\coords.cpp
+	<cmath>
+	"coords.h"
+
+1363292754 d:\git_repositories\output\pathfinder_0.6.0\coords.h
+
+1363292754 source:d:\git_repositories\output\pathfinder_0.6.0\coords3d.cpp
+	<cmath>
+	"coords3d.h"
+
+1363292754 d:\git_repositories\output\pathfinder_0.6.0\coords3d.h
+	<cmath>
+
+1363292754 source:d:\git_repositories\output\pathfinder_0.6.0\main.cpp
+	"main.h"
+
+1363292754 d:\git_repositories\output\pathfinder_0.6.0\main.h
+	<GL/glfw.h>
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	<new>
+	<AntTweakBar.h>
+	"config.h"
+	"prev_declarations.h"
+	"Pathfinder.h"
+	"coords.h"
+	"output.h"
+	<fstream>
+	<cmath>
+	<ctime>
+	"Matrix.h"
+
+1363292754 d:\git_repositories\output\pathfinder_0.6.0\config.h
+
+1363292754 d:\git_repositories\output\pathfinder_0.6.0\prev_declarations.h
+
+1363292754 d:\git_repositories\output\pathfinder_0.6.0\pathfinder.h
+	<vector>
+	<ctime>
+	"Matrix.h"
+
+1363292754 d:\git_repositories\output\pathfinder_0.6.0\matrix.h
+	<iostream>
+	<cmath>
+
+1363292754 d:\git_repositories\output\pathfinder_0.6.0\output.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	"registry.h"
+	"scene.h"
+	"coords3d.h"
+	"Matrix.h"
+
+1363292754 d:\git_repositories\output\pathfinder_0.6.0\registry.h
+
+1363292754 d:\git_repositories\output\pathfinder_0.6.0\scene.h
+	"coords3d.h"
+
+1363292754 source:d:\git_repositories\output\pathfinder_0.6.0\matrix.cpp
+	"Matrix.h"
+	<fstream>
+
+1363292754 source:d:\git_repositories\output\pathfinder_0.6.0\output_1.cpp
+	"output.h"
+
+1363292754 source:d:\git_repositories\output\pathfinder_0.6.0\output_2.cpp
+	"output.h"
+	<string>
+
+1363292754 source:d:\git_repositories\output\pathfinder_0.6.0\output_3.cpp
+	"output.h"
+
+1363292754 source:d:\git_repositories\output\pathfinder_0.6.0\output_4.cpp
+	"output.h"
+
+1363292754 source:d:\git_repositories\output\pathfinder_0.6.0\pathfinder.cpp
+	"Pathfinder.h"
+
+1342361890 i:\programmes\codeblocks\mingw\include\gl\glfw.h
+	<OpenGL/gl3.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL3/gl3.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1301111164 i:\programmes\codeblocks\mingw\include\gl\gl.h
+
+1301111164 i:\programmes\codeblocks\mingw\include\gl\glu.h
+	<stddef.h>
+	<GL/gl.h>
+
+1344505226 i:\programmes\codeblocks\mingw\include\anttweakbar.h
+	<stddef.h>
+	<string>
+	<string>
+

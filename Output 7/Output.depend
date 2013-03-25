@@ -347,3 +347,186 @@
 	"functions.h"
 	<string>
 
+1363292756 source:i:\projets\rinrynque_output\coords.cpp
+	<cmath>
+	"coords.h"
+
+1363292756 i:\projets\rinrynque_output\coords.h
+
+1363292756 source:i:\projets\rinrynque_output\coords3d.cpp
+	<cmath>
+	"coords3d.h"
+
+1363292756 i:\projets\rinrynque_output\coords3d.h
+	<cmath>
+
+1361880750 source:i:\projets\rinrynque_output\functions.cpp
+	"functions.h"
+
+1361879954 i:\projets\rinrynque_output\functions.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	"registry.h"
+	"scene.h"
+	"Matrix.h"
+	"coords3d.h"
+
+1363292756 i:\projets\rinrynque_output\main.h
+	<GL/glfw.h>
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	<new>
+	<AntTweakBar.h>
+	"config.h"
+	"prev_declarations.h"
+	"Pathfinder.h"
+	"coords.h"
+	"output.h"
+	<fstream>
+	<cmath>
+	<ctime>
+	"Matrix.h"
+
+1170358626 i:\projets\rinrynque_output\config.h
+
+1363370970 i:\projets\rinrynque_output\matrix.h
+	<iostream>
+	<cmath>
+
+1363292756 i:\projets\rinrynque_output\registry.h
+
+1363292756 i:\projets\rinrynque_output\scene.h
+	"coords3d.h"
+
+1363369944 source:i:\projets\rinrynque_output\initializations.cpp
+	"functions.h"
+	<string>
+
+1363605086 source:i:\projets\rinrynque_output\main.cpp
+	"main.h"
+
+1363292756 source:i:\projets\rinrynque_output\matrix.cpp
+	"Matrix.h"
+	<fstream>
+
+1363602526 i:\projets\rinrynque_output\prev_declarations.h
+
+1363002456 i:\projets\rinrynque_output\pathfinder.h
+	<vector>
+	<ctime>
+	"Matrix.h"
+
+1363605086 i:\projets\rinrynque_output\output.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	"registry.h"
+	"scene.h"
+	"coords3d.h"
+	"Matrix.h"
+
+1363530114 source:i:\projets\rinrynque_output\output_1.cpp
+	"output.h"
+
+1363605314 source:i:\projets\rinrynque_output\output_2.cpp
+	"output.h"
+	<string>
+
+1363602526 source:i:\projets\rinrynque_output\output_3.cpp
+	"output.h"
+
+1363603976 source:i:\projets\rinrynque_output\output_4.cpp
+	"output.h"
+
+1363603760 source:i:\projets\rinrynque_output\pathfinder.cpp
+	"Pathfinder.h"
+
+1363292756 source:j:\projets\rinrynque_output\matrix.cpp
+	"Matrix.h"
+	<fstream>
+
+1363370970 j:\projets\rinrynque_output\matrix.h
+	<iostream>
+	<cmath>
+
+1363292756 source:j:\projets\rinrynque_output\pathfinder.cpp
+	"Pathfinder.h"
+
+1363292756 j:\projets\rinrynque_output\pathfinder.h
+	<vector>
+	<ctime>
+	"Matrix.h"
+
+1363292756 source:j:\projets\rinrynque_output\coords.cpp
+	<cmath>
+	"coords.h"
+
+1363292756 j:\projets\rinrynque_output\coords.h
+
+1363292756 source:j:\projets\rinrynque_output\coords3d.cpp
+	<cmath>
+	"coords3d.h"
+
+1363292756 j:\projets\rinrynque_output\coords3d.h
+	<cmath>
+
+1363530278 source:j:\projets\rinrynque_output\main.cpp
+	"main.h"
+
+1363292756 j:\projets\rinrynque_output\main.h
+	<GL/glfw.h>
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	<new>
+	<AntTweakBar.h>
+	"config.h"
+	"prev_declarations.h"
+	"Pathfinder.h"
+	"coords.h"
+	"output.h"
+	<fstream>
+	<cmath>
+	<ctime>
+	"Matrix.h"
+
+1170358626 j:\projets\rinrynque_output\config.h
+
+1363292756 j:\projets\rinrynque_output\prev_declarations.h
+
+1363292756 j:\projets\rinrynque_output\output.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	"registry.h"
+	"scene.h"
+	"coords3d.h"
+	"Matrix.h"
+
+1363292756 j:\projets\rinrynque_output\registry.h
+
+1363292756 j:\projets\rinrynque_output\scene.h
+	"coords3d.h"
+
+1363530114 source:j:\projets\rinrynque_output\output_1.cpp
+	"output.h"
+
+1363530208 source:j:\projets\rinrynque_output\output_2.cpp
+	"output.h"
+	<string>
+
+1363292756 source:j:\projets\rinrynque_output\output_3.cpp
+	"output.h"
+
+1363292756 source:j:\projets\rinrynque_output\output_4.cpp
+	"output.h"
+
