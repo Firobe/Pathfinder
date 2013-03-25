@@ -1,0 +1,106 @@
+# depslib dependency file v1.0
+1363292756 source:i:\projets\pathfinder_0.6.5 - copie\coords.cpp
+	<cmath>
+	"coords.h"
+
+1363292756 i:\projets\pathfinder_0.6.5 - copie\coords.h
+
+1363292756 source:i:\projets\pathfinder_0.6.5 - copie\coords3d.cpp
+	<cmath>
+	"coords3d.h"
+
+1363292756 i:\projets\pathfinder_0.6.5 - copie\coords3d.h
+	<cmath>
+
+1363605372 source:i:\projets\pathfinder_0.6.5 - copie\main.cpp
+	"main.h"
+
+1363292756 i:\projets\pathfinder_0.6.5 - copie\main.h
+	<GL/glfw.h>
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	<new>
+	<AntTweakBar.h>
+	"config.h"
+	"prev_declarations.h"
+	"Pathfinder.h"
+	"coords.h"
+	"output.h"
+	<fstream>
+	<cmath>
+	<ctime>
+	"Matrix.h"
+
+1342361890 i:\programmes\codeblocks\mingw\include\gl\glfw.h
+	<OpenGL/gl3.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL3/gl3.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1301111164 i:\programmes\codeblocks\mingw\include\gl\gl.h
+
+1301111164 i:\programmes\codeblocks\mingw\include\gl\glu.h
+	<stddef.h>
+	<GL/gl.h>
+
+1344505226 i:\programmes\codeblocks\mingw\include\anttweakbar.h
+	<stddef.h>
+	<string>
+	<string>
+
+1170358626 i:\projets\pathfinder_0.6.5 - copie\config.h
+
+1363602526 i:\projets\pathfinder_0.6.5 - copie\prev_declarations.h
+
+1363002456 i:\projets\pathfinder_0.6.5 - copie\pathfinder.h
+	<vector>
+	<ctime>
+	"Matrix.h"
+
+1363370970 i:\projets\pathfinder_0.6.5 - copie\matrix.h
+	<iostream>
+	<cmath>
+
+1364209092 i:\projets\pathfinder_0.6.5 - copie\output.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	"registry.h"
+	"scene.h"
+	"coords3d.h"
+	"Matrix.h"
+	"verticesArrays.h"
+
+1363292756 i:\projets\pathfinder_0.6.5 - copie\registry.h
+
+1363292756 i:\projets\pathfinder_0.6.5 - copie\scene.h
+	"coords3d.h"
+
+1363292756 source:i:\projets\pathfinder_0.6.5 - copie\matrix.cpp
+	"Matrix.h"
+	<fstream>
+
+1364210848 source:i:\projets\pathfinder_0.6.5 - copie\output_1.cpp
+	"output.h"
+
+1364210522 source:i:\projets\pathfinder_0.6.5 - copie\output_2.cpp
+	"output.h"
+	<string>
+
+1363602526 source:i:\projets\pathfinder_0.6.5 - copie\output_3.cpp
+	"output.h"
+
+1364208644 source:i:\projets\pathfinder_0.6.5 - copie\output_4.cpp
+	"output.h"
+
+1363603760 source:i:\projets\pathfinder_0.6.5 - copie\pathfinder.cpp
+	"Pathfinder.h"
+
+1364210168 i:\projets\pathfinder_0.6.5 - copie\verticesarrays.h
+
