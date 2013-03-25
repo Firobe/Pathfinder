@@ -12,7 +12,7 @@
 
 class outPut
 {
-    public:
+public:
     outPut(Matrix array);
     ~outPut();
 
@@ -26,7 +26,7 @@ class outPut
     std::vector<int*> choosePoints();
     void genList();
 
-    private:
+private:
     GLuint _dispListMap;
     registry _reg;
     scene _scene3d;

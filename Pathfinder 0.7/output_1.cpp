@@ -1,10 +1,10 @@
 #include "output.h"
 
-    double loopTime;
-    double beginTime = 0;
-    int fps = 0;
+double loopTime;
+double beginTime = 0;
+int fps = 0;
 
-    void outPut::setScene()
+void outPut::setScene()
 {
     static bool autoZfocus(true);
     static bool init = true;
@@ -59,7 +59,7 @@
 void outPut::drawScene()
 {
     drawLight();
-   // genList();
+    // genList();
     glCallList(_dispListMap);
     TwDraw();
 }

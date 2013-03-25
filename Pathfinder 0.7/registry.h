@@ -1,6 +1,6 @@
 #ifndef REGISTRY_H_INCLUDED
 #define REGISTRY_H_INCLUDED
-enum colors_types{real, colorized, uniform};
+enum colors_types {real, colorized, uniform};
 struct registry
 {
     double MULTIPLIER;

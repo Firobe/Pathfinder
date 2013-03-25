@@ -57,8 +57,8 @@ void outPut::init_outPut()
     gluPerspective(70,(double)_reg.WIDTH/_reg.HEIGHT,1,1000);
 
     glEnable(GL_DEPTH_TEST);
-   /* glDisable(GL_POINT_SMOOTH);
-    glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);*/
+    /* glDisable(GL_POINT_SMOOTH);
+     glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);*/
     /*glEnable (GL_BLEND);
     glBlendFunc (GL_ONE, GL_ONE);*/
     //glEnable(GL_CULL_FACE);
@@ -81,7 +81,7 @@ void outPut::init_outPut()
 
 void outPut::loadConfig()
 {
-        ///Initialisation Rude::Config
+    ///Initialisation Rude::Config
     assert(_config.load("config.ini"));
     _config.setSection("window");
 
@@ -224,28 +224,27 @@ void outPut::gen_normalMap()
 coords3d outPut::getVertex(int x, int y)
 {
     if(x < 0)
-    x = 0;
+        x = 0;
     if(x > _dimensions.x-1)
-    x = _dimensions.x-1;
+        x = _dimensions.x-1;
 
     if(y < 0)
-    y = 0;
+        y = 0;
     if(y > _dimensions.y-1)
-    y = _dimensions.y-1;
+        y = _dimensions.y-1;
 
     return _scene3d.verticesMap[x][y];
 }
 
 void outPut::genList()
 {
-    double beginTime = glfwGetTime();
     gen_verticesMap();
     glNewList(_dispListMap, GL_COMPILE);
 
     glDisable(GL_LIGHTING);
     drawAxis();
     if(_reg.DRAW_NORMALS)
-    drawNormals();
+        drawNormals();
     glEnable(GL_LIGHTING);
 
     if(_reg.WIREFRAME)
@@ -260,7 +259,7 @@ void outPut::genList()
 
     drawTerrain();
     glEndList();
-   // std::cout << "Temps de calcul : " << glfwGetTime()- beginTime << " secondes." << endl;
+    // std::cout << "Temps de calcul : " << glfwGetTime()- beginTime << " secondes." << endl;
 }
 
 void outPut::drawAxis()
@@ -286,86 +285,86 @@ void outPut::drawAxis()
 
 void outPut::drawNormals()
 {
-        glLineWidth(1);
-        glColor3ub(255,0,0);
-        for(int x = 0; x < _dimensions.x; x++)
+    glLineWidth(1);
+    glColor3ub(255,0,0);
+    for(int x = 0; x < _dimensions.x; x++)
+    {
+        for(int y = 0; y < _dimensions.y; y++)
         {
-            for(int y = 0; y < _dimensions.y; y++)
-            {
 
-                glBegin(GL_LINES);
-                glVertex3d(_scene3d.verticesMap[x][y].x, _scene3d.verticesMap[x][y].y,_scene3d.verticesMap[x][y].z);
-                glVertex3d(_scene3d.verticesMap[x][y].x+_scene3d.normalMap[x][y].x, _scene3d.verticesMap[x][y].y+_scene3d.normalMap[x][y].y,_scene3d.verticesMap[x][y].z+_scene3d.normalMap[x][y].z);
-                glEnd();
-            }
+            glBegin(GL_LINES);
+            glVertex3d(_scene3d.verticesMap[x][y].x, _scene3d.verticesMap[x][y].y,_scene3d.verticesMap[x][y].z);
+            glVertex3d(_scene3d.verticesMap[x][y].x+_scene3d.normalMap[x][y].x, _scene3d.verticesMap[x][y].y+_scene3d.normalMap[x][y].y,_scene3d.verticesMap[x][y].z+_scene3d.normalMap[x][y].z);
             glEnd();
         }
+        glEnd();
+    }
 }
 
 void outPut::drawTerrain()
 {
-        glColorMaterial(GL_FRONT_AND_BACK, GL_SPECULAR);
-        glColor3ub(50, 50,50);
-        glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
-        glColor3ub(100, 100,100);
-        glMateriali(GL_FRONT_AND_BACK, GL_SHININESS, 30.0);
-        glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-        glColor3f(_reg.UNIFORM_COLOR[0],_reg.UNIFORM_COLOR[1],_reg.UNIFORM_COLOR[2]);
+    glColorMaterial(GL_FRONT_AND_BACK, GL_SPECULAR);
+    glColor3ub(50, 50,50);
+    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
+    glColor3ub(100, 100,100);
+    glMateriali(GL_FRONT_AND_BACK, GL_SHININESS, 30.0);
+    glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
+    glColor3f(_reg.UNIFORM_COLOR[0],_reg.UNIFORM_COLOR[1],_reg.UNIFORM_COLOR[2]);
 
-        for(int x = 0; x < _dimensions.x-1; x++)
+    for(int x = 0; x < _dimensions.x-1; x++)
+    {
+        glBegin(GL_TRIANGLES);
+
+        for(int y = 0; y < _dimensions.y-1; y++)
         {
-            glBegin(GL_TRIANGLES);
-
-            for(int y = 0; y < _dimensions.y-1; y++)
-            {
-                if(_reg.COLORS == colorized)
+            if(_reg.COLORS == colorized)
                 glColor3ub(_data[x][y], 255-_data[x][y], 0);
-                if (_reg.COLORS == real)
+            if (_reg.COLORS == real)
                 glColor3ub(_data[x][y], _data[x][y], _data[x][y]);
 
-                glNormal3d(_scene3d.normalMap[x][y].x,_scene3d.normalMap[x][y].y,_scene3d.normalMap[x][y].z);
-                glVertex3d(_scene3d.verticesMap[x][y].x, _scene3d.verticesMap[x][y].y,_scene3d.verticesMap[x][y].z);
+            glNormal3d(_scene3d.normalMap[x][y].x,_scene3d.normalMap[x][y].y,_scene3d.normalMap[x][y].z);
+            glVertex3d(_scene3d.verticesMap[x][y].x, _scene3d.verticesMap[x][y].y,_scene3d.verticesMap[x][y].z);
 
-                if(_reg.COLORS == colorized)
+            if(_reg.COLORS == colorized)
                 glColor3ub(_data[x+1][y], 255-_data[x+1][y], 0);
-                if (_reg.COLORS == real)
+            if (_reg.COLORS == real)
                 glColor3ub(_data[x+1][y], _data[x+1][y], _data[x+1][y]);
 
-                glNormal3d(_scene3d.normalMap[x+1][y].x,_scene3d.normalMap[x+1][y].y,_scene3d.normalMap[x+1][y].z);
-                glVertex3d(_scene3d.verticesMap[x+1][y].x, _scene3d.verticesMap[x+1][y].y,_scene3d.verticesMap[x+1][y].z);
+            glNormal3d(_scene3d.normalMap[x+1][y].x,_scene3d.normalMap[x+1][y].y,_scene3d.normalMap[x+1][y].z);
+            glVertex3d(_scene3d.verticesMap[x+1][y].x, _scene3d.verticesMap[x+1][y].y,_scene3d.verticesMap[x+1][y].z);
 
-                if(_reg.COLORS == colorized)
+            if(_reg.COLORS == colorized)
                 glColor3ub(_data[x][y+1], 255-_data[x][y+1], 0);
-                if (_reg.COLORS == real)
+            if (_reg.COLORS == real)
                 glColor3ub(_data[x][y+1], _data[x][y+1], _data[x][y+1]);
 
-                glNormal3d (_scene3d.normalMap[x][y+1].x,_scene3d.normalMap[x][y+1].y,_scene3d.normalMap[x][y+1].z);
-                glVertex3d(_scene3d.verticesMap[x][y+1].x, _scene3d.verticesMap[x][y+1].y,_scene3d.verticesMap[x][y+1].z);
+            glNormal3d (_scene3d.normalMap[x][y+1].x,_scene3d.normalMap[x][y+1].y,_scene3d.normalMap[x][y+1].z);
+            glVertex3d(_scene3d.verticesMap[x][y+1].x, _scene3d.verticesMap[x][y+1].y,_scene3d.verticesMap[x][y+1].z);
 
-                if(_reg.COLORS == colorized)
+            if(_reg.COLORS == colorized)
                 glColor3ub(_data[x+1][y+1], 255-_data[x+1][y+1], 0);
-                if (_reg.COLORS == real)
+            if (_reg.COLORS == real)
                 glColor3ub(_data[x+1][y+1], _data[x+1][y+1], _data[x+1][y+1]);
 
-                glNormal3d(_scene3d.normalMap[x+1][y+1].x,_scene3d.normalMap[x+1][y+1].y,_scene3d.normalMap[x+1][y+1].z);
-                glVertex3d(_scene3d.verticesMap[x+1][y+1].x, _scene3d.verticesMap[x+1][y+1].y,_scene3d.verticesMap[x+1][y+1].z);
+            glNormal3d(_scene3d.normalMap[x+1][y+1].x,_scene3d.normalMap[x+1][y+1].y,_scene3d.normalMap[x+1][y+1].z);
+            glVertex3d(_scene3d.verticesMap[x+1][y+1].x, _scene3d.verticesMap[x+1][y+1].y,_scene3d.verticesMap[x+1][y+1].z);
 
-                if(_reg.COLORS == colorized)
+            if(_reg.COLORS == colorized)
                 glColor3ub(_data[x][y+1], 255-_data[x][y+1], 0);
-                if (_reg.COLORS == real)
+            if (_reg.COLORS == real)
                 glColor3ub(_data[x][y+1], _data[x][y+1], _data[x][y+1]);
 
-                glNormal3d (_scene3d.normalMap[x][y+1].x,_scene3d.normalMap[x][y+1].y,_scene3d.normalMap[x][y+1].z);
-                glVertex3d(_scene3d.verticesMap[x][y+1].x, _scene3d.verticesMap[x][y+1].y,_scene3d.verticesMap[x][y+1].z);
+            glNormal3d (_scene3d.normalMap[x][y+1].x,_scene3d.normalMap[x][y+1].y,_scene3d.normalMap[x][y+1].z);
+            glVertex3d(_scene3d.verticesMap[x][y+1].x, _scene3d.verticesMap[x][y+1].y,_scene3d.verticesMap[x][y+1].z);
 
-                if(_reg.COLORS == colorized)
+            if(_reg.COLORS == colorized)
                 glColor3ub(_data[x+1][y], 255-_data[x+1][y], 0);
-                if (_reg.COLORS == real)
+            if (_reg.COLORS == real)
                 glColor3ub(_data[x+1][y], _data[x+1][y], _data[x+1][y]);
 
-                glNormal3d(_scene3d.normalMap[x+1][y].x,_scene3d.normalMap[x+1][y].y,_scene3d.normalMap[x+1][y].z);
-                glVertex3d(_scene3d.verticesMap[x+1][y].x, _scene3d.verticesMap[x+1][y].y,_scene3d.verticesMap[x+1][y].z);
-            }
-            glEnd();
+            glNormal3d(_scene3d.normalMap[x+1][y].x,_scene3d.normalMap[x+1][y].y,_scene3d.normalMap[x+1][y].z);
+            glVertex3d(_scene3d.verticesMap[x+1][y].x, _scene3d.verticesMap[x+1][y].y,_scene3d.verticesMap[x+1][y].z);
         }
+        glEnd();
+    }
 }

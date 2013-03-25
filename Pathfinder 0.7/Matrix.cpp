@@ -155,28 +155,21 @@ void Matrix::FinalData()
         cout<<"!! ERROR !! Data missing";
     }
 }
-
-void Matrix::CloseCell(const int x, const int y, const int Px, const int Py)
-{
-    _array[x][y][0]=-1;
-    _array[x][y][9]=Px;
-    _array[x][y][10]=Py;
-}
 void Matrix::calcWalls()
 {
     for(int i=0; i<_x; i++)
-            for(int j=0; j<_y; j++)
-                for(int k=1; k<9; k++)
+        for(int j=0; j<_y; j++)
+            for(int k=1; k<9; k++)
+            {
+                //Si la case du tableau correspondant au pixel testĂŠ existe
+                if(i+decalXY[k][0]>=0 && i+decalXY[k][0]<=_x-1 && j+decalXY[k][1]>=0 && j+decalXY[k][1]<=_y-1)
                 {
-                    //Si la case du tableau correspondant au pixel testĂŠ existe
-                    if(i+decalXY[k][0]>=0 && i+decalXY[k][0]<=_x-1 && j+decalXY[k][1]>=0 && j+decalXY[k][1]<=_y-1)
-                    {
-                        if(abs((double)(_array[i][j][0]-_array[i+decalXY[k][0]][j+decalXY[k][1]][0]))>MAX_DIFF)
-                            _array[i][j][k]=1;
-                        else
-                            _array[i][j][k]=0;
-                    }
-                    else
+                    if(abs((double)(_array[i][j][0]-_array[i+decalXY[k][0]][j+decalXY[k][1]][0]))>MAX_DIFF)
                         _array[i][j][k]=1;
+                    else
+                        _array[i][j][k]=0;
                 }
+                else
+                    _array[i][j][k]=1;
+            }
 }
