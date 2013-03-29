@@ -9,11 +9,21 @@
 #include <GL/glfw.h>
 
 #include <cstring>
+#include <algorithm>
+
+#include <cstdlib>     /* srand, rand */
+#include <ctime>       /* time */
+
 #include "registry.h"
 #include "scene.h"
 #include "coords3d.h"
 #include "Matrix.h"
 #include "verticesArrays.h"
+
+inline float clamp(float x, float a, float b)
+{
+    return x < a ? a : (x > b ? b : x);
+};
 
 class outPut
 {
@@ -30,11 +40,10 @@ class outPut
     void setScene();
     void drawScene();
     void drawResult(vector<Node>* list = NULL);
+    void drawTerrain(bool reinit = false);
     std::vector<int*> choosePoints();
-    void genList();
 
     private:
-    GLuint _dispListMap;
     registry _reg;
     scene _scene3d;
     bool _running;
@@ -46,7 +55,6 @@ class outPut
 
     void drawNormals();
     void drawAxis();
-    void drawTerrain();
     void drawLight();
 
     void init_Tw();
@@ -60,5 +68,4 @@ class outPut
 
 void ConvertQuaternionToMatrix(const float *quat, float *mat);
 
-//openHeightMap(char carte[]  = "Ressources\grey_lvl.pdt");
 #endif // FUNCTIONS_H_INCLUDED

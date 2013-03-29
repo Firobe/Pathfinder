@@ -4,11 +4,12 @@ using namespace std;
 
 int main (int argc, char** argv)
 {
+    srand(time(NULL));
     cout << "Pathfinder V2 : THE DEMINER"<< endl << "---------------------------" <<endl;
     Pathfinder pathfinder;
     outPut moteur(pathfinder.getMatrix());
     moteur.init_outPut();
-    moteur.genList();
+    //moteur.drawTerrain(true);
     vector<Node> resultList=pathfinder.find(moteur.choosePoints());
 
     if(resultList.empty())

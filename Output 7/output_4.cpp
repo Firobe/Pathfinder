@@ -1,9 +1,5 @@
 #include "output.h"
 
-inline float clamp(float x, float a, float b)
-{
-    return x < a ? a : (x > b ? b : x);
-};
 
 vector<int*> outPut::choosePoints()
 {
@@ -13,26 +9,36 @@ vector<int*> outPut::choosePoints()
 
     TwBar *b_points = TwNewBar("Points stratégiques");
     intCoords curPoint(0,0);
-    bool done(false), addCurrent(false);
+    bool done(false), addCurrent(false), addRandom(false);
     coords3d vertex(0,0,0);
 
     TwAddVarRW(b_points, "x", TW_TYPE_INT32, &(curPoint.x), "keyincr = RIGHT keydecr = LEFT" );
     TwAddVarRW(b_points, "y", TW_TYPE_INT32, &(curPoint.y), "keyincr = UP keydecr = DOWN" );
     TwAddVarRW(b_points, "Fini", TW_TYPE_BOOLCPP, &(done), "key = RETURN" );
     TwAddVarRW(b_points, "Ajouter courant", TW_TYPE_BOOLCPP, &(addCurrent), "key = SPACE" );
+    TwAddVarRW(b_points, "Ajouter au hasard", TW_TYPE_BOOLCPP, &(addRandom), "key = 'r'" );
+    TwDefine(" 'Points stratégiques' iconified=true ");
 
     while(!done || points.size() < 2)
     {
     setScene();
     drawScene();
     glDisable(GL_LIGHTING);
-    glDisable(GL_DEPTH_TEST);
+//    glDisable(GL_DEPTH_TEST);
 
     curPoint.x = clamp(curPoint.x, 0, _dimensions.x-1);
     curPoint.y = clamp(curPoint.y, 0, _dimensions.y-1);
     vertex = getVertex(curPoint.x,curPoint.y);
     _scene3d.focus.x = curPoint.x;
     _scene3d.focus.y = curPoint.y;
+
+    if(addRandom)
+    {
+        addCurrent = true;
+        addRandom = false;
+        curPoint.x = rand()%(_dimensions.x-1);
+        curPoint.y = rand()%(_dimensions.y-1);
+    }
 
     if(addCurrent)
     {
@@ -52,7 +58,7 @@ vector<int*> outPut::choosePoints()
     }
     glEnd();
     glEnable(GL_LIGHTING);
-    glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_DEPTH_TEST);
 
     display();
     }

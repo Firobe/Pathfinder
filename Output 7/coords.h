@@ -31,14 +31,14 @@ coords operator%(coords const& a, coords const& b);
 
 struct intCoords
 {
-    int x;
-    int y;
+    unsigned int x;
+    unsigned int y;
 
     //Fonction static pour pouvoir l'appeler à tt moment
-    static intCoords retournerintCoords(int t_x, int t_y);
+    static intCoords retournerintCoords(unsigned int t_x, unsigned int t_y);
 
     intCoords();
-    intCoords(int t_x, int t_y);
+    intCoords(unsigned int t_x, unsigned int t_y);
 
     //Fonctions de surcharge d'opérateurs raccourcis
     intCoords& operator+=(const intCoords &b);

@@ -30,6 +30,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-g" />
 			<Add option="-fexceptions" />
 			<Add option="-DGLEW_STATIC" />
 			<Add directory="I:/Programmes/CodeBlocks/MinGW/include" />
@@ -60,6 +61,7 @@
 		<Unit filename="output_2.cpp" />
 		<Unit filename="output_3.cpp" />
 		<Unit filename="output_4.cpp" />
+		<Unit filename="output_5.cpp" />
 		<Unit filename="prev_declarations.h" />
 		<Unit filename="registry.h" />
 		<Unit filename="scene.h" />

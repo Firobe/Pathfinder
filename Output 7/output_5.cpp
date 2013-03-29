@@ -33,7 +33,6 @@ void outPut::drawTerrain(bool reinit)
         +-
          */
 
-
     if(init || reinit)
     {
         gen_verticesMap();
@@ -85,9 +84,9 @@ void outPut::drawTerrain(bool reinit)
                     color[2] = _data[i][j]/255.0;
                 }
 
-                terrain.colorsA[(i*_dimensions.y+j)*C_SIZE] = _reg.UNIFORM_COLOR[0];
-                terrain.colorsA[(i*_dimensions.y+j)*C_SIZE+1] = _reg.UNIFORM_COLOR[1];
-                terrain.colorsA[(i*_dimensions.y+j)*C_SIZE+2] = _reg.UNIFORM_COLOR[2];
+                terrain.colorsA[(i*_dimensions.y+j)*C_SIZE] = color[0];
+                terrain.colorsA[(i*_dimensions.y+j)*C_SIZE+1] = color[1];
+                terrain.colorsA[(i*_dimensions.y+j)*C_SIZE+2] = color[2];
             }
         }
 ///Remplissage de l'index
@@ -155,7 +154,6 @@ void outPut::drawTerrain(bool reinit)
         drawNormals();
     glEnable(GL_LIGHTING);
 
-    glEnable(GL_DEPTH_TEST);
     /* specification du buffer des positions de sommets */
     glBindBuffer(GL_ARRAY_BUFFER, buf_pos);
     glVertexPointer(P_SIZE, GL_FLOAT, 0, BUFFER_OFFSET(0));

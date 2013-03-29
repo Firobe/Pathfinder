@@ -40,7 +40,6 @@ outPut::outPut(Matrix array)
 
 outPut::~outPut()
 {
-    glDeleteLists(_dispListMap, 1);
     ///Terminer AntTweakBar
     TwTerminate();
     ///Terminer GLFW
@@ -68,8 +67,8 @@ void outPut::init_outPut()
     gluPerspective(70,(double)_reg.WIDTH/_reg.HEIGHT,1,1000);
 
     glEnable(GL_DEPTH_TEST);
-   /* glDisable(GL_POINT_SMOOTH);
-    glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);*/
+    /* glDisable(GL_POINT_SMOOTH);
+     glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);*/
     /*glEnable (GL_BLEND);
     glBlendFunc (GL_ONE, GL_ONE);*/
     //glEnable(GL_CULL_FACE);
@@ -80,7 +79,7 @@ void outPut::init_outPut()
     glEnable(GL_COLOR_MATERIAL);
     glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-    glClearColor(128,128,128,255);
+    glClearColor(119.0/255.0, 181.0/255.0, 254.0/255.0,1.0);
 
     init_Tw();
     init_Bars();
@@ -93,11 +92,11 @@ void outPut::init_outPut()
 
 void outPut::loadConfig()
 {
-        ///Initialisation Rude::Config
+    ///Initialisation Rude::Config
     assert(_config.load("config.ini"));
     _config.setSection("window");
 
-    _reg.COLORS = uniform;
+    _reg.COLORS = colorized;
     if(_config.getBoolValue("AUTO"))
     {
         _config.setSection("render");
@@ -116,7 +115,7 @@ void outPut::loadConfig()
     }
     _config.setSection("render");
     assert(_reg.MAX_FPS = _config.getIntValue("MAX_FPS"));
-    _reg.WIREFRAME = _config.getBoolValue("WIREFRAME");
+    //_reg.WIREFRAME = _config.getBoolValue("WIREFRAME");
     _reg.DRAW_NORMALS = _config.getBoolValue("DRAW_NORMALS");
     _reg.ZTEST_RESULT = _config.getBoolValue("ZTEST_RESULT");
 }
@@ -134,24 +133,37 @@ void outPut::init_Tw()
     glfwSetCharCallback((GLFWcharfun)TwEventCharGLFW);
 }
 
-void TW_CALL recalculate(void* clientData)
+void TW_CALL recalculate(void* outputObject)
 {
-    static_cast<outPut *>(clientData)->genList();
-    static_cast<outPut *>(clientData)->drawResult();
+    static_cast<outPut *>(outputObject)->drawTerrain(true);
+    static_cast<outPut *>(outputObject)->drawResult();
 }
 
-void TW_CALL cbCenterView(void* clientData)
+void TW_CALL cbCenterView(void* outputObject)
 {
-    static_cast<outPut *>(clientData)->centerView();
+    static_cast<outPut *>(outputObject)->centerView();
+}
+
+void TW_CALL switchWireframe(void * clientData)
+{
+    static bool wireframe(false);
+    if(!wireframe)
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glLineWidth(1);
+        wireframe = true;
+    }
+    else
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        wireframe = false;
+    }
 }
 
 void outPut::centerView()
 {
     _scene3d.focus.x = (int)(_dimensions.x/2.0);
     _scene3d.focus.y = (int)(_dimensions.y/2.0);
-
-    cout << "\nx/2 : " << (int)(_dimensions.x/2.0) << "\ny/2 : " << (int)(_dimensions.y/2.0);
-    cout << "\nx : " << _dimensions.x << "\ny : " << _dimensions.y;
 }
 
 void outPut::init_Bars()
@@ -172,7 +184,7 @@ void outPut::init_Bars()
     TwAddButton(b_scene, "Centrer", cbCenterView, this, " group = 'Focus' ");
 
     TwAddVarRW(b_scene, "Test de profondeur résultat", TW_TYPE_BOOLCPP,
-                &(_reg.ZTEST_RESULT), "label='Z test resultat'");
+               &(_reg.ZTEST_RESULT), "label='Z test resultat'");
 
     //_scene3d.lightDir = {1,1,-1};
     _scene3d.lightDir[0]=_scene3d.lightDir[1]=1;
@@ -193,7 +205,7 @@ void outPut::init_Bars()
     TwType colorsType;
     colorsType = TwDefineEnum("ColorsType", NULL, 0);
     TwAddVarRW(b_reglages, "Couleurs", colorsType, &(_reg.COLORS), " enum='0 {Réelles}, 1 {Colorisé}, 2 {Uniforme}'");
-    TwAddVarRW(b_reglages, "Rendu filaire", TW_TYPE_BOOLCPP, &(_reg.WIREFRAME), "group = 'Rendu'");
+    TwAddButton(b_reglages, "Changer filaire/plein", switchWireframe, NULL, " group = Rendu ");
     TwAddVarRW(b_reglages, "Normales", TW_TYPE_BOOLCPP, &(_reg.DRAW_NORMALS), "group = 'Rendu'");
     TwAddVarRW(b_reglages, "Couleur unie", TW_TYPE_COLOR3F, &(_reg.UNIFORM_COLOR), "colormode=hls group = 'Rendu'");
 
@@ -253,44 +265,10 @@ void outPut::gen_normalMap()
 
 coords3d outPut::getVertex(int x, int y)
 {
-    if(x < 0)
-    x = 0;
-    if(x > _dimensions.x-1)
-    x = _dimensions.x-1;
-
-    if(y < 0)
-    y = 0;
-    if(y > _dimensions.y-1)
-    y = _dimensions.y-1;
+    x = clamp(x, 0, _dimensions.x-1);
+    y = clamp(y, 0, _dimensions.y-1);
 
     return _scene3d.verticesMap[x][y];
-}
-
-void outPut::genList()
-{
-    double beginTime = glfwGetTime();
-    gen_verticesMap();
-    glNewList(_dispListMap, GL_COMPILE);
-
-    glDisable(GL_LIGHTING);
-    drawAxis();
-    if(_reg.DRAW_NORMALS)
-    drawNormals();
-    glEnable(GL_LIGHTING);
-
-    if(_reg.WIREFRAME)
-    {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glLineWidth(1);
-    }
-    else
-    {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    }
-
-    drawTerrain();
-    glEndList();
-   // std::cout << "Temps de calcul : " << glfwGetTime()- beginTime << " secondes." << endl;
 }
 
 void outPut::drawAxis()
@@ -310,92 +288,5 @@ void outPut::drawAxis()
     glVertex3d(0,0,0);
     glVertex3d(0,0,50);
     glEnd();
-
-
-}
-
-void outPut::drawNormals()
-{
-        glLineWidth(1);
-        glColor3ub(255,0,0);
-        for(int x = 0; x < _dimensions.x; x++)
-        {
-            for(int y = 0; y < _dimensions.y; y++)
-            {
-
-                glBegin(GL_LINES);
-                glVertex3d(_scene3d.verticesMap[x][y].x, _scene3d.verticesMap[x][y].y,_scene3d.verticesMap[x][y].z);
-                glVertex3d(_scene3d.verticesMap[x][y].x+_scene3d.normalMap[x][y].x, _scene3d.verticesMap[x][y].y+_scene3d.normalMap[x][y].y,_scene3d.verticesMap[x][y].z+_scene3d.normalMap[x][y].z);
-                glEnd();
-            }
-            glEnd();
-        }
-}
-
-void outPut::drawTerrain()
-{
-        glColorMaterial(GL_FRONT_AND_BACK, GL_SPECULAR);
-        glColor3ub(50, 50,50);
-        glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
-        glColor3ub(100, 100,100);
-        glMateriali(GL_FRONT_AND_BACK, GL_SHININESS, 30.0);
-        glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-        glColor3f(_reg.UNIFORM_COLOR[0],_reg.UNIFORM_COLOR[1],_reg.UNIFORM_COLOR[2]);
-
-        for(int x = 0; x < _dimensions.x-1; x++)
-        {
-            glBegin(GL_TRIANGLES);
-
-            for(int y = 0; y < _dimensions.y-1; y++)
-            {
-                if(_reg.COLORS == colorized)
-                glColor3ub(_data[x][y], 255-_data[x][y], 0);
-                if (_reg.COLORS == real)
-                glColor3ub(_data[x][y], _data[x][y], _data[x][y]);
-
-                glNormal3d(_scene3d.normalMap[x][y].x,_scene3d.normalMap[x][y].y,_scene3d.normalMap[x][y].z);
-                glVertex3d(_scene3d.verticesMap[x][y].x, _scene3d.verticesMap[x][y].y,_scene3d.verticesMap[x][y].z);
-
-                if(_reg.COLORS == colorized)
-                glColor3ub(_data[x+1][y], 255-_data[x+1][y], 0);
-                if (_reg.COLORS == real)
-                glColor3ub(_data[x+1][y], _data[x+1][y], _data[x+1][y]);
-
-                glNormal3d(_scene3d.normalMap[x+1][y].x,_scene3d.normalMap[x+1][y].y,_scene3d.normalMap[x+1][y].z);
-                glVertex3d(_scene3d.verticesMap[x+1][y].x, _scene3d.verticesMap[x+1][y].y,_scene3d.verticesMap[x+1][y].z);
-
-                if(_reg.COLORS == colorized)
-                glColor3ub(_data[x][y+1], 255-_data[x][y+1], 0);
-                if (_reg.COLORS == real)
-                glColor3ub(_data[x][y+1], _data[x][y+1], _data[x][y+1]);
-
-                glNormal3d (_scene3d.normalMap[x][y+1].x,_scene3d.normalMap[x][y+1].y,_scene3d.normalMap[x][y+1].z);
-                glVertex3d(_scene3d.verticesMap[x][y+1].x, _scene3d.verticesMap[x][y+1].y,_scene3d.verticesMap[x][y+1].z);
-
-                if(_reg.COLORS == colorized)
-                glColor3ub(_data[x+1][y+1], 255-_data[x+1][y+1], 0);
-                if (_reg.COLORS == real)
-                glColor3ub(_data[x+1][y+1], _data[x+1][y+1], _data[x+1][y+1]);
-
-                glNormal3d(_scene3d.normalMap[x+1][y+1].x,_scene3d.normalMap[x+1][y+1].y,_scene3d.normalMap[x+1][y+1].z);
-                glVertex3d(_scene3d.verticesMap[x+1][y+1].x, _scene3d.verticesMap[x+1][y+1].y,_scene3d.verticesMap[x+1][y+1].z);
-
-                if(_reg.COLORS == colorized)
-                glColor3ub(_data[x][y+1], 255-_data[x][y+1], 0);
-                if (_reg.COLORS == real)
-                glColor3ub(_data[x][y+1], _data[x][y+1], _data[x][y+1]);
-
-                glNormal3d (_scene3d.normalMap[x][y+1].x,_scene3d.normalMap[x][y+1].y,_scene3d.normalMap[x][y+1].z);
-                glVertex3d(_scene3d.verticesMap[x][y+1].x, _scene3d.verticesMap[x][y+1].y,_scene3d.verticesMap[x][y+1].z);
-
-                if(_reg.COLORS == colorized)
-                glColor3ub(_data[x+1][y], 255-_data[x+1][y], 0);
-                if (_reg.COLORS == real)
-                glColor3ub(_data[x+1][y], _data[x+1][y], _data[x+1][y]);
-
-                glNormal3d(_scene3d.normalMap[x+1][y].x,_scene3d.normalMap[x+1][y].y,_scene3d.normalMap[x+1][y].z);
-                glVertex3d(_scene3d.verticesMap[x+1][y].x, _scene3d.verticesMap[x+1][y].y,_scene3d.verticesMap[x+1][y].z);
-            }
-            glEnd();
-        }
+    glLineWidth(1);
 }

@@ -99,7 +99,7 @@ coords operator%(coords const& a, coords const& b)
 
 ///Et pour intCoords :
 ///Fonction de retour de coordonnées
-intCoords intCoords::retournerintCoords(int t_x, int t_y)
+intCoords intCoords::retournerintCoords(unsigned int t_x, unsigned int t_y)
 {
     intCoords xy;
     xy.x = t_x;
@@ -114,7 +114,7 @@ intCoords::intCoords()
     y=0;
 }
 
-intCoords::intCoords(int t_x, int t_y)
+intCoords::intCoords(unsigned int t_x, unsigned int t_y)
 {
     x=t_x;
     y=t_y;

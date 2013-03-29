@@ -1,23 +1,21 @@
 #include "output.h"
-#define BUFFER_OFFSET(a) ((char*)NULL + (a))
-double loopTime;
+
 double beginTime = 0;
-int fps = 0;
+unsigned int fps = 0;
 
 void outPut::setScene()
 {
     static bool autoZfocus(true);
-    static bool init = true;
+    static bool init(true);
     if (init)
     {
         glfwSetTime(0);
         TwAddVarRW(b_scene, "Auto Z focus", TW_TYPE_BOOLCPP, &autoZfocus, "");
-        TwAddVarRO(b_scene, "FPS", TW_TYPE_INT8, &fps, "");
+        TwAddVarRO(b_scene, "FPS", TW_TYPE_INT16, &fps, "");
         init = false;
-        glfwSetTime(0);
     }
-    static float mat[4*4];
-    static coords3d focus3d;
+    float mat[4*4];
+    coords3d focus3d;
 
     beginTime = glfwGetTime();
 
@@ -30,7 +28,7 @@ void outPut::setScene()
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-    gluPerspective(_scene3d.zoom,_reg.WIDTH/_reg.HEIGHT,1,1000);
+    gluPerspective(_scene3d.zoom,_reg.WIDTH/_reg.HEIGHT,3,100000);
 
 
     gluLookAt(focus3d.x, focus3d.y, _scene3d.distance, focus3d.x, focus3d.y, focus3d.z, 0, 1, 0);
@@ -59,19 +57,23 @@ void outPut::setScene()
 void outPut::drawScene()
 {
     drawLight();
-    // genList();
-    glCallList(_dispListMap);
+    drawTerrain();
     TwDraw();
 }
 
 void outPut::display()
 {
+    //glfwSwapInterval(1);
     glfwSwapBuffers();
 
-    loopTime = glfwGetTime() - beginTime;
-    fps = 1/loopTime;
+    double loopTime = glfwGetTime() - beginTime;
+    fps = 1.0/loopTime;
     if(fps >  _reg.MAX_FPS)
-        glfwSleep(loopTime-1/_reg.MAX_FPS );
+        {
+            glfwSleep(1.0/(double)_reg.MAX_FPS-loopTime );
+            fps = 1.0/(glfwGetTime() - beginTime);
+        //cout << "\nDodo de " << 1.0/(double)_reg.MAX_FPS-loopTime <<"s";
+        }
 }
 
 void outPut::drawResult(vector<Node>* list)
@@ -87,10 +89,12 @@ void outPut::drawResult(vector<Node>* list)
         lastList = list;
         if(list == NULL)
             return;
+        std::reverse(list->begin(), list->end());
     }
     else if(list == NULL)
     {
         list = lastList;
+        std::reverse(list->begin(), list->end());
         init = true;
     }
 #define decalZ 1
@@ -109,8 +113,8 @@ void outPut::drawResult(vector<Node>* list)
             results.verticesA[i*P_SIZE] = vertex.x;
             results.verticesA[i*P_SIZE+1] = vertex.y;
             results.verticesA[i*P_SIZE+2] = vertex.z;
-
-            /* creation de nos VBO */
+        }
+        /* creation de nos VBO */
             glGenBuffers(1, &buf_pos);
             glGenBuffers(1, &buf_col);
             /* on bind le buffer des positions de sommets */
@@ -131,19 +135,16 @@ void outPut::drawResult(vector<Node>* list)
                                                  *results.colorsA), results.colorsA);
             /* plus aucun buffer n'est a utiliser */
             glBindBuffer(GL_ARRAY_BUFFER, 0);
-            /*cout << "\n\n\n x :" << results.verticesA[i*P_SIZE] << "\n y :" << results.verticesA[i*P_SIZE+1] << "\n z :" << results.verticesA[i*P_SIZE+2] ;
-            cout << "\n r :" << results.colorsA[i*C_SIZE] << "\n v :" << results.colorsA[i*C_SIZE+1] << "\n b :" << results.colorsA[i*C_SIZE+2] ;*/
-        }
 
         init = false;
     }
-#define ESPACE 5
-#define VITESSE 0.3
+#define SPACE 5
+#define SPEED 0.5
 
     for(unsigned int i = 0; i < list->size(); i++)
     {
         results.colorsA[i*C_SIZE] = 0;
-        results.colorsA[i*C_SIZE+1] = (int)(occurence*VITESSE+i)%(ESPACE)*(255/ESPACE);
+        results.colorsA[i*C_SIZE+1] = (int)(occurence*SPEED+i)%(SPACE)*(255/SPACE);
         results.colorsA[i*C_SIZE+2] = 0;
     }
     GLvoid *col_vbo = NULL;
@@ -170,8 +171,10 @@ void outPut::drawResult(vector<Node>* list)
     glEnableClientState(GL_COLOR_ARRAY);
 
     glDisable(GL_LIGHTING);
+    glLineWidth(lineWidth);
     glDrawArrays(GL_LINE_STRIP, 0, list->size());
     glEnable(GL_LIGHTING);
+    glLineWidth(1);
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
