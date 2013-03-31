@@ -72,7 +72,6 @@ void outPut::display()
         {
             glfwSleep(1.0/(double)_reg.MAX_FPS-loopTime );
             fps = 1.0/(glfwGetTime() - beginTime);
-        //cout << "\nDodo de " << 1.0/(double)_reg.MAX_FPS-loopTime <<"s";
         }
 }
 
@@ -109,7 +108,7 @@ void outPut::drawResult(vector<Node>* list)
         for(unsigned int i = 0; i < list->size(); i++)
         {
             vertex = getVertex((*list)[i].x,(*list)[i].y);
-            normal = _scene3d.normalMap[(*list)[i].x][(*list)[i].y];
+            vertex.x+= decalZ;
             results.verticesA[i*P_SIZE] = vertex.x;
             results.verticesA[i*P_SIZE+1] = vertex.y;
             results.verticesA[i*P_SIZE+2] = vertex.z;
@@ -139,12 +138,12 @@ void outPut::drawResult(vector<Node>* list)
         init = false;
     }
 #define SPACE 5
-#define SPEED 0.5
+#define SPEED 0.2
 
     for(unsigned int i = 0; i < list->size(); i++)
     {
         results.colorsA[i*C_SIZE] = 0;
-        results.colorsA[i*C_SIZE+1] = (int)(occurence*SPEED+i)%(SPACE)*(255/SPACE);
+        results.colorsA[i*C_SIZE+1] = ((int)(occurence*SPEED+i))%(SPACE)*(255.0/SPACE);
         results.colorsA[i*C_SIZE+2] = 0;
     }
     GLvoid *col_vbo = NULL;
@@ -159,6 +158,8 @@ void outPut::drawResult(vector<Node>* list)
 
     if(!_reg.ZTEST_RESULT)
         glDisable(GL_DEPTH_TEST);
+    else
+        glEnable(GL_DEPTH_TEST);
 
     /* specification du buffer des positions de sommets */
     glBindBuffer(GL_ARRAY_BUFFER, buf_pos);
@@ -169,24 +170,17 @@ void outPut::drawResult(vector<Node>* list)
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
-
-    glDisable(GL_LIGHTING);
     glLineWidth(lineWidth);
     glDrawArrays(GL_LINE_STRIP, 0, list->size());
-    glEnable(GL_LIGHTING);
     glLineWidth(1);
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
-
-    if(!_reg.ZTEST_RESULT)
-        glEnable(GL_DEPTH_TEST);
 }
 
 void outPut::drawLight()
 {
 #define DL_SCALE 10
-    glDisable(GL_LIGHTING);
     glPointSize(5);
     glColor3ub(255,255,0);
     if(_scene3d.lightPos[3])
@@ -202,6 +196,4 @@ void outPut::drawLight()
         glVertex3d(0,0,0);
         glEnd();
     }
-
-    glEnable(GL_LIGHTING);
 }

@@ -8,7 +8,7 @@ vector<int*> outPut::choosePoints()
     vector <intCoords > points;
 
     TwBar *b_points = TwNewBar("Points stratégiques");
-    intCoords curPoint(0,0);
+    intCoords curPoint((float)_dimensions.x/2.0, (float)_dimensions.y/2.0);
     bool done(false), addCurrent(false), addRandom(false);
     coords3d vertex(0,0,0);
 
@@ -23,11 +23,10 @@ vector<int*> outPut::choosePoints()
     {
     setScene();
     drawScene();
-    glDisable(GL_LIGHTING);
-//    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_DEPTH_TEST);
 
-    curPoint.x = clamp(curPoint.x, 0, _dimensions.x-1);
-    curPoint.y = clamp(curPoint.y, 0, _dimensions.y-1);
+    curPoint.x = clamp(curPoint.x, 1, _dimensions.x-1);
+    curPoint.y = clamp(curPoint.y, 1, _dimensions.y-1);
     vertex = getVertex(curPoint.x,curPoint.y);
     _scene3d.focus.x = curPoint.x;
     _scene3d.focus.y = curPoint.y;
@@ -57,8 +56,6 @@ vector<int*> outPut::choosePoints()
         glVertex3d(vertex.x, vertex.y, vertex.z);
     }
     glEnd();
-    glEnable(GL_LIGHTING);
-//    glEnable(GL_DEPTH_TEST);
 
     display();
     }

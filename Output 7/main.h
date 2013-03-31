@@ -5,14 +5,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
 #include <new>
-#include <AntTweakBar.h>
 
 #include "config.h"
 #include "prev_declarations.h"
 #include "Pathfinder.h"
-#include "coords.h"
 #include "output.h"
 
 #define CASE_H SCREEN_H/20

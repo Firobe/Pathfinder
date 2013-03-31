@@ -65,6 +65,8 @@
 		<Unit filename="prev_declarations.h" />
 		<Unit filename="registry.h" />
 		<Unit filename="scene.h" />
+		<Unit filename="shaders.cpp" />
+		<Unit filename="shaders.h" />
 		<Unit filename="verticesArrays.h" />
 		<Extensions>
 			<code_completion />

@@ -81,6 +81,18 @@ void outPut::init_outPut()
     glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
     glClearColor(119.0/255.0, 181.0/255.0, 254.0/255.0,1.0);
 
+    _sNolight.loadProgram("Ressources/shaders/simple.vs","Ressources/shaders/simple.fs");
+    _sLight.loadProgram("Ressources/shaders/light.vs","Ressources/shaders/light.fs");
+    //_sNolight = _sLight;
+    //_sLight = _sNolight;
+
+    GLuint idUniformResolution = glGetUniformLocation(_sNolight._program, "resolution");
+    glUniform2f(idUniformResolution, (float)_reg.WIDTH, (float)_reg.HEIGHT);
+    idUniformResolution = glGetUniformLocation(_sLight._program, "resolution");
+    glUniform2f(idUniformResolution, (float)_reg.WIDTH, (float)_reg.HEIGHT);
+
+    glUseProgram(_sNolight._program);
+
     init_Tw();
     init_Bars();
 
@@ -273,6 +285,7 @@ coords3d outPut::getVertex(int x, int y)
 
 void outPut::drawAxis()
 {
+    glDisable(GL_DEPTH_TEST);
     glLineWidth(3);
     glBegin(GL_LINES);
     glColor3ub(255, 0,0);
@@ -282,7 +295,6 @@ void outPut::drawAxis()
     glColor3ub(0, 255,0);
     glVertex3d(0,0,0);
     glVertex3d(0,50,0);
-
 
     glColor3ub(0,0,255);
     glVertex3d(0,0,0);

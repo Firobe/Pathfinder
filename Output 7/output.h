@@ -1,24 +1,26 @@
 #ifndef FUNCTIONS_H_INCLUDED
 #define FUNCTIONS_H_INCLUDED
+
 #include "main.h"
 #include <vector>
 #include <cstdlib>
 #include <cstdio>
+#include <ctime>
 
 #include <GL/glew.h>
 #include <GL/glfw.h>
+#include <AntTweakBar.h>
 
 #include <cstring>
 #include <algorithm>
 
-#include <cstdlib>     /* srand, rand */
-#include <ctime>       /* time */
-
 #include "registry.h"
 #include "scene.h"
+#include "coords.h"
 #include "coords3d.h"
 #include "Matrix.h"
 #include "verticesArrays.h"
+#include "shaders.h"
 
 inline float clamp(float x, float a, float b)
 {
@@ -44,8 +46,13 @@ class outPut
     std::vector<int*> choosePoints();
 
     private:
+
     registry _reg;
     scene _scene3d;
+
+    opShader _sNolight;
+    opShader _sLight;
+
     bool _running;
     TwBar *b_scene, *b_reglages;
 
@@ -53,7 +60,7 @@ class outPut
     int** _data;
     intCoords _dimensions;
 
-    void drawNormals();
+    void drawNormals(bool reinit = false);
     void drawAxis();
     void drawLight();
 

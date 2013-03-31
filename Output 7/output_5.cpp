@@ -1,21 +1,68 @@
 #include "output.h"
 
-void outPut::drawNormals()
+void outPut::drawNormals(bool reinit)
 {
-    glLineWidth(1);
-    glColor3ub(255,0,0);
-    for(int x = 0; x < _dimensions.x; x++)
-    {
-        for(int y = 0; y < _dimensions.y; y++)
-        {
+    static VA normals;
+    static GLuint buf_pos;
+    unsigned int nbVertices = _dimensions.x*_dimensions.y*2;
 
-            glBegin(GL_LINES);
-            glVertex3d(_scene3d.verticesMap[x][y].x, _scene3d.verticesMap[x][y].y,_scene3d.verticesMap[x][y].z);
-            glVertex3d(_scene3d.verticesMap[x][y].x+_scene3d.normalMap[x][y].x, _scene3d.verticesMap[x][y].y+_scene3d.normalMap[x][y].y,_scene3d.verticesMap[x][y].z+_scene3d.normalMap[x][y].z);
-            glEnd();
+    if(reinit)
+    {
+        glDeleteBuffers(1,&buf_pos);
+        delete normals.verticesA;
+
+        normals.verticesA = new float[nbVertices*P_SIZE];
+
+#define NORM_SCALE 2.5
+///Remplissage des tableaux de sommets et de couleurs
+        for(unsigned int i = 0; i < _dimensions.x; i++)
+        {
+            for(unsigned int j = 0; j < _dimensions.y; j++)
+            {
+                coords3d vertex(0,0,0), normal(0,0,0);
+
+                vertex = getVertex(i,j);
+                normal = _scene3d.normalMap[i][j];
+                normals.verticesA[(i*_dimensions.y+j)*P_SIZE*2] = vertex.x;
+                normals.verticesA[(i*_dimensions.y+j)*P_SIZE*2+1] = vertex.y;
+                normals.verticesA[(i*_dimensions.y+j)*P_SIZE*2+2] = vertex.z;
+
+                normals.verticesA[(i*_dimensions.y+j)*P_SIZE*2+3] = vertex.x+normal.x*NORM_SCALE;
+                normals.verticesA[(i*_dimensions.y+j)*P_SIZE*2+4] = vertex.y+normal.y*NORM_SCALE;
+                normals.verticesA[(i*_dimensions.y+j)*P_SIZE*2+5] = vertex.z+normal.z*NORM_SCALE;
+            }
         }
-        glEnd();
+        /* creation de nos VBO+IBO */
+        glGenBuffers(1, &buf_pos);
+
+        /* construction du VBO de positions */
+        glBindBuffer(GL_ARRAY_BUFFER, buf_pos);
+        glBufferData(GL_ARRAY_BUFFER, (nbVertices*P_SIZE*sizeof *normals.verticesA),
+                     NULL, GL_STREAM_DRAW);
+
+        glBufferSubData(GL_ARRAY_BUFFER, 0, (nbVertices*P_SIZE*sizeof
+                                             *normals.verticesA), normals.verticesA);
+
+    //On debind le VBO
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        cout<<"\n(re)initialisation de l'affichage des normales reussie\n";
     }
+    glUseProgram(_sNolight._program);
+    /* specification du buffer des positions de sommets */
+    glBindBuffer(GL_ARRAY_BUFFER, buf_pos);
+    glVertexPointer(P_SIZE, GL_FLOAT, 0, BUFFER_OFFSET(0));
+
+    glColor3ub(255,0,255);
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+
+    glDrawArrays(GL_LINES, 0, nbVertices);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+
+    //On debind le VBO
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void outPut::drawTerrain(bool reinit)
@@ -36,6 +83,7 @@ void outPut::drawTerrain(bool reinit)
     if(init || reinit)
     {
         gen_verticesMap();
+        drawNormals(true);
 
         glDeleteBuffers(1,&buf_pos);
         glDeleteBuffers(1,&buf_col);
@@ -147,13 +195,13 @@ void outPut::drawTerrain(bool reinit)
         cout<<"\n(re)initialisation de l'affichage du terrain reussie\n";
         init = false;
     }
-
-    glDisable(GL_LIGHTING);
     drawAxis();
+
+    glEnable(GL_DEPTH_TEST);
     if(_reg.DRAW_NORMALS)
         drawNormals();
-    glEnable(GL_LIGHTING);
 
+    glUseProgram(_sLight._program);
     /* specification du buffer des positions de sommets */
     glBindBuffer(GL_ARRAY_BUFFER, buf_pos);
     glVertexPointer(P_SIZE, GL_FLOAT, 0, BUFFER_OFFSET(0));
@@ -171,8 +219,6 @@ void outPut::drawTerrain(bool reinit)
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
 
-    //glDrawArrays(GL_POINTS,0,nbVertices);
-    //glDrawElements(GL_TRIANGLES, nbIndex, GL_UNSIGNED_INT, BUFFER_OFFSET(0));
     glDrawElements(GL_TRIANGLES, nbIndex, GL_UNSIGNED_INT, BUFFER_OFFSET(0));
 
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -182,5 +228,7 @@ void outPut::drawTerrain(bool reinit)
     //On debind les VBO+IBO
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glUseProgram(_sNolight._program);
 }
 
