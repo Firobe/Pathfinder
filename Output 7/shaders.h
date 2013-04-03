@@ -19,12 +19,14 @@ static GLchar* loadSource(const char*filename);
 static GLuint loadShader(GLenum type, const char*filename);
 
 void loadProgram(const char* vsFile, const char* fsFile);
+void linkProgram();
+void delShader();
 void loadVs(const char*filename);
 void loadFs(const char*filename);
 
-GLuint _vs;
-GLuint _fs;
-GLuint _program;
+GLuint vs;
+GLuint fs;
+GLuint program;
 };
 
 #endif // SHADERS_H_INCLUDED

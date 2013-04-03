@@ -24,6 +24,7 @@ vector<int*> outPut::choosePoints()
     setScene();
     drawScene();
     glDisable(GL_DEPTH_TEST);
+    glUseProgram(_sNolight.program);
 
     curPoint.x = clamp(curPoint.x, 1, _dimensions.x-1);
     curPoint.y = clamp(curPoint.y, 1, _dimensions.y-1);
@@ -69,6 +70,10 @@ vector<int*> outPut::choosePoints()
     }
 
     TwDeleteBar(b_points);
+
+    TwDefine(" Scene/x  keyincr = RIGHT keydecr = LEFT");
+    TwDefine(" Scene/y  keyincr = UP keydecr = DOWN");
+
     return bombList;
 }
 

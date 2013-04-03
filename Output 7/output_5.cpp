@@ -48,7 +48,7 @@ void outPut::drawNormals(bool reinit)
 
         cout<<"\n(re)initialisation de l'affichage des normales reussie\n";
     }
-    glUseProgram(_sNolight._program);
+    glUseProgram(_sNolight.program);
     /* specification du buffer des positions de sommets */
     glBindBuffer(GL_ARRAY_BUFFER, buf_pos);
     glVertexPointer(P_SIZE, GL_FLOAT, 0, BUFFER_OFFSET(0));
@@ -201,7 +201,7 @@ void outPut::drawTerrain(bool reinit)
     if(_reg.DRAW_NORMALS)
         drawNormals();
 
-    glUseProgram(_sLight._program);
+    glUseProgram(_sLight.program);
     /* specification du buffer des positions de sommets */
     glBindBuffer(GL_ARRAY_BUFFER, buf_pos);
     glVertexPointer(P_SIZE, GL_FLOAT, 0, BUFFER_OFFSET(0));
@@ -228,7 +228,5 @@ void outPut::drawTerrain(bool reinit)
     //On debind les VBO+IBO
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glUseProgram(_sNolight._program);
 }
 

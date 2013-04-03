@@ -1,6 +1,8 @@
-uniform vec2 resolution;
- 
+uniform int occurence;
+
 void main()
 {
-    gl_FragColor = gl_Color;
+    gl_FragColor.r = gl_Color.r;
+    gl_FragColor.g = gl_Color.g;
+    gl_FragColor.b = gl_Color.b;
 }

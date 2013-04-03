@@ -2,27 +2,31 @@
 
 void opShader::loadProgram(const char* vsFile, const char* fsFile)
 {
-    _vs = glCreateShader(GL_VERTEX_SHADER);
-    assert(_vs != 0);
-    _fs = glCreateShader(GL_FRAGMENT_SHADER);
-    assert(_fs != 0);
-    _program = glCreateProgram();
+    vs = glCreateShader(GL_VERTEX_SHADER);
+    assert(vs != 0);
+    fs = glCreateShader(GL_FRAGMENT_SHADER);
+    assert(fs != 0);
+    program = glCreateProgram();
     loadVs(vsFile);
     loadFs(fsFile);
-    glAttachShader(_program, _vs);
-    glAttachShader(_program, _fs);
-    glLinkProgram(_program);
+    glAttachShader(program, vs);
+    glAttachShader(program, fs);
+}
+
+void opShader::linkProgram()
+{
+    glLinkProgram(program);
 
     /* verification du succes du 'linkage' */
     GLint link_status = GL_TRUE;
-    glGetProgramiv(_program, GL_LINK_STATUS, &link_status);
+    glGetProgramiv(program, GL_LINK_STATUS, &link_status);
     if(link_status != GL_TRUE)
     {
         GLsizei logsize = 0;
         char *log = NULL;
         /* erreur a la compilation recuperation du log d'erreur */
         /* on recupere la taille du message d'erreur */
-        glGetProgramiv(_program, GL_INFO_LOG_LENGTH, &logsize);
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logsize);
         /* on alloue un espace memoire dans lequel OpenGL ecrira le
         message */
         log = new char[logsize + 1];
@@ -30,23 +34,24 @@ void opShader::loadProgram(const char* vsFile, const char* fsFile)
 
         /* initialisation du contenu */
         memset(log, '\0', logsize + 1);
-        glGetProgramInfoLog(_program, logsize, &logsize, log);
+        glGetProgramInfoLog(program, logsize, &logsize, log);
         std::cerr << "\nImpossible de linker le program : " << log;
         /* ne pas oublier de liberer la memoire et notre shader */
         delete log;
         assert(false);
     }
+    std::cout << "\nLink du shader reussi\n";
 }
 
 void opShader::loadVs(const char*filename)
 {
-    _vs = loadShader(GL_VERTEX_SHADER, filename);
+    vs = loadShader(GL_VERTEX_SHADER, filename);
 }
 
 
 void opShader::loadFs(const char*filename)
 {
-    _fs = loadShader(GL_FRAGMENT_SHADER, filename);
+    fs = loadShader(GL_FRAGMENT_SHADER, filename);
 }
 
 opShader::opShader()
@@ -54,11 +59,18 @@ opShader::opShader()
 
 }
 
+void opShader::delShader()
+{
+    glDeleteShader(vs);
+    glDeleteShader(fs);
+    glDeleteProgram(program);
+}
+
 opShader::~opShader()
 {
-    glDeleteShader(_vs);
-    glDeleteShader(_fs);
-    glDeleteProgram(_program);
+    glDeleteShader(vs);
+    glDeleteShader(fs);
+    glDeleteProgram(program);
 }
 
 GLchar* opShader::loadSource(const char*filename)

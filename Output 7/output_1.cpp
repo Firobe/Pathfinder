@@ -56,8 +56,8 @@ void outPut::setScene()
 }
 void outPut::drawScene()
 {
-    drawLight();
     drawTerrain();
+    drawLight();
     TwDraw();
 }
 
@@ -69,119 +69,136 @@ void outPut::display()
     double loopTime = glfwGetTime() - beginTime;
     fps = 1.0/loopTime;
     if(fps >  _reg.MAX_FPS)
-        {
-            glfwSleep(1.0/(double)_reg.MAX_FPS-loopTime );
-            fps = 1.0/(glfwGetTime() - beginTime);
-        }
+    {
+        glfwSleep(1.0/(double)_reg.MAX_FPS-loopTime );
+        fps = 1.0/(glfwGetTime() - beginTime);
+    }
 }
 
 void outPut::drawResult(vector<Node>* list)
 {
-    static bool init(true);
-    static unsigned int occurence(0);
-    static VA results;
-    static GLuint buf_pos, buf_col;
-    occurence++;
     static vector<Node>* lastList = NULL;
+
+    static bool init(true);
+    static int occurence(0);
+    occurence++;
+
+    static VA results;
+    static int* attribs;
+    static GLuint buf_result;
+    static opShader shader;
+
+    static GLuint uid_occurence = NULL;
+
     if(init)
     {
         lastList = list;
         if(list == NULL)
             return;
-        std::reverse(list->begin(), list->end());
     }
     else if(list == NULL)
     {
         list = lastList;
-        std::reverse(list->begin(), list->end());
         init = true;
     }
-#define decalZ 1
-#define lineWidth 2
+#define DECALZ 1
+#define LINEWIDTH 2
+#define ATTRIB_ID 1
     if(init)
     {
+        shader.delShader();
+        shader.loadProgram("Ressources/shaders/result.vs","Ressources/shaders/result.fs");
+        glBindAttribLocation(shader.program, ATTRIB_ID, "attrib");
+        shader.linkProgram();
+
+        uid_occurence = glGetUniformLocation(shader.program, "occurence");
+
+        GLuint errorState = glGetError();
+        if ( errorState != GL_NO_ERROR )
+        {
+            cerr << "Erreur "<< errorState << " lors du passage du tableau de valeur à la variable attribute 'attrib'\n";
+        }
+
+        glDeleteBuffers(1,&buf_result);
+        delete results.verticesA;
+        delete attribs;
         results.verticesA = new float[list->size()*P_SIZE];
-        results.colorsA = new float[list->size()*C_SIZE];
+        attribs = new int[list->size()];
 
         coords3d vertex(0,0,0), normal(0,0,0);
 
         for(unsigned int i = 0; i < list->size(); i++)
         {
             vertex = getVertex((*list)[i].x,(*list)[i].y);
-            vertex.x+= decalZ;
             results.verticesA[i*P_SIZE] = vertex.x;
             results.verticesA[i*P_SIZE+1] = vertex.y;
-            results.verticesA[i*P_SIZE+2] = vertex.z;
+            results.verticesA[i*P_SIZE+2] = vertex.z+DECALZ;
+
+            attribs[i] = i;
         }
+
         /* creation de nos VBO */
-            glGenBuffers(1, &buf_pos);
-            glGenBuffers(1, &buf_col);
-            /* on bind le buffer des positions de sommets */
-            glBindBuffer(GL_ARRAY_BUFFER, buf_pos);
-            /* on alloue un espace */
-            glBufferData(GL_ARRAY_BUFFER, (list->size()*P_SIZE*sizeof *results.verticesA),
-                         NULL, GL_STREAM_DRAW);
-            /* on specifie les donnees */
-            glBufferSubData(GL_ARRAY_BUFFER, 0, (list->size()*P_SIZE*sizeof
-                                                 *results.verticesA), results.verticesA);
-            /* on bind le buffer des positions de sommets */
-            glBindBuffer(GL_ARRAY_BUFFER, buf_col);
-            /* on alloue un espace */
-            glBufferData(GL_ARRAY_BUFFER, (list->size()*C_SIZE*sizeof *results.colorsA),
-                         NULL, GL_STREAM_DRAW);
-            /* on specifie les donnees */
-            glBufferSubData(GL_ARRAY_BUFFER, 0, (list->size()*C_SIZE*sizeof
-                                                 *results.colorsA), results.colorsA);
-            /* plus aucun buffer n'est a utiliser */
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glGenBuffers(1, &buf_result);
+        /* on bind le buffer des positions de sommets */
+        glBindBuffer(GL_ARRAY_BUFFER, buf_result);
+
+        GLsizeiptr size_pos = (list->size()*P_SIZE*sizeof *results.verticesA),
+        size_attrib = (list->size()*sizeof *attribs);
+        /* on alloue un espace */
+        glBufferData(GL_ARRAY_BUFFER, size_pos + size_attrib ,
+                     NULL, GL_STREAM_DRAW);
+        /* on specifie les donnees */
+        glBufferSubData(GL_ARRAY_BUFFER, 0, size_pos, results.verticesA);
+        glBufferSubData(GL_ARRAY_BUFFER, size_pos, size_attrib, attribs);
+
+        /* plus aucun buffer n'est a utiliser */
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         init = false;
     }
-#define SPACE 5
-#define SPEED 0.2
-
-    for(unsigned int i = 0; i < list->size(); i++)
-    {
-        results.colorsA[i*C_SIZE] = 0;
-        results.colorsA[i*C_SIZE+1] = ((int)(occurence*SPEED+i))%(SPACE)*(255.0/SPACE);
-        results.colorsA[i*C_SIZE+2] = 0;
-    }
-    GLvoid *col_vbo = NULL;
-    glBindBuffer(GL_ARRAY_BUFFER, buf_col);
-    col_vbo = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-    assert(col_vbo != NULL);
-    /* transfert */
-    memcpy(col_vbo, results.colorsA, list->size() * P_SIZE * sizeof *(results.colorsA));
-    glUnmapBuffer(GL_ARRAY_BUFFER);
-    col_vbo = NULL;
-
 
     if(!_reg.ZTEST_RESULT)
         glDisable(GL_DEPTH_TEST);
     else
         glEnable(GL_DEPTH_TEST);
 
-    /* specification du buffer des positions de sommets */
-    glBindBuffer(GL_ARRAY_BUFFER, buf_pos);
-    glVertexPointer(P_SIZE, GL_FLOAT, 0, BUFFER_OFFSET(0));
-    /* specification du buffer des couleurs de sommets */
-    glBindBuffer(GL_ARRAY_BUFFER, buf_col);
-    glColorPointer(C_SIZE, GL_FLOAT, 0, BUFFER_OFFSET(0));
-
     glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
-    glLineWidth(lineWidth);
+    glEnableVertexAttribArray(ATTRIB_ID);
+
+    glBindBuffer(GL_ARRAY_BUFFER, buf_result);
+    /* specification du buffer des positions de sommets */
+    glVertexPointer(P_SIZE, GL_FLOAT, 0, BUFFER_OFFSET(0));
+    /* specification du buffer des attributs de sommets */
+    glVertexAttribIPointer(ATTRIB_ID, 1, GL_INT, 0, BUFFER_OFFSET((list->size()*P_SIZE*sizeof *results.verticesA)));        GLuint errorState = glGetError();
+        if ( errorState != GL_NO_ERROR )
+        {
+            cerr << "Erreur "<< errorState << " lors du passage du tableau de valeur à la variable attribute 'attrib'\n";
+        }
+
+    glUseProgram(shader.program);
+    glUniform1i(uid_occurence, occurence);
+         errorState = glGetError();
+        if ( errorState != GL_NO_ERROR )
+        {
+            cerr << "Erreur "<< errorState << " lors du passage de la valeur d'occurence a 'occurence'\n";
+        }
+
+    glLineWidth(LINEWIDTH);
     glDrawArrays(GL_LINE_STRIP, 0, list->size());
     glLineWidth(1);
 
     glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_COLOR_ARRAY);
+    glDisableVertexAttribArray(ATTRIB_ID);
 }
 
 void outPut::drawLight()
 {
+    glEnable(GL_DEPTH_TEST);
+    glUseProgram(_sNolight.program);
 #define DL_SCALE 10
+#define LINE_WIDTH 2
     glPointSize(5);
+    glLineWidth(LINE_WIDTH);
     glColor3ub(255,255,0);
     if(_scene3d.lightPos[3])
     {

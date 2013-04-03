@@ -54,6 +54,7 @@ void outPut::init_outPut()
 
     loadConfig();
 
+    glfwOpenWindowHint(GLFW_OPENGL_COMPAT_PROFILE, GL_TRUE);
     glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
     assert(glfwOpenWindow( _reg.WIDTH, _reg.HEIGHT, 0,0,0,0,0,0, GLFW_WINDOW ));
     std::string window_title = "";
@@ -67,14 +68,9 @@ void outPut::init_outPut()
     gluPerspective(70,(double)_reg.WIDTH/_reg.HEIGHT,1,1000);
 
     glEnable(GL_DEPTH_TEST);
-    /* glDisable(GL_POINT_SMOOTH);
-     glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);*/
-    /*glEnable (GL_BLEND);
-    glBlendFunc (GL_ONE, GL_ONE);*/
     //glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    glShadeModel(GL_SMOOTH);
 
     glEnable(GL_COLOR_MATERIAL);
     glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
@@ -82,16 +78,17 @@ void outPut::init_outPut()
     glClearColor(119.0/255.0, 181.0/255.0, 254.0/255.0,1.0);
 
     _sNolight.loadProgram("Ressources/shaders/simple.vs","Ressources/shaders/simple.fs");
+    _sNolight.linkProgram();
     _sLight.loadProgram("Ressources/shaders/light.vs","Ressources/shaders/light.fs");
-    //_sNolight = _sLight;
-    //_sLight = _sNolight;
+    _sLight.linkProgram();
 
-    GLuint idUniformResolution = glGetUniformLocation(_sNolight._program, "resolution");
+
+    GLuint idUniformResolution = glGetUniformLocation(_sNolight.program, "resolution");
     glUniform2f(idUniformResolution, (float)_reg.WIDTH, (float)_reg.HEIGHT);
-    idUniformResolution = glGetUniformLocation(_sLight._program, "resolution");
+    idUniformResolution = glGetUniformLocation(_sLight.program, "resolution");
     glUniform2f(idUniformResolution, (float)_reg.WIDTH, (float)_reg.HEIGHT);
 
-    glUseProgram(_sNolight._program);
+    glUseProgram(_sNolight.program);
 
     init_Tw();
     init_Bars();
@@ -190,8 +187,8 @@ void outPut::init_Bars()
     TwAddVarRW(b_scene, "Orientation", TW_TYPE_QUAT4F, &(_scene3d.orientation),"axisx=x axisy=y axisz=z");
     TwAddVarRW(b_scene, "Distance", TW_TYPE_DOUBLE, &(_scene3d.distance),"");
     TwAddVarRW(b_scene, "Zoom", TW_TYPE_DOUBLE, &(_scene3d.zoom),"min = 5 max = 200");
-    TwAddVarRW(b_scene, "x", TW_TYPE_DOUBLE, &(_scene3d.focus.x), "group = 'Focus'");
-    TwAddVarRW(b_scene, "y", TW_TYPE_DOUBLE, &(_scene3d.focus.y), "group = 'Focus'");
+    TwAddVarRW(b_scene, "x", TW_TYPE_DOUBLE, &(_scene3d.focus.x), "group = 'Focus' ");
+    TwAddVarRW(b_scene, "y", TW_TYPE_DOUBLE, &(_scene3d.focus.y), "group = 'Focus' ");
     TwAddVarRW(b_scene, "z", TW_TYPE_DOUBLE, &(_scene3d.focus.z), "group = 'Focus'");
     TwAddButton(b_scene, "Centrer", cbCenterView, this, " group = 'Focus' ");
 
@@ -285,7 +282,8 @@ coords3d outPut::getVertex(int x, int y)
 
 void outPut::drawAxis()
 {
-    glDisable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
+    glUseProgram(_sNolight.program);
     glLineWidth(3);
     glBegin(GL_LINES);
     glColor3ub(255, 0,0);

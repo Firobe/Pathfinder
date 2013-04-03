@@ -1,7 +1,5 @@
 varying vec3 N;
 varying vec3 v; 
-
-#define DIRECTIONNAL 
   
 void main (void)  
 {  
