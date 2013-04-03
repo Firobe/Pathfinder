@@ -21,6 +21,7 @@
 #include "Matrix.h"
 #include "verticesArrays.h"
 #include "shaders.h"
+#include "postproc.h"
 
 inline float clamp(float x, float a, float b)
 {
@@ -52,6 +53,10 @@ class outPut
 
     opShader _sNolight;
     opShader _sLight;
+    opShader _postProcess;
+    GLuint uid_pp_colors, uid_pp_offset;
+
+    fbo frameBuffer;
 
     bool _running;
     TwBar *b_scene, *b_reglages;

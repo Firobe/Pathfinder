@@ -82,6 +82,13 @@ void outPut::init_outPut()
     _sLight.loadProgram("Ressources/shaders/light.vs","Ressources/shaders/light.fs");
     _sLight.linkProgram();
 
+    _postProcess.loadProgram("Ressources/shaders/postprocess.vs","Ressources/shaders/postprocess.fs");
+    //glBindAttribLocation(_postProcess.program, aID_UV, "uv_fbo");
+    _postProcess.linkProgram();
+    uid_pp_colors = glGetUniformLocation(_postProcess.program, "fbo_texture");
+    uid_pp_offset = glGetUniformLocation(_postProcess.program, "offset");
+
+    frameBuffer.genFBO(_reg.WIDTH, _reg.HEIGHT);
 
     GLuint idUniformResolution = glGetUniformLocation(_sNolight.program, "resolution");
     glUniform2f(idUniformResolution, (float)_reg.WIDTH, (float)_reg.HEIGHT);

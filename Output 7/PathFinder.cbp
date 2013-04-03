@@ -62,6 +62,8 @@
 		<Unit filename="output_3.cpp" />
 		<Unit filename="output_4.cpp" />
 		<Unit filename="output_5.cpp" />
+		<Unit filename="postproc.cpp" />
+		<Unit filename="postproc.h" />
 		<Unit filename="prev_declarations.h" />
 		<Unit filename="registry.h" />
 		<Unit filename="scene.h" />

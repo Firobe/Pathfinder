@@ -4,10 +4,10 @@ enum colors_types{real, colorized, uniform};
 struct registry
 {
     double MULTIPLIER;
-    int PIXEL_SIZE;
-    int WIDTH;
-    int HEIGHT;
-    int MAX_FPS;
+    unsigned int PIXEL_SIZE;
+    unsigned int WIDTH;
+    unsigned int HEIGHT;
+    unsigned int MAX_FPS;
     colors_types COLORS;
     //bool WIREFRAME;
     bool DRAW_NORMALS;

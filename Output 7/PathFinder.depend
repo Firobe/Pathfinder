@@ -149,7 +149,7 @@
 	<iostream>
 	<cmath>
 
-1364818982 i:\projets\output 7\output.h
+1364998218 i:\projets\output 7\output.h
 	"main.h"
 	<vector>
 	<cstdlib>
@@ -167,8 +167,9 @@
 	"Matrix.h"
 	"verticesArrays.h"
 	"shaders.h"
+	"postproc.h"
 
-1364486464 i:\projets\output 7\registry.h
+1364993054 i:\projets\output 7\registry.h
 
 1363292756 i:\projets\output 7\scene.h
 	"coords3d.h"
@@ -179,20 +180,20 @@
 	"Matrix.h"
 	<fstream>
 
-1364925830 source:i:\projets\output 7\output_2.cpp
+1364998218 source:i:\projets\output 7\output_2.cpp
 	"output.h"
 	<string>
 
 1363602526 source:i:\projets\output 7\output_3.cpp
 	"output.h"
 
-1364750810 source:i:\projets\output 7\output_4.cpp
+1364981576 source:i:\projets\output 7\output_4.cpp
 	"output.h"
 
 1364248830 source:i:\projets\output 7\pathfinder.cpp
 	"Pathfinder.h"
 
-1364980208 source:i:\projets\output 7\output_1.cpp
+1364998346 source:i:\projets\output 7\output_1.cpp
 	"output.h"
 
 1344243548 i:\programmes\codeblocks\mingw\include\gl\glew.h
@@ -418,7 +419,7 @@
 1364750810 source:i:\projets\output 7\output_5.cpp
 	"output.h"
 
-1364819686 i:\projets\output 7\shaders.h
+1364991998 i:\projets\output 7\shaders.h
 	<GL/glew.h>
 	<GL/glfw.h>
 	<cstdlib>
@@ -430,4 +431,30 @@
 
 1364820850 source:i:\projets\output 7\shaders.cpp
 	"shaders.h"
+
+1364993054 i:\projets\output 7\fbo.h
+	<GL/glew.h>
+	<GL/glfw.h>
+	<cstdlib>
+	<cstdio>
+	<iostream>
+	<cassert>
+	<cstring>
+	<new>
+
+1364991308 source:i:\projets\output 7\fbo.cpp
+	"fbo.h"
+
+1364997100 i:\projets\output 7\postproc.h
+	<GL/glew.h>
+	<GL/glfw.h>
+	<cstdlib>
+	<cstdio>
+	<iostream>
+	<cassert>
+	<cstring>
+	<new>
+
+1364994646 source:i:\projets\output 7\postproc.cpp
+	"postproc.h"
 

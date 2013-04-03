@@ -24,14 +24,13 @@ void outPut::setScene()
     {
         focus3d.z = getVertex((int)_scene3d.focus.x, (int)_scene3d.focus.y).z;
     }
-
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
     gluPerspective(_scene3d.zoom,_reg.WIDTH/_reg.HEIGHT,3,100000);
-
-
     gluLookAt(focus3d.x, focus3d.y, _scene3d.distance, focus3d.x, focus3d.y, focus3d.z, 0, 1, 0);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer.buffer);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
     if(!_scene3d.lightPos[3])
     {
@@ -63,7 +62,20 @@ void outPut::drawScene()
 
 void outPut::display()
 {
-    //glfwSwapInterval(1);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glUseProgram(_postProcess.program);
+    glBindTexture(GL_TEXTURE_2D, frameBuffer.colors);
+    glUniform1i(uid_pp_colors, /*GL_TEXTURE*/0);
+    glUniform1f(uid_pp_offset, glfwGetTime() * 2*3.14159 * .75);
+
+    glBegin(GL_TRIANGLE_STRIP);
+    glVertex2d(-1, -1);
+    glVertex2d(1, -1);
+    glVertex2d(-1, 1);
+    glVertex2d(1, 1);
+    glEnd();
+
     glfwSwapBuffers();
 
     double loopTime = glfwGetTime() - beginTime;
@@ -134,7 +146,7 @@ void outPut::drawResult(vector<Node>* list)
             results.verticesA[i*P_SIZE+1] = vertex.y;
             results.verticesA[i*P_SIZE+2] = vertex.z+DECALZ;
 
-            attribs[i] = i;
+            attribs[i] = list->size()-i;
         }
 
         /* creation de nos VBO */

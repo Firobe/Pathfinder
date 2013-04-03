@@ -13,20 +13,25 @@
 
 struct opShader
 {
-opShader();
-~opShader();
-static GLchar* loadSource(const char*filename);
-static GLuint loadShader(GLenum type, const char*filename);
+public:
+    opShader();
+    ~opShader();
+    static GLchar* loadSource(const char*filename);
+    static GLuint loadShader(GLenum type, const char*filename);
 
-void loadProgram(const char* vsFile, const char* fsFile);
-void linkProgram();
-void delShader();
-void loadVs(const char*filename);
-void loadFs(const char*filename);
+    void loadProgram(const char* vsFile, const char* fsFile);
+    void linkProgram();
+    void delShader();
 
-GLuint vs;
-GLuint fs;
-GLuint program;
+    GLuint program;
+
+private :
+
+    void loadVs(const char*filename);
+    void loadFs(const char*filename);
+
+    GLuint vs;
+    GLuint fs;
 };
 
 #endif // SHADERS_H_INCLUDED
