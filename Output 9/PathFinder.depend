@@ -871,3 +871,133 @@
 
 1361373728 i:\programmes\codeblocks\mingw\include\glm\gtc\type_ptr.inl
 
+1366119362 source:i:\projets\output 9\lightshader.cpp
+	"shaders.h"
+	"output.h"
+
+1366119362 i:\projets\output 9\shaders.h
+	<GL/glew.h>
+	<GL/glfw.h>
+	<cstdlib>
+	<cstdio>
+	<iostream>
+	<cassert>
+	<cstring>
+	<new>
+
+1366119464 i:\projets\output 9\output.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	<ctime>
+	<GL/glew.h>
+	<GL/glfw.h>
+	<AntTweakBar.h>
+	<cstring>
+	<algorithm>
+	<glm/glm.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"registry.h"
+	"scene.h"
+	"coords.h"
+	"coords3d.h"
+	"Matrix.h"
+	"verticesArrays.h"
+	"shaders.h"
+	"postproc.h"
+
+1364575558 i:\projets\output 9\main.h
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<new>
+	"config.h"
+	"prev_declarations.h"
+	"Pathfinder.h"
+	"output.h"
+	<fstream>
+	<cmath>
+	<ctime>
+	"Matrix.h"
+
+1170358626 i:\projets\output 9\config.h
+
+1363602526 i:\projets\output 9\prev_declarations.h
+
+1364248830 i:\projets\output 9\pathfinder.h
+	<vector>
+	<ctime>
+	<algorithm>
+	"Matrix.h"
+
+1363370970 i:\projets\output 9\matrix.h
+	<iostream>
+	<cmath>
+
+1366126504 i:\projets\output 9\registry.h
+
+1365667020 i:\projets\output 9\scene.h
+	"coords3d.h"
+
+1365668264 i:\projets\output 9\coords3d.h
+	<cmath>
+	"coords3d.tpp"
+
+1365668234 i:\projets\output 9\coords3d.tpp
+	<cmath>
+	"coords3d.h"
+
+1365670982 i:\projets\output 9\coords.h
+	<cmath>
+	"coords.tpp"
+
+1365670982 i:\projets\output 9\coords.tpp
+	"coords.h"
+
+1364484702 i:\projets\output 9\verticesarrays.h
+
+1364997100 i:\projets\output 9\postproc.h
+	<GL/glew.h>
+	<GL/glfw.h>
+	<cstdlib>
+	<cstdio>
+	<iostream>
+	<cassert>
+	<cstring>
+	<new>
+
+1366102732 source:i:\projets\output 9\main.cpp
+	"main.h"
+
+1363292756 source:i:\projets\output 9\matrix.cpp
+	"Matrix.h"
+	<fstream>
+
+1366117238 source:i:\projets\output 9\output_2.cpp
+	"output.h"
+	<string>
+
+1366041450 source:i:\projets\output 9\output_3.cpp
+	"output.h"
+
+1366102520 source:i:\projets\output 9\output_4.cpp
+	"output.h"
+
+1366126504 source:i:\projets\output 9\output_5.cpp
+	"output.h"
+
+1365673018 source:i:\projets\output 9\pathfinder.cpp
+	"Pathfinder.h"
+
+1364994646 source:i:\projets\output 9\postproc.cpp
+	"postproc.h"
+
+1366041450 source:i:\projets\output 9\shaders.cpp
+	"shaders.h"
+	"output.h"
+
+1366126538 source:i:\projets\output 9\output_1.cpp
+	"output.h"
+

@@ -120,6 +120,7 @@ void outPut::init_outPut()
     //_reg.UNIFORM_COLOR = {0.5,0.5,0.5};
     _reg.UNIFORM_COLOR[0]=_reg.UNIFORM_COLOR[1]=_reg.UNIFORM_COLOR[2]=0.5;
     _running = true;
+    _reg.WIREFRAME = false;
 }
 
 void outPut::loadConfig()
@@ -176,7 +177,7 @@ void TW_CALL cbCenterView(void* outputObject)
     static_cast<outPut *>(outputObject)->centerView();
 }
 
-void TW_CALL switchWireframe(void * clientData)
+/*void TW_CALL switchWireframe(void * clientData)
 {
     static bool wireframe(false);
     if(!wireframe)
@@ -190,7 +191,7 @@ void TW_CALL switchWireframe(void * clientData)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         wireframe = false;
     }
-}
+}*/
 
 void outPut::centerView()
 {
@@ -237,7 +238,7 @@ void outPut::init_Bars()
     TwType colorsType;
     colorsType = TwDefineEnum("ColorsType", NULL, 0);
     TwAddVarRW(b_reglages, "Couleurs", colorsType, &(_reg.COLORS), " enum='0 {Réelles}, 1 {Colorisé}, 2 {Uniforme}'");
-    TwAddButton(b_reglages, "Changer filaire/plein", switchWireframe, NULL, " group = Rendu ");
+    TwAddVarRW(b_reglages, "Filaire", TW_TYPE_BOOLCPP, &(_reg.WIREFRAME), " group = Rendu ");
     TwAddVarRW(b_reglages, "Normales", TW_TYPE_BOOLCPP, &(_reg.DRAW_NORMALS), "group = 'Rendu'");
     TwAddVarRW(b_reglages, "Couleur unie", TW_TYPE_COLOR3F, &(_reg.UNIFORM_COLOR), "colormode=hls group = 'Rendu'");
 

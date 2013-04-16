@@ -66,6 +66,14 @@ void outPut::drawScene()
 
 void outPut::display()
 {
+
+    if(_reg.WIREFRAME)
+    {
+        glPushAttrib(GL_POLYGON_BIT);
+        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+    }
+
+
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glUseProgram(_postProcess.getProgramID());
@@ -90,6 +98,8 @@ void outPut::display()
         glfwSleep(1.0/(double)_reg.MAX_FPS-loopTime );
         fps = 1.0/(glfwGetTime() - beginTime);
     }
+    if(_reg.WIREFRAME)
+        glPopAttrib();
 }
 
 void outPut::drawResult(vector<Node>* list)

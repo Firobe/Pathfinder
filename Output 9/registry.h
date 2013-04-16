@@ -9,7 +9,7 @@ struct registry
     unsigned int HEIGHT;
     unsigned int MAX_FPS;
     colors_types COLORS;
-    //bool WIREFRAME;
+    bool WIREFRAME;
     bool DRAW_NORMALS;
     float UNIFORM_COLOR[3];
     bool ZTEST_RESULT;

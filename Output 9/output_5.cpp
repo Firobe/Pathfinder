@@ -67,6 +67,20 @@ void outPut::drawNormals(bool reinit)
 
 void outPut::drawTerrain(bool reinit)
 {
+    static bool lastwfStatus(!_reg.WIREFRAME);
+    if(lastwfStatus != _reg.WIREFRAME)
+    {
+        if(_reg.WIREFRAME)
+            {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glLineWidth(1);
+    }
+    else
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }}
+    lastwfStatus = _reg.WIREFRAME;
+
     static bool init(true);
     static VA terrain;
     static GLuint buf_pos, buf_col, buf_norm, buf_index;
