@@ -53,7 +53,7 @@ class lightShading : public opShader
 {
     public:
         void initCommunication();
-        void setLightPos(float position[]);
+        void setPos(float lightPos[]);
         void setLightMaterial(float ambient[], float diffuse[], float specular[]);
         void setLightMaterial(float ambient, float diffuse, float specular);
         void setMaterial(float ambient[], float diffuse[], float specular[],float shininess);
@@ -63,6 +63,7 @@ class lightShading : public opShader
     protected:
         s_light _light;
         s_material _material;
+        GLuint _uid_camPos;
 };
 
 #endif // SHADERS_H_INCLUDED

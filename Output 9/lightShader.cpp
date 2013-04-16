@@ -14,6 +14,8 @@ void lightShading::initCommunication()
     catchError(S__LINE__);
     _light.uid_specular = glGetUniformLocation(_program, "lighting.specular");
     catchError(S__LINE__);
+    _uid_camPos = glGetUniformLocation(_program, "camPos");
+    catchError(S__LINE__);
 
     _material.uid_shininess = glGetUniformLocation(_program, "material.shininess");
     catchError(S__LINE__);
@@ -25,10 +27,10 @@ void lightShading::initCommunication()
     catchError(S__LINE__);
 }
 
-void lightShading::setLightPos(float position[])
+void lightShading::setPos(float lightPos[])
 {
     glUseProgram(_program);
-    glUniform4fv(_light.uid_position, 1, position);
+    glUniform4fv(_light.uid_position, 1, lightPos);
     catchError(S__LINE__);
 }
 void lightShading::setLightMaterial(float ambient[], float diffuse[], float specular[])
@@ -54,6 +56,8 @@ void lightShading::setMaterial(float ambient[], float diffuse[], float specular[
     glUniform4fv(_material.uid_diffuse, 1, diffuse);
     catchError(S__LINE__);
     glUniform4fv(_material.uid_specular, 1, specular);
+    catchError(S__LINE__);
+    glUniform1f(_material.uid_shininess, shininess);
     catchError(S__LINE__);
 
 }

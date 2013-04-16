@@ -27,6 +27,8 @@ void outPut::setScene()
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
     gluPerspective(_scene3d.zoom,_reg.WIDTH/_reg.HEIGHT,3,100000);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
     gluLookAt(focus3d.x, focus3d.y, _scene3d.distance, focus3d.x, focus3d.y, focus3d.z, 0, 1, 0);
 
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer.buffer);
@@ -44,9 +46,11 @@ void outPut::setScene()
         _scene3d.lightPos[1] = _scene3d.lightDir[1];
         _scene3d.lightPos[2] = _scene3d.lightDir[2];
     }
-    _sLight.setLightPos(_scene3d.lightPos);
+    float camPos[4] = {focus3d.x, focus3d.y,_scene3d.distance,0.0};
+    _sLight.setPos(_scene3d.lightPos );
 
-
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
     glTranslatef(focus3d.x, focus3d.y, focus3d.z);
     ConvertQuaternionToMatrix(_scene3d.orientation, mat);
     glMultMatrixf(mat);

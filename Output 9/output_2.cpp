@@ -128,7 +128,7 @@ void outPut::loadConfig()
     assert(_config.load("config.ini"));
     _config.setSection("window");
 
-    _reg.COLORS = colorized;
+    _reg.COLORS = uniform;
     if(_config.getBoolValue("AUTO"))
     {
         _config.setSection("render");

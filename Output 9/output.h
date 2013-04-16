@@ -13,6 +13,8 @@
 
 #include <cstring>
 #include <algorithm>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "registry.h"
 #include "scene.h"

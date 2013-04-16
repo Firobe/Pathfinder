@@ -12,7 +12,7 @@ struct s_light
 uniform s_light lighting;
 uniform s_material material;
 
-varying vec3 normal, lightDir, eyeVec, Ls;
+varying vec3 normal, lightDir, eyeVec;
 
 void main (void)
 {
@@ -36,8 +36,7 @@ void main (void)
 		vec3 R = reflect(-L, N);
 		/*float specular = pow( max(dot(R, E), 0.0),
 		                 material.shininess );*/
-        vec4 specular = vec4(1.0,1.0,1.0,1.0)*vec4(0.7,0.7,0.7,1.0)
-                * pow(max(dot(R,V),0.0), 60.0);
+        float specular = pow(max(dot(R,V),0.0), material.shininess);
 		                 //specular = 0.0;
 		final_color += lighting.specular *
 		               material.specular *

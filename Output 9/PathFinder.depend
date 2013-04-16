@@ -477,3 +477,397 @@
 	"shaders.h"
 	"output.h"
 
+1366119362 source:i:\projets\output 8\lightshader.cpp
+	"shaders.h"
+	"output.h"
+
+1366119362 i:\projets\output 8\shaders.h
+	<GL/glew.h>
+	<GL/glfw.h>
+	<cstdlib>
+	<cstdio>
+	<iostream>
+	<cassert>
+	<cstring>
+	<new>
+
+1366119464 i:\projets\output 8\output.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	<ctime>
+	<GL/glew.h>
+	<GL/glfw.h>
+	<AntTweakBar.h>
+	<cstring>
+	<algorithm>
+	<glm/glm.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"registry.h"
+	"scene.h"
+	"coords.h"
+	"coords3d.h"
+	"Matrix.h"
+	"verticesArrays.h"
+	"shaders.h"
+	"postproc.h"
+
+1364575558 i:\projets\output 8\main.h
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<new>
+	"config.h"
+	"prev_declarations.h"
+	"Pathfinder.h"
+	"output.h"
+	<fstream>
+	<cmath>
+	<ctime>
+	"Matrix.h"
+
+1170358626 i:\projets\output 8\config.h
+
+1363602526 i:\projets\output 8\prev_declarations.h
+
+1364248830 i:\projets\output 8\pathfinder.h
+	<vector>
+	<ctime>
+	<algorithm>
+	"Matrix.h"
+
+1363370970 i:\projets\output 8\matrix.h
+	<iostream>
+	<cmath>
+
+1364993054 i:\projets\output 8\registry.h
+
+1365667020 i:\projets\output 8\scene.h
+	"coords3d.h"
+
+1365668264 i:\projets\output 8\coords3d.h
+	<cmath>
+	"coords3d.tpp"
+
+1365668234 i:\projets\output 8\coords3d.tpp
+	<cmath>
+	"coords3d.h"
+
+1365670982 i:\projets\output 8\coords.h
+	<cmath>
+	"coords.tpp"
+
+1365670982 i:\projets\output 8\coords.tpp
+	"coords.h"
+
+1364484702 i:\projets\output 8\verticesarrays.h
+
+1364997100 i:\projets\output 8\postproc.h
+	<GL/glew.h>
+	<GL/glfw.h>
+	<cstdlib>
+	<cstdio>
+	<iostream>
+	<cassert>
+	<cstring>
+	<new>
+
+1366102732 source:i:\projets\output 8\main.cpp
+	"main.h"
+
+1363292756 source:i:\projets\output 8\matrix.cpp
+	"Matrix.h"
+	<fstream>
+
+1366119824 source:i:\projets\output 8\output_1.cpp
+	"output.h"
+
+1366117238 source:i:\projets\output 8\output_2.cpp
+	"output.h"
+	<string>
+
+1366041450 source:i:\projets\output 8\output_3.cpp
+	"output.h"
+
+1366102520 source:i:\projets\output 8\output_4.cpp
+	"output.h"
+
+1366038272 source:i:\projets\output 8\output_5.cpp
+	"output.h"
+
+1365673018 source:i:\projets\output 8\pathfinder.cpp
+	"Pathfinder.h"
+
+1364994646 source:i:\projets\output 8\postproc.cpp
+	"postproc.h"
+
+1366041450 source:i:\projets\output 8\shaders.cpp
+	"shaders.h"
+	"output.h"
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\glm.hpp
+	"core/_fixes.hpp"
+	<cmath>
+	<climits>
+	<cfloat>
+	<limits>
+	<cstdio>
+	"core/setup.hpp"
+	"./core/_detail.hpp"
+	"./core/_vectorize.hpp"
+	"./core/type.hpp"
+	"./core/func_trigonometric.hpp"
+	"./core/func_exponential.hpp"
+	"./core/func_common.hpp"
+	"./core/func_packing.hpp"
+	"./core/func_geometric.hpp"
+	"./core/func_matrix.hpp"
+	"./core/func_vector_relational.hpp"
+	"./core/func_integer.hpp"
+	"./core/func_noise.hpp"
+	"./core/_swizzle.hpp"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\_fixes.hpp
+	<cmath>
+
+1363521492 i:\programmes\codeblocks\mingw\include\glm\core\setup.hpp
+	<intrin.h>
+	<immintrin.h>
+	<immintrin.h>
+	<smmintrin.h>
+	<pmmintrin.h>
+	<emmintrin.h>
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\core\_detail.hpp
+	"setup.hpp"
+	<cassert>
+	<cstdint>
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\_vectorize.hpp
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type.hpp
+	"type_half.hpp"
+	"type_float.hpp"
+	"type_int.hpp"
+	"type_gentype.hpp"
+	"type_vec1.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"type_mat2x2.hpp"
+	"type_mat2x3.hpp"
+	"type_mat2x4.hpp"
+	"type_mat3x2.hpp"
+	"type_mat3x3.hpp"
+	"type_mat3x4.hpp"
+	"type_mat4x2.hpp"
+	"type_mat4x3.hpp"
+	"type_mat4x4.hpp"
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\core\type_half.hpp
+	<cstdlib>
+	"type_half.inl"
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\core\type_half.inl
+	"_detail.hpp"
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\core\type_float.hpp
+	"type_half.hpp"
+	"setup.hpp"
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\core\type_int.hpp
+	"setup.hpp"
+	"_detail.hpp"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_gentype.hpp
+	"type_size.hpp"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_size.hpp
+	<cstdlib>
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_vec1.hpp
+	"type_vec.hpp"
+	"type_float.hpp"
+	"type_int.hpp"
+	"type_size.hpp"
+	"_swizzle.hpp"
+	"type_vec1.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_vec.hpp
+	"type_gentype.hpp"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\_swizzle.hpp
+	"_swizzle_func.hpp"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\_swizzle_func.hpp
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_vec1.inl
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\core\type_vec2.hpp
+	"type_vec.hpp"
+	"type_float.hpp"
+	"type_int.hpp"
+	"type_size.hpp"
+	"_swizzle.hpp"
+	"type_vec2.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_vec2.inl
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\core\type_vec3.hpp
+	"type_vec.hpp"
+	"type_float.hpp"
+	"type_int.hpp"
+	"type_size.hpp"
+	"_swizzle.hpp"
+	"type_vec3.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_vec3.inl
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\core\type_vec4.hpp
+	"type_vec.hpp"
+	"type_float.hpp"
+	"type_int.hpp"
+	"type_size.hpp"
+	"_swizzle.hpp"
+	"type_vec4.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_vec4.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat2x2.hpp
+	"type_mat.hpp"
+	"type_mat2x2.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat.hpp
+	"type_gentype.hpp"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat2x2.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat2x3.hpp
+	"type_mat.hpp"
+	"type_mat2x3.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat2x3.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat2x4.hpp
+	"type_mat.hpp"
+	"type_mat2x4.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat2x4.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat3x2.hpp
+	"type_mat.hpp"
+	"type_mat3x2.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat3x2.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat3x3.hpp
+	"type_mat.hpp"
+	"type_mat3x3.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat3x3.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat3x4.hpp
+	"type_mat.hpp"
+	"type_mat3x4.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat3x4.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat4x2.hpp
+	"type_mat.hpp"
+	"type_mat4x2.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat4x2.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat4x3.hpp
+	"type_mat.hpp"
+	"type_mat4x3.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat4x3.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat4x4.hpp
+	"type_mat.hpp"
+	"type_mat4x4.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\type_mat4x4.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_trigonometric.hpp
+	"func_trigonometric.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_trigonometric.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_exponential.hpp
+	"func_exponential.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_exponential.inl
+
+1363522670 i:\programmes\codeblocks\mingw\include\glm\core\func_common.hpp
+	"_fixes.hpp"
+	"func_common.inl"
+
+1363524804 i:\programmes\codeblocks\mingw\include\glm\core\func_common.inl
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\core\func_packing.hpp
+	"func_packing.inl"
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\core\func_packing.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_geometric.hpp
+	"func_geometric.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_geometric.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_matrix.hpp
+	"func_matrix.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_matrix.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_vector_relational.hpp
+	"_detail.hpp"
+	"func_vector_relational.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_vector_relational.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_integer.hpp
+	"func_integer.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_integer.inl
+	<intrin.h>
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_noise.hpp
+	"func_noise.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\core\func_noise.inl
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\gtc\type_ptr.hpp
+	"../glm.hpp"
+	"../gtc/half_float.hpp"
+	"../gtc/quaternion.hpp"
+	<cstring>
+	"type_ptr.inl"
+
+1363522960 i:\programmes\codeblocks\mingw\include\glm\gtc\half_float.hpp
+	"../glm.hpp"
+	"half_float.inl"
+
+1363522478 i:\programmes\codeblocks\mingw\include\glm\gtc\half_float.inl
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\gtc\quaternion.hpp
+	"../glm.hpp"
+	"../gtc/half_float.hpp"
+	"../gtc/constants.hpp"
+	"quaternion.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\gtc\constants.hpp
+	"../glm.hpp"
+	"../gtc/half_float.hpp"
+	"constants.inl"
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\gtc\constants.inl
+
+1363487672 i:\programmes\codeblocks\mingw\include\glm\gtc\quaternion.inl
+	<limits>
+
+1361373728 i:\programmes\codeblocks\mingw\include\glm\gtc\type_ptr.inl
+
