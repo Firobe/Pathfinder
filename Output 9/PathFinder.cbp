@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="PathFinder" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/PathFinder" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/PathFinder" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-g" />
+			<Add option="-fexceptions" />
+			<Add option="-DGLEW_STATIC" />
+			<Add directory="I:/Programmes/CodeBlocks/MinGW/include" />
+		</Compiler>
+		<Linker>
+			<Add option="-lglew32s" />
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\libRudeConfig_lib.a" />
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\libglfw.a" />
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\libglfwdll.a" />
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\libglu32.a" />
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\libopengl32.a" />
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\AntTweakBar.lib" />
+			<Add library="I:\Programmes\CodeBlocks\MinGW\lib\libglew32s.a" />
+		</Linker>
+		<Unit filename="Matrix.cpp" />
+		<Unit filename="Matrix.h" />
+		<Unit filename="Pathfinder.cpp" />
+		<Unit filename="Pathfinder.h" />
+		<Unit filename="Ressources/shaders/light.fs" />
+		<Unit filename="Ressources/shaders/light.vs" />
+		<Unit filename="Ressources/shaders/postprocess.fs" />
+		<Unit filename="Ressources/shaders/postprocess.vs" />
+		<Unit filename="Ressources/shaders/result.fs" />
+		<Unit filename="Ressources/shaders/result.vs" />
+		<Unit filename="Ressources/shaders/simple.fs" />
+		<Unit filename="Ressources/shaders/simple.vs" />
+		<Unit filename="config.ini" />
+		<Unit filename="coords.h" />
+		<Unit filename="coords.tpp" />
+		<Unit filename="coords3d.h" />
+		<Unit filename="coords3d.tpp" />
+		<Unit filename="lightShader.cpp" />
+		<Unit filename="main.cpp" />
+		<Unit filename="main.h" />
+		<Unit filename="output.h" />
+		<Unit filename="output_1.cpp" />
+		<Unit filename="output_2.cpp" />
+		<Unit filename="output_3.cpp" />
+		<Unit filename="output_4.cpp" />
+		<Unit filename="output_5.cpp" />
+		<Unit filename="postproc.cpp" />
+		<Unit filename="postproc.h" />
+		<Unit filename="prev_declarations.h" />
+		<Unit filename="registry.h" />
+		<Unit filename="scene.h" />
+		<Unit filename="shaders.cpp" />
+		<Unit filename="shaders.h" />
+		<Unit filename="verticesArrays.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

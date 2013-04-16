@@ -1,0 +1,479 @@
+# depslib dependency file v1.0
+1363292756 source:i:\projets\pathfinder_0.6.5 - copie\coords.cpp
+	<cmath>
+	"coords.h"
+
+1363292756 i:\projets\pathfinder_0.6.5 - copie\coords.h
+
+1363292756 source:i:\projets\pathfinder_0.6.5 - copie\coords3d.cpp
+	<cmath>
+	"coords3d.h"
+
+1363292756 i:\projets\pathfinder_0.6.5 - copie\coords3d.h
+	<cmath>
+
+1363605372 source:i:\projets\pathfinder_0.6.5 - copie\main.cpp
+	"main.h"
+
+1363292756 i:\projets\pathfinder_0.6.5 - copie\main.h
+	<GL/glfw.h>
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	<new>
+	<AntTweakBar.h>
+	"config.h"
+	"prev_declarations.h"
+	"Pathfinder.h"
+	"coords.h"
+	"output.h"
+	<fstream>
+	<cmath>
+	<ctime>
+	"Matrix.h"
+
+1342361890 i:\programmes\codeblocks\mingw\include\gl\glfw.h
+	<OpenGL/gl3.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL3/gl3.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1301111164 i:\programmes\codeblocks\mingw\include\gl\gl.h
+
+1301111164 i:\programmes\codeblocks\mingw\include\gl\glu.h
+	<stddef.h>
+	<GL/gl.h>
+
+1344505226 i:\programmes\codeblocks\mingw\include\anttweakbar.h
+	<stddef.h>
+	<string>
+	<string>
+
+1170358626 i:\projets\pathfinder_0.6.5 - copie\config.h
+
+1363602526 i:\projets\pathfinder_0.6.5 - copie\prev_declarations.h
+
+1363002456 i:\projets\pathfinder_0.6.5 - copie\pathfinder.h
+	<vector>
+	<ctime>
+	"Matrix.h"
+
+1363370970 i:\projets\pathfinder_0.6.5 - copie\matrix.h
+	<iostream>
+	<cmath>
+
+1364209092 i:\projets\pathfinder_0.6.5 - copie\output.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	"registry.h"
+	"scene.h"
+	"coords3d.h"
+	"Matrix.h"
+	"verticesArrays.h"
+
+1363292756 i:\projets\pathfinder_0.6.5 - copie\registry.h
+
+1363292756 i:\projets\pathfinder_0.6.5 - copie\scene.h
+	"coords3d.h"
+
+1363292756 source:i:\projets\pathfinder_0.6.5 - copie\matrix.cpp
+	"Matrix.h"
+	<fstream>
+
+1364210848 source:i:\projets\pathfinder_0.6.5 - copie\output_1.cpp
+	"output.h"
+
+1364210522 source:i:\projets\pathfinder_0.6.5 - copie\output_2.cpp
+	"output.h"
+	<string>
+
+1363602526 source:i:\projets\pathfinder_0.6.5 - copie\output_3.cpp
+	"output.h"
+
+1364208644 source:i:\projets\pathfinder_0.6.5 - copie\output_4.cpp
+	"output.h"
+
+1363603760 source:i:\projets\pathfinder_0.6.5 - copie\pathfinder.cpp
+	"Pathfinder.h"
+
+1364210168 i:\projets\pathfinder_0.6.5 - copie\verticesarrays.h
+
+1364592224 source:i:\projets\output 7\coords.cpp
+	<cmath>
+	"coords.h"
+
+1365670982 i:\projets\output 7\coords.h
+	<cmath>
+	"coords.tpp"
+
+1363292756 source:i:\projets\output 7\coords3d.cpp
+	<cmath>
+	"coords3d.h"
+
+1365668264 i:\projets\output 7\coords3d.h
+	<cmath>
+	"coords3d.tpp"
+
+1366102732 source:i:\projets\output 7\main.cpp
+	"main.h"
+
+1364575558 i:\projets\output 7\main.h
+	<cassert>
+	<iostream>
+	<string>
+	<vector>
+	<new>
+	"config.h"
+	"prev_declarations.h"
+	"Pathfinder.h"
+	"output.h"
+	<fstream>
+	<cmath>
+	<ctime>
+	"Matrix.h"
+
+1170358626 i:\projets\output 7\config.h
+
+1363602526 i:\projets\output 7\prev_declarations.h
+
+1364248830 i:\projets\output 7\pathfinder.h
+	<vector>
+	<ctime>
+	<algorithm>
+	"Matrix.h"
+
+1363370970 i:\projets\output 7\matrix.h
+	<iostream>
+	<cmath>
+
+1366039138 i:\projets\output 7\output.h
+	"main.h"
+	<vector>
+	<cstdlib>
+	<cstdio>
+	<ctime>
+	<GL/glew.h>
+	<GL/glfw.h>
+	<AntTweakBar.h>
+	<cstring>
+	<algorithm>
+	"registry.h"
+	"scene.h"
+	"coords.h"
+	"coords3d.h"
+	"Matrix.h"
+	"verticesArrays.h"
+	"shaders.h"
+	"postproc.h"
+
+1364993054 i:\projets\output 7\registry.h
+
+1365667020 i:\projets\output 7\scene.h
+	"coords3d.h"
+
+1364484702 i:\projets\output 7\verticesarrays.h
+
+1363292756 source:i:\projets\output 7\matrix.cpp
+	"Matrix.h"
+	<fstream>
+
+1366052010 source:i:\projets\output 7\output_2.cpp
+	"output.h"
+	<string>
+
+1366041450 source:i:\projets\output 7\output_3.cpp
+	"output.h"
+
+1366102520 source:i:\projets\output 7\output_4.cpp
+	"output.h"
+
+1365673018 source:i:\projets\output 7\pathfinder.cpp
+	"Pathfinder.h"
+
+1366045234 source:i:\projets\output 7\output_1.cpp
+	"output.h"
+
+1344243548 i:\programmes\codeblocks\mingw\include\gl\glew.h
+	<stddef.h>
+	<inttypes.h>
+	<stdint.h>
+	<inttypes.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1341006772 i:\programmes\codeblocks\mingw\include\inttypes.h
+	<_mingw.h>
+	<stdint.h>
+	<stddef.h>
+
+1341006770 i:\programmes\codeblocks\mingw\include\_mingw.h
+
+1341006776 i:\programmes\codeblocks\mingw\include\stdint.h
+	<stddef.h>
+
+1301111162 i:\programmes\codeblocks\mingw\include\windows.h
+	<winresrc.h>
+	<stdarg.h>
+	<windef.h>
+	<wincon.h>
+	<winbase.h>
+	<wingdi.h>
+	<winuser.h>
+	<winnls.h>
+	<winver.h>
+	<winnetwk.h>
+	<winreg.h>
+	<winsvc.h>
+	<cderr.h>
+	<dde.h>
+	<ddeml.h>
+	<dlgs.h>
+	<imm.h>
+	<lzexpand.h>
+	<mmsystem.h>
+	<nb30.h>
+	<rpc.h>
+	<shellapi.h>
+	<winperf.h>
+	<commdlg.h>
+	<winspool.h>
+	<winsock2.h>
+	<winsock.h>
+	<ole2.h>
+
+1301111162 i:\programmes\codeblocks\mingw\include\winresrc.h
+	<winuser.h>
+	<winnt.h>
+	<winver.h>
+	<dde.h>
+	<dlgs.h>
+	<commctrl.h>
+
+1301111164 i:\programmes\codeblocks\mingw\include\winuser.h
+
+1301111162 i:\programmes\codeblocks\mingw\include\winnt.h
+	<winerror.h>
+	<string.h>
+	<basetsd.h>
+	<pshpack4.h>
+	<poppack.h>
+
+1301111162 i:\programmes\codeblocks\mingw\include\winerror.h
+
+1341006776 i:\programmes\codeblocks\mingw\include\string.h
+	<_mingw.h>
+	<stddef.h>
+
+1301111148 i:\programmes\codeblocks\mingw\include\basetsd.h
+
+1301111156 i:\programmes\codeblocks\mingw\include\pshpack4.h
+
+1301111156 i:\programmes\codeblocks\mingw\include\poppack.h
+
+1301111164 i:\programmes\codeblocks\mingw\include\winver.h
+
+1301111148 i:\programmes\codeblocks\mingw\include\dde.h
+
+1301111150 i:\programmes\codeblocks\mingw\include\dlgs.h
+
+1301111148 i:\programmes\codeblocks\mingw\include\commctrl.h
+	<prsht.h>
+
+1301111156 i:\programmes\codeblocks\mingw\include\prsht.h
+
+1301111162 i:\programmes\codeblocks\mingw\include\windef.h
+	<winnt.h>
+
+1301111162 i:\programmes\codeblocks\mingw\include\wincon.h
+
+1301111160 i:\programmes\codeblocks\mingw\include\winbase.h
+
+1301111162 i:\programmes\codeblocks\mingw\include\wingdi.h
+
+1301111162 i:\programmes\codeblocks\mingw\include\winnls.h
+
+1301111162 i:\programmes\codeblocks\mingw\include\winnetwk.h
+
+1301111162 i:\programmes\codeblocks\mingw\include\winreg.h
+
+1301111164 i:\programmes\codeblocks\mingw\include\winsvc.h
+
+1301111148 i:\programmes\codeblocks\mingw\include\cderr.h
+
+1301111148 i:\programmes\codeblocks\mingw\include\ddeml.h
+
+1301111150 i:\programmes\codeblocks\mingw\include\imm.h
+
+1301111154 i:\programmes\codeblocks\mingw\include\lzexpand.h
+
+1301111154 i:\programmes\codeblocks\mingw\include\mmsystem.h
+
+1301111154 i:\programmes\codeblocks\mingw\include\nb30.h
+
+1301111158 i:\programmes\codeblocks\mingw\include\rpc.h
+	<windows.h>
+	<rpcdce.h>
+	<rpcnsi.h>
+	<rpcnterr.h>
+	<winerror.h>
+	<excpt.h>
+
+1301111158 i:\programmes\codeblocks\mingw\include\rpcdce.h
+	<basetyps.h>
+	<rpcdcep.h>
+
+1301111148 i:\programmes\codeblocks\mingw\include\basetyps.h
+
+1301111158 i:\programmes\codeblocks\mingw\include\rpcdcep.h
+
+1301111158 i:\programmes\codeblocks\mingw\include\rpcnsi.h
+
+1301111158 i:\programmes\codeblocks\mingw\include\rpcnterr.h
+
+1341006772 i:\programmes\codeblocks\mingw\include\excpt.h
+	<_mingw.h>
+	<windef.h>
+
+1301111160 i:\programmes\codeblocks\mingw\include\shellapi.h
+	<pshpack2.h>
+	<poppack.h>
+
+1301111156 i:\programmes\codeblocks\mingw\include\pshpack2.h
+
+1301111162 i:\programmes\codeblocks\mingw\include\winperf.h
+
+1301111148 i:\programmes\codeblocks\mingw\include\commdlg.h
+	<unknwn.h>
+	<prsht.h>
+
+1301111160 i:\programmes\codeblocks\mingw\include\unknwn.h
+	<windows.h>
+	<objfwd.h>
+	<wtypes.h>
+
+1301111156 i:\programmes\codeblocks\mingw\include\objfwd.h
+	<basetyps.h>
+
+1301111164 i:\programmes\codeblocks\mingw\include\wtypes.h
+	<rpc.h>
+	<rpcndr.h>
+
+1301111158 i:\programmes\codeblocks\mingw\include\rpcndr.h
+	<rpcnsip.h>
+	<objfwd.h>
+
+1301111158 i:\programmes\codeblocks\mingw\include\rpcnsip.h
+
+1301111162 i:\programmes\codeblocks\mingw\include\winspool.h
+
+1301111162 i:\programmes\codeblocks\mingw\include\winsock2.h
+	<windows.h>
+
+1301111162 i:\programmes\codeblocks\mingw\include\winsock.h
+	<windows.h>
+	<mswsock.h>
+
+1301111154 i:\programmes\codeblocks\mingw\include\mswsock.h
+
+1301111156 i:\programmes\codeblocks\mingw\include\ole2.h
+	<winerror.h>
+	<objbase.h>
+	<olectlid.h>
+	<oleauto.h>
+	<oleidl.h>
+
+1301111154 i:\programmes\codeblocks\mingw\include\objbase.h
+	<rpc.h>
+	<rpcndr.h>
+	<stdlib.h>
+	<basetyps.h>
+	<wtypes.h>
+	<unknwn.h>
+	<objidl.h>
+	<cguid.h>
+
+1341006776 i:\programmes\codeblocks\mingw\include\stdlib.h
+	<_mingw.h>
+	<stddef.h>
+
+1301111156 i:\programmes\codeblocks\mingw\include\objidl.h
+	<objfwd.h>
+
+1301111148 i:\programmes\codeblocks\mingw\include\cguid.h
+
+1301111156 i:\programmes\codeblocks\mingw\include\olectlid.h
+
+1301111156 i:\programmes\codeblocks\mingw\include\oleauto.h
+	<oaidl.h>
+
+1301111154 i:\programmes\codeblocks\mingw\include\oaidl.h
+	<windows.h>
+	<ole2.h>
+
+1301111156 i:\programmes\codeblocks\mingw\include\oleidl.h
+	<objfwd.h>
+
+1366038272 source:i:\projets\output 7\output_5.cpp
+	"output.h"
+
+1366043474 i:\projets\output 7\shaders.h
+	<GL/glew.h>
+	<GL/glfw.h>
+	<cstdlib>
+	<cstdio>
+	<iostream>
+	<cassert>
+	<cstring>
+	<new>
+
+1366041450 source:i:\projets\output 7\shaders.cpp
+	"shaders.h"
+	"output.h"
+
+1364993054 i:\projets\output 7\fbo.h
+	<GL/glew.h>
+	<GL/glfw.h>
+	<cstdlib>
+	<cstdio>
+	<iostream>
+	<cassert>
+	<cstring>
+	<new>
+
+1364991308 source:i:\projets\output 7\fbo.cpp
+	"fbo.h"
+
+1364997100 i:\projets\output 7\postproc.h
+	<GL/glew.h>
+	<GL/glfw.h>
+	<cstdlib>
+	<cstdio>
+	<iostream>
+	<cassert>
+	<cstring>
+	<new>
+
+1364994646 source:i:\projets\output 7\postproc.cpp
+	"postproc.h"
+
+1364592224 source:i:\projets\output 7\coords.tpp
+	<cmath>
+	"coords.h"
+
+1365668234 i:\projets\output 7\coords3d.tpp
+	<cmath>
+	"coords3d.h"
+
+1365670982 i:\projets\output 7\coords.tpp
+	"coords.h"
+
+1366043784 source:i:\projets\output 7\lightshader.cpp
+	"shaders.h"
+	"output.h"
+
