@@ -17,7 +17,7 @@ vector<int*> outPut::choosePoints()
     TwAddVarRW(b_points, "Fini", TW_TYPE_BOOLCPP, &(done), "key = RETURN" );
     TwAddVarRW(b_points, "Ajouter courant", TW_TYPE_BOOLCPP, &(addCurrent), "key = SPACE" );
     TwAddVarRW(b_points, "Ajouter au hasard", TW_TYPE_BOOLCPP, &(addRandom), "key = 'r'" );
-    TwDefine(" 'Points stratégiques' iconified=true ");
+    TwAddVarRW(b_points, "Pente max", TW_TYPE_INT32, &(_status.maxDiff), "keyincr=o keydecr=l");
 
     while((!done || _points.size() < 2) && _status.running)
     {

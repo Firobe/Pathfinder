@@ -33,7 +33,7 @@ inline float clamp(float x, float a, float b)
 struct s_status
  {
      bool running;
-     bool restart;
+     bool pause;
      int maxDiff;
  };
 

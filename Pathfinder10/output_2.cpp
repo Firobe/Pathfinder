@@ -135,6 +135,7 @@ void outPut::init_outPut()
 
     _status.running = true;
     _status.maxDiff = 50;
+    _valueChanges.reserve(_dimensions.x*_dimensions.y);
 
     _reg.WIREFRAME = false;
 }
@@ -193,22 +194,6 @@ void TW_CALL cbCenterView(void* outputObject)
     static_cast<outPut *>(outputObject)->centerView();
 }
 
-/*void TW_CALL switchWireframe(void * clientData)
-{
-    static bool wireframe(false);
-    if(!wireframe)
-    {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glLineWidth(1);
-        wireframe = true;
-    }
-    else
-    {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        wireframe = false;
-    }
-}*/
-
 void outPut::centerView()
 {
     _scene3d.focus.x = (int)(_dimensions.x/2.0);
@@ -261,11 +246,11 @@ void outPut::init_Bars()
 
     b_pathfind = TwNewBar("Pathfind");
     TwAddVarRW(b_pathfind, "En cours", TW_TYPE_BOOLCPP, &(_status.running), "help='Fermer le programme' key=ESC");
-    TwAddVarRW(b_pathfind, "Recommencer", TW_TYPE_BOOLCPP, &(_status.restart), "help='recommencer un calcul'");
-    TwAddVarRW(b_pathfind, "Pente max", TW_TYPE_INT32, &(_status.maxDiff), "");
+    TwAddVarRW(b_pathfind, "Pause", TW_TYPE_BOOLCPP, &(_status.pause), "key=t");
 
     TwSetTopBar(b_scene);
     TwDefine(" Reglages iconified=true ");
+    TwDefine(" Pathfind iconified=true ");
     TwDefine(" Post-processing iconified=true ");
 }
 
