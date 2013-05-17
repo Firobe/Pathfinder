@@ -1,0 +1,131 @@
+
+//== PROGRAM LINK STATUS = TRUE
+//== PROGRAM VALIDATE STATUS = FALSE
+/*== INFO LOG ==
+No errors.
+  == INFO LOG END ==*/
+
+//======================================================
+//   Vertex Shader 9 
+//======================================================
+
+//== SHADER COMPILE STATUS = TRUE
+/*== INFO LOG ==
+No errors.
+  == INFO LOG END ==*/
+#version 330 core
+
+struct s_light
+{
+    vec4 position;
+    vec4 ambient, diffuse, specular;
+};
+
+uniform vec3 defaultColor;
+uniform s_light lighting;
+uniform int maxCost;
+uniform mat4 MVM;
+uniform mat3 MVNM;
+uniform mat4 MVPM;
+
+#define aID_position 0
+#define aID_normal 1
+#define aID_cost 2
+
+layout(location = aID_position) in vec4 a_position;//in model space
+layout(location = aID_normal) in vec3 a_normal;
+layout(location = aID_cost) in int a_cost;
+
+out vec3 normal, lightDir, eyeVec;
+out vec4 color;
+
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
+void main()
+{
+	normal = /*gl_NormalMatrix */ a_normal;
+
+	vec3 vVertex = vec3(/*gl_ModelViewMatrix */ a_position);
+	if(lighting.position[3]==0)
+	lightDir = vec3((/*gl_ModelViewMatrix*/lighting.position).xyz);
+	else
+	lightDir = vec3((/*gl_ModelViewMatrix*/lighting.position).xyz - vVertex);
+	eyeVec = -vVertex;
+
+	//gl_ClipVertex =/* gl_ModelViewMatrix */ a_position;
+	gl_Position	 = /*gl_ModelViewProjectionMatrix*/a_position;
+	if(a_cost != -1)
+	{
+	float cost = float(a_cost)/500.0;
+    cost = clamp(cost,0.01, 0.99);
+
+	color =     vec4(cost,
+                     1.0-cost,
+                     0.0,
+                     1.0);
+	}
+	else
+	{
+	color = vec4(defaultColor, 1.0);
+	}
+}
+
+//======================================================
+//   Fragment Shader 10
+//======================================================
+
+//== SHADER COMPILE STATUS = TRUE
+/*== INFO LOG ==
+No errors.
+  == INFO LOG END ==*/
+struct s_material
+{
+    vec4 ambient, diffuse, specular;
+    float shininess;
+};
+struct s_light
+{
+    vec4 position;
+    vec4 ambient, diffuse, specular;
+};
+
+uniform s_light lighting;
+uniform s_material material;
+
+in vec3 normal, lightDir, eyeVec;
+in vec4 color;
+
+void main (void)
+{
+	vec4 final_color =
+	(gl_FrontLightModelProduct.sceneColor * material.ambient) +
+	(lighting.ambient * material.ambient);
+
+	vec3 N = normalize(normal);
+	vec3 L = normalize(lightDir);
+
+	float lambertTerm = dot(N,L);
+
+	if(lambertTerm > 0.0)
+	{
+		final_color += lighting.diffuse *
+		               color *
+					   lambertTerm;
+
+		vec3 V = normalize(eyeVec);
+
+		vec3 R = reflect(-L, N);
+		/*float specular = pow( max(dot(R, E), 0.0),
+		                 material.shininess );*/
+        float specular = pow(max(dot(R,V),0.0), material.shininess);
+		                 //specular = 0.0;
+		final_color += lighting.specular *
+		               material.specular *
+					   specular;
+	}
+
+	gl_FragColor =  final_color;
+}
+

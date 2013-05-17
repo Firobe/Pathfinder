@@ -1,3 +1,5 @@
+//#version 330 core
+
 struct s_material
 {
     vec4 ambient, diffuse, specular;
@@ -12,7 +14,8 @@ struct s_light
 uniform s_light lighting;
 uniform s_material material;
 
-varying vec3 normal, lightDir, eyeVec;
+in vec3 normal, lightDir, eyeVec;
+in vec4 color;
 
 void main (void)
 {
@@ -28,7 +31,7 @@ void main (void)
 	if(lambertTerm > 0.0)
 	{
 		final_color += lighting.diffuse *
-		               gl_Color *
+		               color *
 					   lambertTerm;
 
 		vec3 V = normalize(eyeVec);
@@ -43,6 +46,6 @@ void main (void)
 					   specular;
 	}
 
-	gl_FragColor = final_color;
+	gl_FragColor =  final_color;
 }
 

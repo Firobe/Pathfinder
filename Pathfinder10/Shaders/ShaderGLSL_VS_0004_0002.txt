@@ -1,0 +1,13 @@
+
+//== SHADER COMPILE STATUS = TRUE
+/*== INFO LOG ==
+No errors.
+  == INFO LOG END ==*/
+void main()
+{
+	gl_FrontColor = gl_Color;
+    gl_Position = ftransform();
+	
+	gl_ClipVertex = gl_ModelViewMatrix * gl_Position;
+	
+}

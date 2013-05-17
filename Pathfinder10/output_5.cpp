@@ -83,7 +83,7 @@ void outPut::drawTerrain(bool reinit)
 
     static bool init(true);
     static VA terrain;
-    static GLuint buf_pos, buf_col, buf_norm, buf_index;
+    static GLuint buf_pos, buf_norm, buf_cost, buf_index;
 
     unsigned int nbVertices = _dimensions.x*_dimensions.y;
     unsigned int nbIndex = (_dimensions.x-1)*(_dimensions.y-1)*6;
@@ -100,22 +100,22 @@ void outPut::drawTerrain(bool reinit)
         drawNormals(true);
 
         glDeleteBuffers(1,&buf_pos);
-        glDeleteBuffers(1,&buf_col);
         glDeleteBuffers(1,&buf_norm);
+        glDeleteBuffers(1,&buf_cost);
         glDeleteBuffers(1,&buf_index);
 
 
         delete terrain.verticesA;
-        delete terrain.colorsA;
-        delete terrain.indexA;
         delete terrain.normalsA;
+        delete terrain.costsA;
+        delete terrain.indexA;
 
         terrain.verticesA = new float[nbVertices*P_SIZE];
-        terrain.colorsA = new float[nbVertices*C_SIZE];
         terrain.normalsA = new float[nbVertices*N_SIZE];
+        terrain.costsA = new int[nbVertices*C_SIZE];
         terrain.indexA = new unsigned int[nbIndex];
 
-///Remplissage des tableaux de sommets et de couleurs
+///Remplissage des tableaux de sommets et de coûts
         for(unsigned int i = 0; i < _dimensions.x; i++)
         {
             for(unsigned int j = 0; j < _dimensions.y; j++)
@@ -124,31 +124,18 @@ void outPut::drawTerrain(bool reinit)
 
                 vertex = getVertex<float>(i,j);
                 normal = _scene3d.normalMap[i][j];
-                terrain.verticesA[(i*_dimensions.y+j)*P_SIZE] = vertex.x;
-                terrain.verticesA[(i*_dimensions.y+j)*P_SIZE+1] = vertex.y;
-                terrain.verticesA[(i*_dimensions.y+j)*P_SIZE+2] = vertex.z;
 
-                terrain.normalsA[(i*_dimensions.y+j)*P_SIZE] = normal.x;
-                terrain.normalsA[(i*_dimensions.y+j)*P_SIZE+1] = normal.y;
-                terrain.normalsA[(i*_dimensions.y+j)*P_SIZE+2] = normal.z;
+                int vertexPos = (i*_dimensions.y+j);
 
-                float color[3] = {_reg.UNIFORM_COLOR[0],_reg.UNIFORM_COLOR[1],_reg.UNIFORM_COLOR[2]};
-                if(_reg.COLORS == colorized)
-                {
-                    color[0] = _data[i][j]/255.0;
-                    color[1] = 1-_data[i][j]/255.0;
-                    color[2] = 0;
-                }
-                else if(_reg.COLORS == real)
-                {
-                    color[0] = _data[i][j]/255.0;
-                    color[1] = _data[i][j]/255.0;
-                    color[2] = _data[i][j]/255.0;
-                }
+                terrain.verticesA[vertexPos*P_SIZE] = vertex.x;
+                terrain.verticesA[vertexPos*P_SIZE+1] = vertex.y;
+                terrain.verticesA[vertexPos*P_SIZE+2] = vertex.z;
 
-                terrain.colorsA[(i*_dimensions.y+j)*C_SIZE] = color[0];
-                terrain.colorsA[(i*_dimensions.y+j)*C_SIZE+1] = color[1];
-                terrain.colorsA[(i*_dimensions.y+j)*C_SIZE+2] = color[2];
+                terrain.normalsA[vertexPos*P_SIZE] = normal.x;
+                terrain.normalsA[vertexPos*P_SIZE+1] = normal.y;
+                terrain.normalsA[vertexPos*P_SIZE+2] = normal.z;
+
+                terrain.costsA[vertexPos*C_SIZE] = -1;
             }
         }
 ///Remplissage de l'index
@@ -169,7 +156,7 @@ void outPut::drawTerrain(bool reinit)
 
         /* creation de nos VBO+IBO */
         glGenBuffers(1, &buf_pos);
-        glGenBuffers(1, &buf_col);
+        glGenBuffers(1, &buf_cost);
         glGenBuffers(1, &buf_norm);
         glGenBuffers(1, &buf_index);
 
@@ -181,19 +168,20 @@ void outPut::drawTerrain(bool reinit)
         glBufferSubData(GL_ARRAY_BUFFER, 0, (nbVertices*P_SIZE*sizeof
                                              *terrain.verticesA), terrain.verticesA);
 
-        /* construction du VBO de couleurs */
-        glBindBuffer(GL_ARRAY_BUFFER, buf_col);
-        glBufferData(GL_ARRAY_BUFFER, (nbVertices*C_SIZE*sizeof *terrain.colorsA),
-                     NULL, GL_STREAM_DRAW);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, (nbVertices*C_SIZE*sizeof
-                                             *terrain.colorsA), terrain.colorsA);
-
         /* construction du VBO de normales */
         glBindBuffer(GL_ARRAY_BUFFER, buf_norm);
         glBufferData(GL_ARRAY_BUFFER, (nbVertices*N_SIZE*sizeof *terrain.normalsA),
                      NULL, GL_STREAM_DRAW);
         glBufferSubData(GL_ARRAY_BUFFER, 0, (nbVertices*N_SIZE*sizeof
                                              *terrain.normalsA), terrain.normalsA);
+
+        /* construction du VBO de coûts */
+        glBindBuffer(GL_ARRAY_BUFFER, buf_cost);
+        glBufferData(GL_ARRAY_BUFFER, (nbVertices*C_SIZE*sizeof *terrain.costsA),
+                     NULL, GL_STREAM_DRAW);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, (nbVertices*C_SIZE*sizeof
+                                             *terrain.costsA), terrain.costsA);
+
 
         /* construction du IBO */
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buf_index);
@@ -206,21 +194,28 @@ void outPut::drawTerrain(bool reinit)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+    _maxValue = 1;
+
         cout<<"\n(re)initialisation de l'affichage du terrain reussie\n";
         init = false;
+        _valueChanges.clear();
     }
     drawAxis();
 
-    glBindBuffer(GL_ARRAY_BUFFER, buf_col);
+    glBindBuffer(GL_ARRAY_BUFFER, buf_cost);
     for(unsigned int i = 0; i < _valueChanges.size(); ++i)
     {
-        float couleur[3];
-        couleur[0] = (float)_valueChanges[i].value/400/*(float)_maxValue*/;
-        couleur[1] = 1.0-couleur[0];
-        couleur[2] = 0.0f;
-        glBufferSubData(GL_ARRAY_BUFFER, (_valueChanges[i].x*_dimensions.y + _valueChanges[i].y)*(C_SIZE* sizeof *couleur), (C_SIZE*sizeof
-                                             *couleur), couleur);
+        int newCost = _valueChanges[i].value;
+        //newCost = 2;
+        //std::cout << newCost << "/" << _maxValue << std::endl;
+        glBufferSubData(GL_ARRAY_BUFFER, (_valueChanges[i].x*_dimensions.y + _valueChanges[i].y)*(sizeof newCost)*C_SIZE, (sizeof
+                                             newCost), &newCost);
+        //terrain.costsA[_valueChanges[i].x*_dimensions.y + _valueChanges[i].y] = newCost;
     }
+    /*
+    glBufferSubData(GL_ARRAY_BUFFER, 0, (nbVertices*C_SIZE*sizeof
+                                        *terrain.costsA), terrain.costsA);*/
+    catchError("application de changements de couleur");
     _valueChanges.clear();
 
     glEnable(GL_DEPTH_TEST);
@@ -228,31 +223,40 @@ void outPut::drawTerrain(bool reinit)
         drawNormals();
 
     glUseProgram(_sLight.getProgramID());
+    //Envoi des uniforms
+    glUniform1i(uid_maxCost, _maxValue);
+    catchError("Envoi de la valeur max");
+    glUniform3f(uid_defaultColor, _reg.UNIFORM_COLOR[0],_reg.UNIFORM_COLOR[1],_reg.UNIFORM_COLOR[2]);
     /* specification du buffer des positions de sommets */
+    glEnableVertexAttribArray(aID_position);
     glBindBuffer(GL_ARRAY_BUFFER, buf_pos);
-    glVertexPointer(P_SIZE, GL_FLOAT, 0, BUFFER_OFFSET(0));
-    /* specification du buffer des couleurs de sommets */
-    glBindBuffer(GL_ARRAY_BUFFER, buf_col);
-    glColorPointer(C_SIZE, GL_FLOAT, 0, BUFFER_OFFSET(0));
+    glVertexAttribPointer(aID_position, P_SIZE , GL_FLOAT, 0, 0, BUFFER_OFFSET(0) );
     /* specification du buffer des normales de sommets */
+    glEnableVertexAttribArray(aID_normal);
     glBindBuffer(GL_ARRAY_BUFFER, buf_norm);
-    glNormalPointer( GL_FLOAT, 0, BUFFER_OFFSET(0));
+    glVertexAttribPointer(aID_normal, N_SIZE , GL_FLOAT, 0, 0, BUFFER_OFFSET(0) );
+    /* specification du buffer des coûts de sommets */
+    glEnableVertexAttribArray(aID_cost);
+    glBindBuffer(GL_ARRAY_BUFFER, buf_cost);
+    glVertexAttribIPointer(aID_cost, C_SIZE, GL_INT, 0, BUFFER_OFFSET(0));
 
     /*Spécification de l'index*/
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buf_index);
 
     glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
 
     glDrawElements(GL_TRIANGLES, nbIndex, GL_UNSIGNED_INT, BUFFER_OFFSET(0));
 
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_COLOR_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableVertexAttribArray(aID_position);
+    glDisableVertexAttribArray(aID_normal);
+    glDisableVertexAttribArray(aID_cost);
 
     //On debind les VBO+IBO
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glDisableVertexAttribArray(aID_position);
+    glDisableVertexAttribArray(aID_normal);
+    glDisableVertexAttribArray(aID_cost);
+    glUseProgram(0);
 }
 

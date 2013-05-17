@@ -29,8 +29,6 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
-			<Add option="-g" />
 			<Add option="-fexceptions" />
 			<Add option="-DGLEW_STATIC" />
 			<Add directory="I:/Programmes/CodeBlocks/MinGW/include" />

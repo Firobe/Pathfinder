@@ -49,6 +49,10 @@ struct s_light
     GLuint uid_ambient, uid_diffuse, uid_specular;
 };
 
+#define aID_position 0
+#define aID_normal 1
+#define aID_cost 2
+
 class lightShading : public opShader
 {
     public:

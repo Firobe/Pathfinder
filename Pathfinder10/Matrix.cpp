@@ -252,7 +252,7 @@ void Matrix::calcWalls(int maxDiff)
                 //Si la case du tableau correspondant au pixel testĂŠ existe
                 if(i+decalXY[k][0]>=0 && i+decalXY[k][0]<=_x-1 && j+decalXY[k][1]>=0 && j+decalXY[k][1]<=_y-1)
                 {
-                    if(abs((double)(_array[i][j][0]-_array[i+decalXY[k][0]][j+decalXY[k][1]][0]))>maxDiff)
+                    if(abs(_array[i][j][0]-_array[i+decalXY[k][0]][j+decalXY[k][1]][0])>maxDiff)
                         _array[i][j][k]=1;
                     else
                         _array[i][j][k]=0;

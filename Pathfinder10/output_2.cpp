@@ -38,6 +38,7 @@ outPut::outPut(Matrix& array)
         _scene3d.verticesMap[i] = new coords3d<float>[_dimensions.y];
 
     _valueChanges.clear();
+    //_valueChanges.allocate(_dimensions.x*_dimensions.y);
     _maxValue = 1;
 }
 
@@ -45,6 +46,9 @@ outPut::~outPut()
 {
     ///Terminer AntTweakBar
     TwTerminate();
+    glDeleteProgram(_sLight.getProgramID());
+    glDeleteProgram(_postProcess.getProgramID());
+    glDeleteProgram(_sNolight.getProgramID());
     ///Terminer GLFW
     glfwTerminate();
 }
@@ -81,7 +85,13 @@ void outPut::init_outPut()
     _sNolight.loadProgram("Ressources/shaders/simple.vs","Ressources/shaders/simple.fs");
     _sNolight.linkProgram();
     _sLight.loadProgram("Ressources/shaders/light.vs","Ressources/shaders/light.fs");
+    glBindAttribLocation(_sLight.getProgramID(), aID_position, "a_position");
+    glBindAttribLocation(_sLight.getProgramID(), aID_normal, "a_normal");
+    glBindAttribLocation(_sLight.getProgramID(), aID_cost, "a_cost");
     _sLight.linkProgram();
+    uid_maxCost = glGetUniformLocation(_sLight.getProgramID(), "maxCost");
+    uid_defaultColor = glGetUniformLocation(_sLight.getProgramID(), "defaultColor");
+
     {
         //float lightPos[4] = {200.0,200.0,50.0,1.0};
         float lightD[4] = {0.0f,0.0f,0.0f,0.0f};
@@ -251,6 +261,7 @@ void outPut::init_Bars()
 
     b_pathfind = TwNewBar("Pathfind");
     TwAddVarRW(b_pathfind, "En cours", TW_TYPE_BOOLCPP, &(_status.running), "help='Fermer le programme' key=ESC");
+    TwAddVarRW(b_pathfind, "Recommencer", TW_TYPE_BOOLCPP, &(_status.restart), "help='recommencer un calcul'");
     TwAddVarRW(b_pathfind, "Pente max", TW_TYPE_INT32, &(_status.maxDiff), "");
 
     TwSetTopBar(b_scene);

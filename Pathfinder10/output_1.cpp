@@ -63,6 +63,7 @@ void outPut::drawScene()
 {
     drawTerrain();
     drawLight();
+    drawPoints();
     TwDraw();
 }
 
@@ -209,6 +210,7 @@ void outPut::drawResult(vector<Node>* list)
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableVertexAttribArray(ATTRIB_ID);
+    glUseProgram(0);
 }
 
 void outPut::drawLight()

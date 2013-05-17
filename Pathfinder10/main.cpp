@@ -6,19 +6,18 @@ int main (int argc, char** argv)
 {
     srand(time(NULL));
     cout << "Pathfinder V2 : THE DEMINER"<< endl << "---------------------------" <<endl;
+    bool restart(false);
+
     Pathfinder pathfinder;
+    cout << "Pathfinder cree";
     outPut moteur(pathfinder.getMatrix());
     moteur.init_outPut();
     vector<int*> bombs = moteur.choosePoints();
 
-    while(moteur.getStatus().running)
-    {
-        cout<<moteur.getStatus().running;
-
         vector<Node> resultList;
         vector<Node>* resultPointer;
         if(moteur.getStatus().running)
-            resultList=pathfinder.find(bombs, moteur);
+        resultList=pathfinder.find(bombs, moteur);
 
         if(resultList.empty())
         {
@@ -40,6 +39,5 @@ int main (int argc, char** argv)
             moteur.drawResult(resultPointer);
             moteur.display();
         }
-    }
     return 0;
 }

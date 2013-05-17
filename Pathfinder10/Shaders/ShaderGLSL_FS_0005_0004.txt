@@ -1,0 +1,11 @@
+
+//== SHADER COMPILE STATUS = TRUE
+/*== INFO LOG ==
+No errors.
+  == INFO LOG END ==*/
+uniform vec2 resolution;
+ 
+void main()
+{
+    gl_FragColor = gl_Color;
+}

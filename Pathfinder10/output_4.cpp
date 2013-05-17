@@ -5,7 +5,7 @@ vector<int*> outPut::choosePoints()
 {
     glfwEnable( GLFW_KEY_REPEAT );
 
-    vector <coords<int> > points;
+    _points.clear();
 
     TwBar *b_points = TwNewBar("Points stratégiques");
     coords<int> curPoint((float)_dimensions.x/2.0, (float)_dimensions.y/2.0);
@@ -19,7 +19,7 @@ vector<int*> outPut::choosePoints()
     TwAddVarRW(b_points, "Ajouter au hasard", TW_TYPE_BOOLCPP, &(addRandom), "key = 'r'" );
     TwDefine(" 'Points stratégiques' iconified=true ");
 
-    while((!done || points.size() < 2) && _status.running)
+    while((!done || _points.size() < 2) && _status.running)
     {
     setScene();
     drawScene();
@@ -42,25 +42,18 @@ vector<int*> outPut::choosePoints()
 
     if(addCurrent)
     {
-        points.push_back(curPoint);
+        _points.push_back(curPoint);
         addCurrent = false;
     }
 
     glBegin(GL_POINTS);
     glColor3ub(0,255,0);
     glVertex3d(vertex.x, vertex.y, vertex.z);
-
-    for(unsigned int i=0;i<points.size();i++)
-    {
-        glColor3ub(0,255,255);
-        vertex = getVertex<float>(points[i].x,points[i].y);
-        glVertex3d(vertex.x, vertex.y, vertex.z);
-    }
     glEnd();
-
     display();
     }
-    unsigned int n = points.size();
+    unsigned int n = _points.size();
+    std::cout << "nb de bombes : " << n << std::endl;
     vector<int*> bombList(n, NULL);
     for(unsigned int i = 0; i<n;i++)
     {
@@ -69,8 +62,8 @@ vector<int*> outPut::choosePoints()
         {
             bombList[i][j] = 0;
         }
-        bombList[i][n+2-2] = points[i].x;
-        bombList[i][n+2-1] = points[i].y;
+        bombList[i][n+2-2] = _points[i].x;
+        bombList[i][n+2-1] = _points[i].y;
     }
 
     TwDeleteBar(b_points);
@@ -79,6 +72,22 @@ vector<int*> outPut::choosePoints()
     TwDefine(" Scene/y  keyincr = UP keydecr = DOWN");
 
     return bombList;
+}
+
+void outPut::drawPoints()
+{
+    glPushAttrib(GL_DEPTH_TEST);
+    glDisable(GL_DEPTH_TEST);
+    glBegin(GL_POINTS);
+    for(unsigned int i=0;i<_points.size();i++)
+    {
+        glColor3ub(0,255,255);
+        coords3d<float> vertex = getVertex<float>(_points[i].x,_points[i].y);
+        glVertex3d(vertex.x, vertex.y, vertex.z);
+    }
+    glEnd();
+    glPopAttrib();
+    return;
 }
 
 /*

@@ -174,9 +174,9 @@ vector<Node> Pathfinder::path(Node begb,Node endb, outPut& moteur)
     for(int i=0; i<matrix.GetX(); i++)
         for(int j=0; j<matrix.GetY(); j++)
         {
-            moteur.setColor(i, j, -1);
             for(int k=0; k<3; k++)
                 cells[i][j][k]=0;}
+    moteur.drawTerrain(true);
     openList.push_back(begb);
     exTime = time(0);
     exTime2=glfwGetTime();

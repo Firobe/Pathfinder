@@ -33,6 +33,7 @@ inline float clamp(float x, float a, float b)
 struct s_status
  {
      bool running;
+     bool restart;
      int maxDiff;
  };
 
@@ -62,6 +63,7 @@ class outPut
 
     opShader _sNolight;
     lightShading _sLight;
+    GLuint uid_maxCost, uid_defaultColor;
     opShader _postProcess;
     GLuint uid_pp_colors, uid_pp_offset, uid_pp_effect;
     unsigned int _effect;
@@ -73,6 +75,7 @@ class outPut
 
     rude::Config _config;
     int** _data;
+    vector <coords<int> > _points;
 
     struct changeValue
     {
@@ -88,6 +91,7 @@ class outPut
     void drawNormals(bool reinit = false);
     void drawAxis();
     void drawLight();
+    void drawPoints();
 
     void init_Tw();
     void init_Bars();

@@ -12,6 +12,11 @@ struct scene
     float lightDir[3];
     float lightPos[4];
     coords3d<float> focus;
+
+    glm::mat4 MVM;
+    glm::mat4 PM;
+    glm::mat4 MVPM;
+    glm::mat4 MVNM;
 };
 
 #endif // SCENE_H_INCLUDED
