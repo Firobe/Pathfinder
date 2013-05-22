@@ -6,6 +6,7 @@
 #include <fstream>
 #include <cmath>
 #include <cstdlib>
+#define MAX_DIFF 10
 #define DECAL_XY { {0,0,0},{0,1,COST_FOR},{1,1,COST_DIAG},{1,0,COST_FOR},{1,-1,COST_DIAG},{0,-1,COST_FOR},{-1,-1,COST_DIAG},{-1,0,COST_FOR},{-1,1,COST_DIAG} }
 #ifdef _WIN32
 #include <windows.h>
@@ -30,8 +31,9 @@ public:
     const int GetY();
     void DataFile();
     void RandMap();
-    void OpenMap();
     void calcWalls(int);
+    string LocalMap();
+    string Internet();
 protected:
 private:
     int _x;
