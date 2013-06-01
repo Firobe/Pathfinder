@@ -134,7 +134,9 @@ void outPut::init_outPut()
     _reg.UNIFORM_COLOR[0]=_reg.UNIFORM_COLOR[1]=_reg.UNIFORM_COLOR[2]=0.5;
 
     _status.running = true;
+    _status.pause = false;
     _status.maxDiff = 50;
+    _status.drawDelay = 75;
     _valueChanges.reserve(_dimensions.x*_dimensions.y);
 
     _reg.WIREFRAME = false;
@@ -216,9 +218,10 @@ void outPut::init_Bars()
     TwAddVarRW(b_scene, "y", TW_TYPE_FLOAT, &(_scene3d.focus.y), "group = 'Focus' ");
     TwAddVarRW(b_scene, "z", TW_TYPE_FLOAT, &(_scene3d.focus.z), "group = 'Focus'");
     TwAddButton(b_scene, "Centrer", cbCenterView, this, " group = 'Focus' ");
-
     TwAddVarRW(b_scene, "Test de profondeur résultat", TW_TYPE_BOOLCPP,
                &(_reg.ZTEST_RESULT), "label='Z test resultat'");
+
+    TwAddVarRW(b_scene, "Temps de calcul (ms)", TW_TYPE_INT32, &(_status.drawDelay), "min=0 max=1000");
 
     //_scene3d.lightDir = {1,1,-1};
     _scene3d.lightDir[0]=_scene3d.lightDir[1]=1;
@@ -236,7 +239,7 @@ void outPut::init_Bars()
     TwAddVarRW(b_reglages, "Multiplicateur", TW_TYPE_DOUBLE, &(_reg.MULTIPLIER), "group = 'Rendu' min = 0 max = 100");
     TwType colorsType;
     colorsType = TwDefineEnum("ColorsType", NULL, 0);
-    TwAddVarRW(b_reglages, "Couleurs", colorsType, &(_reg.COLORS), " enum='0 {Réelles}, 1 {Colorisé}, 2 {Uniforme}'");
+    //TwAddVarRW(b_reglages, "Couleurs", colorsType, &(_reg.COLORS), " enum='0 {Réelles}, 1 {Colorisé}, 2 {Uniforme}'");
     TwAddVarRW(b_reglages, "Filaire", TW_TYPE_BOOLCPP, &(_reg.WIREFRAME), " group = Rendu ");
     TwAddVarRW(b_reglages, "Normales", TW_TYPE_BOOLCPP, &(_reg.DRAW_NORMALS), "group = 'Rendu'");
     TwAddVarRW(b_reglages, "Couleur unie", TW_TYPE_COLOR3F, &(_reg.UNIFORM_COLOR), "colormode=hls group = 'Rendu'");

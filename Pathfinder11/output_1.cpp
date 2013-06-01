@@ -5,12 +5,15 @@ unsigned int fps = 0;
 
 void outPut::setScene()
 {
+    _status.running = _status.running && glfwGetWindowParam( GLFW_OPENED ); //On met à jour le statut d'execution
+    if(!_status.running)
+        return;
     static bool autoZfocus(true);
     static bool init(true);
     if (init)
     {
         glfwSetTime(0);
-        TwAddVarRW(b_scene, "Auto Z focus", TW_TYPE_BOOLCPP, &autoZfocus, "");
+        TwAddVarRW(b_scene, "Auto Z focus", TW_TYPE_BOOLCPP, &autoZfocus, "group = 'Focus'");
         TwAddVarRO(b_scene, "FPS", TW_TYPE_INT16, &fps, "");
         init = false;
     }
@@ -18,8 +21,6 @@ void outPut::setScene()
     coords3d<float> focus3d;
 
     beginTime = glfwGetTime();
-
-    _status.running = _status.running && glfwGetWindowParam( GLFW_OPENED ); //On met à jour le statut d'execution
 
     focus3d = _scene3d.focus*(coords3d<float>::retournercoords3d(_reg.PIXEL_SIZE, _reg.PIXEL_SIZE, 1));
     if(autoZfocus)
@@ -61,6 +62,8 @@ void outPut::setScene()
 }
 void outPut::drawScene()
 {
+    if(!_status.running)
+        return;
     drawTerrain();
     drawLight();
     drawPoints();
@@ -69,6 +72,8 @@ void outPut::drawScene()
 
 void outPut::display()
 {
+    if(!_status.running)
+        return;
 
     if(_reg.WIREFRAME)
     {
@@ -107,6 +112,8 @@ void outPut::display()
 
 void outPut::drawResult(vector<Node>* list)
 {
+    if(!_status.running)
+        return;
     static vector<Node>* lastList = NULL;
 
     static bool init(true);

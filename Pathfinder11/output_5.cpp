@@ -46,7 +46,7 @@ void outPut::drawNormals(bool reinit)
     //On debind le VBO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-        cout<<"\n(re)initialisation de l'affichage des normales reussie\n";
+       // cout<<"\n(re)initialisation de l'affichage des normales reussie\n";
     }
     glUseProgram(_sNolight.getProgramID());
     /* specification du buffer des positions de sommets */
@@ -196,7 +196,7 @@ void outPut::drawTerrain(bool reinit)
 
     _maxValue = 1;
 
-        cout<<"\n(re)initialisation de l'affichage du terrain reussie\n";
+//        cout<<"\n(re)initialisation de l'affichage du terrain reussie\n";
         init = false;
         _valueChanges.clear();
     }

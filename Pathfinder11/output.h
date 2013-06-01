@@ -35,6 +35,7 @@ struct s_status
      bool running;
      bool pause;
      int maxDiff;
+     unsigned int drawDelay;
  };
 
 class outPut

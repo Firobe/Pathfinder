@@ -140,12 +140,14 @@ vector<Node> Pathfinder::find(vector<int*> bombList, outPut& moteur)
 
     //Recherche de la combinaison la moins coûteuse
     cout<<"Selection du parcours le moins couteux possible..."<<endl;
-    sum=0;
-    for(unsigned int i=1; i<factorial(bombList.size()-1); i++)
-        if(possib[i][bombList.size()]<=possib[sum][bombList.size()] && possib[i][bombList.size()]!=-1)
+    sum=-1;
+    for(unsigned int i=0; i<factorial(bombList.size()-1); i++)
+        if(sum==-1 && possib[i][bombList.size()]!=-1)
+            sum=i;
+        else if(possib[i][bombList.size()]<=possib[sum][bombList.size()] && possib[i][bombList.size()]!=-1)
             sum=i;
     finalList.clear();
-    if(sum==0)
+    if(sum==-1)
         return finalList;
 
     //Reconstitution finale
@@ -221,7 +223,7 @@ vector<Node> Pathfinder::path(Node begb,Node endb, outPut& moteur)
             exCount= count;
             exTime = actTime;
         }
-        if(actTime2-exTime2>=0.1)
+        if(actTime2-exTime2>=((double)moteur.getStatus().drawDelay/1000.0))
         {
             exTime2 = actTime2;
             moteur.setScene();
