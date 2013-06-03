@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 
         if(resultList.empty() && moteur.getStatus().running)
         {
-            cout << "ERROR" << endl << "Le probleme n'a pas de solution" << endl << "Annulation de l'operation" << endl;
+            cout << "Erreur" << endl << "Le probleme n'a pas de solution" << endl << "Annulation de l'operation" << endl;
             resultPointer = NULL;
         }
         else

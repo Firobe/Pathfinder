@@ -112,8 +112,6 @@ string Matrix::Internet()
     }
     else
     {
-        system("cls");
-        system("color 0C");
         cout<<"!!ERREUR!! Fichier d'index absent ou illisible"<< endl << endl;
         system("PAUSE");
         exit(EXIT_FAILURE);
@@ -262,12 +260,7 @@ void Matrix::DataFile()
 
         else
         {
-            system("cls");
-            system("color 0C");
             cout << "!! ERREUR !! Plan illisible, manquant ou nom de fichier mal saisit" << endl << endl;
-            system("PAUSE");
-            system("cls");
-            system("Pathfinder.exe");
             exit(EXIT_FAILURE);
         }
     }

@@ -141,11 +141,13 @@ vector<Node> Pathfinder::find(vector<int*> bombList, outPut& moteur)
     //Recherche de la combinaison la moins coûteuse
     cout<<"Selection du parcours le moins couteux possible..."<<endl;
     sum=-1;
-    for(unsigned int i=0; i<factorial(bombList.size()-1); i++)
+    for(unsigned int i=0; i<factorial(bombList.size()-1); i++){
         if(sum==-1 && possib[i][bombList.size()]!=-1)
             sum=i;
-        else if(possib[i][bombList.size()]<=possib[sum][bombList.size()] && possib[i][bombList.size()]!=-1)
-            sum=i;
+        if(sum!=-1)
+            if(possib[i][bombList.size()]<=possib[sum][bombList.size()] && possib[i][bombList.size()]!=-1)
+                sum=i;}
+    cout<<sum<<endl;
     finalList.clear();
     if(sum==-1)
         return finalList;
