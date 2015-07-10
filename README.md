@@ -5,3 +5,5 @@ Fonctionnalités
 - Ouvre n'importe quelle image BMP et la convertit en Heightmap
 - Permet de placer des points à relier sur le terrain affiché en 3D
 - Calcule et affiche le chemin le plus rapide passant par tous les points en prenant compte du relief
+
+(import depuis SourceForge)
